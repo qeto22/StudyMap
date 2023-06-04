@@ -1,17 +1,17 @@
 import { Button, Container, Tooltip } from '@mui/material';
 import './NavigationBar.css'
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import SearchBar from './SearchBar';
+import CategoriesButton from './CategoriesButton';
 
 function NavigationBar() {
     return (<Container maxWidth='xl'>
                 <div className='navbar-wrapper'>
                     <img src='https://fireship.io/img/logo.svg' alt='Logo' className='navbar-icon'></img>
                     <h2 className='company-title'>StudyMap</h2>
-                    <span className='navbar-item'>Categories <ArrowDropDownIcon></ArrowDropDownIcon></span>
-                    <SearchBar width={680} marginLeft={5} />
+                    <div className='navbar-item'><CategoriesButton></CategoriesButton></div>
+                    <SearchBar width={600} marginLeft={5} />
                     <span className='navbar-item'>
                         <Tooltip title="Cart">
                             <ShoppingCartIcon></ShoppingCartIcon>
