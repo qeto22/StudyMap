@@ -1,9 +1,13 @@
 import './App.css';
-import NavigationBar from './NavigationBar';
+import NavigationBar from './navbar/NavigationBar';
+import WelcomeContent from './welcome/WelcomeContent';
 
 function App() {
   return (
-    <NavigationBar></NavigationBar>
+    <div style={{minHeight: "100%"}}>
+      <NavigationBar />
+      <WelcomeContent />
+    </div>
   );
 }
 
