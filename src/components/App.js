@@ -5,7 +5,6 @@ import WelcomeContent from './welcome/WelcomeContent';
 function App() {
   return (
     <div style={{minHeight: "100%"}}>
-      <NavigationBar />
       <WelcomeContent />
     </div>
   );
