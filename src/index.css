@@ -7,6 +7,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: rgb(18, 24, 27);
   color: white;
+  font-family: "cubano";
 }
 
 code {

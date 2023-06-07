@@ -13,6 +13,9 @@ const theme = createTheme({
         },
         material: {
             main: 'rgb(236,102,82)'
+        },
+        light: {
+            main: "#d5ebf7"
         }
     }
 })
