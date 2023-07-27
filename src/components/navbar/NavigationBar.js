@@ -1,47 +1,50 @@
-import { Button, Container, Tooltip } from '@mui/material';
-import './NavigationBar.css'
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import LightModeIcon from '@mui/icons-material/LightMode';
-import SearchBar from './SearchBar';
-import CategoriesButton from './CategoriesButton';
+import { Container, useMediaQuery, IconButton } from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import "./NavigationBar.css";
+import { useState } from "react";
+import NavigationBarDrawer from "./NavigationBarDrawer";
+import NavigationBarDesktop from "./NavigationBarDesktop";
 
 function NavigationBar() {
-    return (<Container maxWidth='xl'>
-                <div className='navbar-wrapper'>
-                    <img src='https://fireship.io/img/logo.svg' alt='Logo' className='navbar-icon'></img>
-                    <h2 className='company-title'>StudyMap</h2>
-                    <div className='navbar-item'><CategoriesButton></CategoriesButton></div>
-                    <SearchBar width={600} marginLeft={5} />
-                    <span className='navbar-item'>
-                        <Tooltip title="Cart">
-                            <ShoppingCartIcon></ShoppingCartIcon>
-                        </Tooltip>
-                    </span>
-                    <div className='navbar-item'>
-                        <Button sx={{
-                            width: "130px",
-                            fontFamily: "cubano",
-                            letterSpacing: "1px"
-                        }} variant="outlined" >Log in</Button>
-                    </div>
-                    <div style={{marginLeft: 10}}>
-                        <Button sx={{
-                            width: "130px",
-                            fontFamily: "cubano",
-                            letterSpacing: "1px"
-                        }} variant="contained" color="material">Sign Up</Button>
-                    </div>
-                    <div style={{marginLeft: 10}}>
-                        <Tooltip title="Light Mode">
-                            <Button sx={{
-                                width: "30px",
-                                fontFamily: "cubano",
-                                letterSpacing: "1px"
-                            }} variant="outlined"><LightModeIcon></LightModeIcon></Button>
-                        </Tooltip>
-                    </div>
-                </div>
-            </Container>)
+    const showDrawer = useMediaQuery((theme) => theme.breakpoints.down("lg"));
+    const [open, setOpen] = useState(false);
+
+    const handleDrawerToggle = () => {
+        setOpen(!open);
+    };
+
+    return (
+        <Container maxWidth="xl">
+            <div className="navbar-wrapper">
+                <img
+                    src="https://fireship.io/img/logo.svg"
+                    alt="Logo"
+                    className="navbar-icon"
+                ></img>
+                <h2 className="company-title">StudyMap</h2>
+                {showDrawer ? (
+                    <>
+                        <IconButton
+                            color="inherit"
+                            aria-label="open drawer"
+                            onClick={handleDrawerToggle}
+                            style={{}}
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                        <NavigationBarDrawer
+                            open={open}
+                            handleDrawerToggle={handleDrawerToggle}
+                        ></NavigationBarDrawer>
+                    </>
+                ) : (
+                    <>
+                        <NavigationBarDesktop></NavigationBarDesktop>
+                    </>
+                )}
+            </div>
+        </Container>
+    );
 }
 
 export default NavigationBar;
