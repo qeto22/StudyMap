@@ -7,7 +7,7 @@ function Footer() {
                 <Grid item xs={12} md={3} style={{ display: "flex", flexDirection: "column", gap: "15px", justifyContent: "space-between" }}>
                     <div style={{ display: "flex", alignItems: "center", fontFamily: "cubano", fontSize: "16px", margin: "0 auto", justifyContent: "center" }}>
                         <img
-                            src="https://fireship.io/img/logo.svg"
+                            src="/logo.png"
                             alt="Logo"
                             style={{ display: "inline-block", width: "32px", height: "32px", marginRight: "15px" }}
                         ></img> StudyMap

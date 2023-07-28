@@ -17,7 +17,7 @@ function NavigationBar() {
         <Container maxWidth="xl">
             <div className="navbar-wrapper">
                 <img
-                    src="https://fireship.io/img/logo.svg"
+                    src="/logo.png"
                     alt="Logo"
                     className="navbar-icon"
                 ></img>

@@ -1,7 +1,8 @@
-import { Button, Container, Grid, useMediaQuery } from "@mui/material";
+import { Button, Container, Grid, Typography, useMediaQuery } from "@mui/material";
 import { useEffect, useRef } from "react";
 import "@fontsource/roboto";
 import Typed from "typed.js";
+import SkillSlider from "./SkillSlider";
 
 function WelcomeBody() {
     const isLargeScreen = useMediaQuery((theme) => theme.breakpoints.up("md"));
@@ -28,31 +29,41 @@ function WelcomeBody() {
 
 
     return (
-        <Container maxWidth="xl">
-            <Grid container spacing={2} alignItems="center" style={{ marginTop: "70px" }}>
-                <Grid item xs={isLargeScreen ? 6 : 12} order={isLargeScreen ? 1 : 2}>
-                    <h1 style={{ marginTop: "0px", textAlign: "center", fontFamily: "cubano" }} className="header-title">Learn to <span style={{ color: "rgb(236, 102, 82)" }} className="typed-header"></span></h1>
-                    <h3 style={{ marginTop: "15px", textAlign: "center", color: "#d5ebf7", letterSpacing: "1px", fontFamily: "roboto"}}>Learn and sharpen your skill with <span style={{ fontWeight: "bold" }}>Study Map</span></h3>
-                    <div style={{ display: "flex", alignItems: "baseline", justifyContent: "center", gap: "20px" }}>
-                        <Button sx={{
-                            width: "130px",
-                            fontFamily: "cubano",
-                            letterSpacing: "1px"
-                        }} variant="outlined" color="light">Log in</Button>
-                        <Button sx={{
-                            width: "130px",
-                            fontFamily: "cubano",
-                            letterSpacing: "1px",
-                            marginTop: "15px",
-                            color: "black"
-                        }} variant="contained" color="light">Sign Up</Button>
-                    </div>
+        <div>
+            <Container maxWidth="xl">
+                <Grid container spacing={2} alignItems="center" style={isLargeScreen ? { marginTop: "100px" } : { marginTop: "60px" }}>
+                    <Grid item xs={isLargeScreen ? 6 : 12} order={isLargeScreen ? 1 : 2}>
+                        <h1 style={{ marginTop: "0px", textAlign: "center", fontFamily: "cubano" }} className="header-title">Learn to <span style={{ color: "rgb(236, 102, 82)" }} className="typed-header"></span></h1>
+                        <h3 style={{ marginTop: "15px", textAlign: "center", color: "#d5ebf7", letterSpacing: "1px", fontFamily: "roboto" }}>Learn and sharpen your skill with <span style={{ fontWeight: "bold" }}>Study Map</span></h3>
+                        <div style={{ display: "flex", alignItems: "baseline", justifyContent: "center", gap: "20px" }}>
+                            <Button sx={{
+                                width: "130px",
+                                fontFamily: "cubano",
+                                letterSpacing: "1px"
+                            }} variant="outlined" color="light">Log in</Button>
+                            <Button sx={{
+                                width: "130px",
+                                fontFamily: "cubano",
+                                letterSpacing: "1px",
+                                marginTop: "15px",
+                                color: "black"
+                            }} variant="contained" color="light">Sign Up</Button>
+                        </div>
+                    </Grid>
+                    <Grid item xs={isLargeScreen ? 6 : 12} style={{ display: "flex", justifyContent: "center" }} order={isLargeScreen ? 2 : 1}>
+                        <img src="/woman.png" style={{ width: "350px", margin: '0 auto', maxWidth: "100%" }} alt="Welcome" />
+                    </Grid>
                 </Grid>
-                <Grid item xs={isLargeScreen ? 6 : 12} style={{ display: "flex", justifyContent: "center" }} order={isLargeScreen ? 2 : 1}>
-                    <img src="/woman.png" style={{ width: "350px", margin: '0 auto', maxWidth: "100%" }} alt="Welcome" />
-                </Grid>
-            </Grid>
-        </Container>
+            </Container>
+            <div style={{ marginTop: isLargeScreen ? "100px" : "80px", marginBottom: "80px" }}>
+                <Container maxWidth="xl" style={{ marginBottom: "25px" }}>
+                    <Typography variant="h6" fontFamily="cubano" textAlign="center">
+                        Short list of what you can learn at <span style={{ color: "rgb(236, 102, 82)" }}>StudyMap</span>
+                    </Typography>
+                </Container>
+                <SkillSlider></SkillSlider>
+            </div>
+        </div>
     )
 }
 
