@@ -1,0 +1,42 @@
+.course-title {
+    font-size: 18px !important;
+}
+
+.course-author-wrapper {
+    display: flex;
+    flex-direction: row;
+    margin-top: 8px;
+    font-size: 13px !important;
+    color: #c7c9ca;
+    gap: 5px
+}
+
+.course-author-wrapper img {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+}
+
+.course-rating-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    justify-content: baseline;
+    margin-top: 8px;
+}
+
+.course-rating-text {
+    font-size: 14px !important;
+    text-align: center;
+    color: #FAAF00 !important;
+}
+
+.course-rating-count {
+    font-size: 14px !important;
+    text-align: center;
+    color: #c7c9ca; 
+}
+
+.course-price {
+    margin-top: 15px !important;
+}

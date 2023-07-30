@@ -3,7 +3,7 @@ import { Container, Grid, Hidden } from "@mui/material";
 function Footer() {
     return (
         <Container maxWidth="xl">
-            <Grid container alignItems="stretch" style={{ height: "100%" }}>
+            <Grid container alignItems="stretch" style={{ height: "100%", marginBottom: "25px" }}>
                 <Grid item xs={12} md={3} style={{ display: "flex", flexDirection: "column", gap: "15px", justifyContent: "space-between" }}>
                     <div style={{ display: "flex", alignItems: "center", fontFamily: "cubano", fontSize: "16px", margin: "0 auto", justifyContent: "center" }}>
                         <img

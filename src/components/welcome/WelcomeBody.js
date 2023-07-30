@@ -3,6 +3,7 @@ import { useEffect, useRef } from "react";
 import "@fontsource/roboto";
 import Typed from "typed.js";
 import SkillSlider from "./SkillSlider";
+import CourseItem from "./CourseItem";
 
 function WelcomeBody() {
     const isLargeScreen = useMediaQuery((theme) => theme.breakpoints.up("md"));
@@ -61,7 +62,31 @@ function WelcomeBody() {
                         Short list of what you can learn at <span style={{ color: "rgb(236, 102, 82)" }}>StudyMap</span>
                     </Typography>
                 </Container>
-                <SkillSlider></SkillSlider>
+                <SkillSlider />
+            </div>
+            <div style={{ marginTop: isLargeScreen ? "100px" : "80px", marginBottom: "80px" }}>
+                <Container maxWidth="xl" style={{ marginBottom: "25px" }}>
+                    <div style={{ display: "flex", justifyContent: "center", marginBottom: "15px" }}>
+
+                        <Typography variant="h6" fontFamily="cubano" textAlign="center" height="40px" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                            Popular Study Maps
+                        </Typography>
+                    </div>
+                    <Grid container spacing={5} alignItems="center">
+                        <Grid item xs={3}>
+                            <CourseItem></CourseItem>
+                        </Grid>
+                        <Grid item xs={3}>
+                            <CourseItem></CourseItem>
+                        </Grid>
+                        <Grid item xs={3}>
+                            <CourseItem></CourseItem>
+                        </Grid>
+                        <Grid item xs={3}>
+                            <CourseItem></CourseItem>
+                        </Grid>
+                    </Grid>
+                </Container>
             </div>
         </div>
     )
