@@ -1,7 +1,18 @@
 import { Button, Drawer, List, ListItem } from '@mui/material';
 import CategoriesButton from './CategoriesButton';
+import { useNavigate } from 'react-router-dom';
 
 function NavigationBarDrawer({ open, handleDrawerToggle }) {
+    const navigate = useNavigate();
+
+    const handleLoginClick = () => {
+        navigate('/login');
+    };
+
+    const handleSignupClick = () => {
+        navigate("/signup")
+    }
+
     return (
         <Drawer
             variant="temporary"
@@ -15,14 +26,14 @@ function NavigationBarDrawer({ open, handleDrawerToggle }) {
             <div className='navbar-drawer'>
                 <List>
                     <ListItem>
-                        <Button sx={{
+                        <Button onClick={handleLoginClick} sx={{
                             width: "100%",
                             fontFamily: "cubano",
                             letterSpacing: "1px"
                         }} variant="outlined" >Log in</Button>
                     </ListItem>
                     <ListItem>
-                        <Button sx={{
+                        <Button onClick={handleSignupClick} sx={{
                             width: "100%",
                             fontFamily: "cubano",
                             letterSpacing: "1px",
