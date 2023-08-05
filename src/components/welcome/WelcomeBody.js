@@ -1,11 +1,13 @@
 import { Button, Container, Grid, Typography, useMediaQuery } from "@mui/material";
-import { useEffect, useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
 import "@fontsource/roboto";
 import Typed from "typed.js";
 import SkillSlider from "./SkillSlider";
 import CourseItem from "./CourseItem";
+import { AuthContext } from "../AuthProvider";
 
 function WelcomeBody() {
+    const { isAuthenticated } = useContext(AuthContext);
     const isLargeScreen = useMediaQuery((theme) => theme.breakpoints.up("md"));
 
     const typedRef = useRef(null);
@@ -37,18 +39,33 @@ function WelcomeBody() {
                         <h1 style={{ marginTop: "0px", textAlign: "center", fontFamily: "cubano" }} className="header-title">Learn to <span style={{ color: "rgb(236, 102, 82)" }} className="typed-header"></span></h1>
                         <h3 style={{ marginTop: "15px", textAlign: "center", color: "#d5ebf7", letterSpacing: "1px", fontFamily: "roboto" }}>Learn and sharpen your skill with <span style={{ fontWeight: "bold" }}>Study Map</span></h3>
                         <div style={{ display: "flex", alignItems: "baseline", justifyContent: "center", gap: "20px" }}>
-                            <Button sx={{
-                                width: "130px",
-                                fontFamily: "cubano",
-                                letterSpacing: "1px"
-                            }} variant="outlined" color="light">Log in</Button>
-                            <Button sx={{
-                                width: "130px",
-                                fontFamily: "cubano",
-                                letterSpacing: "1px",
-                                marginTop: "15px",
-                                color: "black"
-                            }} variant="contained" color="light">Sign Up</Button>
+                            {isAuthenticated ? (
+                                <Button sx={{
+                                    width: "200px",
+                                    fontFamily: "cubano",
+                                    letterSpacing: "1px",
+                                    marginTop: "15px",
+                                    color: "black"
+                                }} variant="contained" color="light">Explore StudyMaps</Button>
+                            ) : (<></>)}
+
+                            {!isAuthenticated ? (
+                                <Button sx={{
+                                    width: "130px",
+                                    fontFamily: "cubano",
+                                    letterSpacing: "1px"
+                                }} variant="outlined" color="light">Log in</Button>
+                            ) : (<></>) } 
+                            
+                            {!isAuthenticated ? (
+                                <Button sx={{
+                                    width: "130px",
+                                    fontFamily: "cubano",
+                                    letterSpacing: "1px",
+                                    marginTop: "15px",
+                                    color: "black"
+                                }} variant="contained" color="light">Sign Up</Button>
+                            ) : (<></>)}
                         </div>
                     </Grid>
                     <Grid item xs={isLargeScreen ? 6 : 12} style={{ display: "flex", justifyContent: "center" }} order={isLargeScreen ? 2 : 1}>

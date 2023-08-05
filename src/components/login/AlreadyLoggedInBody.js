@@ -26,7 +26,7 @@ function AlreadyLoggedInBody() {
                 <Typography style={{
                     textAlign: "center",
                     fontFamily: "cubano"
-                }}>You are already logged in</Typography>
+                }}>You are logged in</Typography>
                 <Alert style={{
                     background: "#388E3C",
                     color: "white",

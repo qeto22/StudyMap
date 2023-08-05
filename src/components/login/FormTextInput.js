@@ -1,6 +1,6 @@
 import { TextField } from "@mui/material";
 
-function FormTextInput({ label, style }) {
+function FormTextInput({ label, style, onChange }) {
     return (<div style={style}>
         <label className="form-label">{label}</label>
         <TextField
@@ -9,6 +9,7 @@ function FormTextInput({ label, style }) {
                 width: "100%",
                 marginTop: "7px"
             }}
+            onChange={onChange}
             sx={{
                 "& .MuiInputBase-input": {
                     color: "white",

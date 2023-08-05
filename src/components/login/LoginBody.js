@@ -1,4 +1,4 @@
-import { Alert, Button, Collapse, Snackbar, Typography } from "@mui/material";
+import { Alert, Button, Collapse, Typography } from "@mui/material";
 import FormTextInput from "./FormTextInput";
 import "./LoginBody.css";
 import { useContext, useState } from "react";
@@ -8,7 +8,7 @@ import { AuthContext } from "../AuthProvider";
 function LoginBody() {
     const { setIsAuthenticated } = useContext(AuthContext);
 
-    const [username, setUsername] = useState('');
+    const [usernameOrEmail, setUsernameOrEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const [errorMessage, setErrorMessage] = useState('')
@@ -16,17 +16,15 @@ function LoginBody() {
     const handleLogin = async () => {
         setErrorMessage('');
         try {
-            const response = await axios.post('/api/auth/login', { username, password });
+            const response = await axios.post('http://localhost:8080/api/v1/auth/authenticate', { usernameOrEmail, password });
             if (response.status === 200) {
                 localStorage.setItem('token', response.data.token);
                 setIsAuthenticated(true);
-            } if (response.status === 401) {
-                setErrorMessage('Invalid Username or Password!') // todo
-            } else {
-                setErrorMessage('Invalid Username or Password!') // todo
+            } if (response.status !== 403) {
+                setErrorMessage('Invalid username, email or password!')
             }
         } catch (error) {
-            setErrorMessage('Invalid Username or Password!') // todo
+            setErrorMessage('Invalid username, email or password!')
         }
     }
 
@@ -41,8 +39,8 @@ function LoginBody() {
                         fontSize: "14px"
                     }} variant="filled" severity="error" open>{errorMessage}</Alert>
                 </Collapse>
-                <FormTextInput label="Username or email address" />
-                <FormTextInput style={{
+                <FormTextInput  onChange={e => setUsernameOrEmail(e.target.value)} label="Username or email address" />
+                <FormTextInput onChange={e => setPassword(e.target.value)} style={{
                     marginTop: "10px"
                 }} label="Password" />
                 <Button onClick={handleLogin} sx={{
