@@ -3,6 +3,7 @@ import './App.css';
 import WelcomeContent from './welcome/WelcomeContent';
 import LoginContent from './login/LoginContent';
 import { AuthProvider } from "./AuthProvider";
+import SearchContent from "./search/SearchContent";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
           <Routes>
             <Route path="/" element={<WelcomeContent />} />
             <Route path="/login" element={<LoginContent />} />
+            <Route path="/search" element={<SearchContent />} />
           </Routes>
         </Router>
       </AuthProvider>
