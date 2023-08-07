@@ -17,6 +17,16 @@ const theme = createTheme({
         light: {
             main: "#d5ebf7"
         }
+    },
+    components: {
+        MuiAutocomplete: {
+            styleOverrides: {
+                noOptions: {
+                    fontSize: "16px",
+                    color: "white",
+                },
+            },
+        },
     }
 })
 
