@@ -1,4 +1,3 @@
-import * as React from 'react'
 import { Button, ListItemIcon, ListItemText, Menu, MenuItem } from "@mui/material";
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import CodeIcon from '@mui/icons-material/Code';
@@ -12,16 +11,27 @@ import CampaignIcon from '@mui/icons-material/Campaign';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import CameraEnhanceIcon from '@mui/icons-material/CameraEnhance';
 import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { escape } from "lodash";
 
 function CategoriesButton() {
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    const navigate = useNavigate();
+
+    const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
+    
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
+
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    const onCategorySelected = (category) => {
+        navigate("/search?category=" + encodeURIComponent(category));
+    }
 
     return (<div>
         <Button id="categories-btn"
@@ -40,67 +50,67 @@ function CategoriesButton() {
                 'aria-labelledby': 'categories-btn',
             }}
         >
-            <MenuItem onClick={handleClose}>
+            <MenuItem onClick={() => onCategorySelected('Development')}>
                 <ListItemIcon>
                     <CodeIcon fontSize="small" />
                 </ListItemIcon>
                 <ListItemText>Development</ListItemText>
             </MenuItem>
-            <MenuItem onClick={handleClose}>
+            <MenuItem onClick={() => onCategorySelected('Business')}>
                 <ListItemIcon>
                     <WorkIcon fontSize="small" />
                 </ListItemIcon>
                 <ListItemText>Business</ListItemText>
             </MenuItem>
-            <MenuItem onClick={handleClose}>
+            <MenuItem onClick={() => onCategorySelected('Finance & Accounting')}>
                 <ListItemIcon>
                     <AccountBalanceIcon fontSize="small" />
                 </ListItemIcon>
                 <ListItemText>Finance & Accounting</ListItemText>
             </MenuItem>
-            <MenuItem onClick={handleClose}>
+            <MenuItem onClick={() => onCategorySelected('IT & Software')}>
                 <ListItemIcon>
                     <CloudIcon fontSize="small" />
                 </ListItemIcon>
                 <ListItemText>IT & Software</ListItemText>
             </MenuItem>
-            <MenuItem onClick={handleClose}>
+            <MenuItem onClick={() => onCategorySelected('Office Productivity')}>
                 <ListItemIcon>
                     <HomeWorkIcon fontSize="small" />
                 </ListItemIcon>
                 <ListItemText>Office Productivity</ListItemText>
             </MenuItem>
-            <MenuItem onClick={handleClose}>
+            <MenuItem onClick={() => onCategorySelected('Personal Development')}>
                 <ListItemIcon>
                     <SettingsAccessibilityIcon fontSize="small" />
                 </ListItemIcon>
                 <ListItemText>Personal Development</ListItemText>
             </MenuItem>
-            <MenuItem onClick={handleClose}>
+            <MenuItem onClick={() => onCategorySelected('Design')}>
                 <ListItemIcon>
                     <BrushIcon fontSize="small" />
                 </ListItemIcon>
                 <ListItemText>Design</ListItemText>
             </MenuItem>
-            <MenuItem onClick={handleClose}>
+            <MenuItem onClick={() => onCategorySelected('Marketing')}>
                 <ListItemIcon>
                     <CampaignIcon fontSize="small" />
                 </ListItemIcon>
                 <ListItemText>Marketing</ListItemText>
             </MenuItem>
-            <MenuItem onClick={handleClose}>
+            <MenuItem onClick={() => onCategorySelected('Lifestyle')}>
                 <ListItemIcon>
                     <FitnessCenterIcon fontSize="small" />
                 </ListItemIcon>
                 <ListItemText>Lifestyle</ListItemText>
             </MenuItem>
-            <MenuItem onClick={handleClose}>
+            <MenuItem onClick={() => onCategorySelected('Photography & Video')}>
                 <ListItemIcon>
                     <CameraEnhanceIcon fontSize="small" />
                 </ListItemIcon>
                 <ListItemText>Photography & Video</ListItemText>
             </MenuItem>
-            <MenuItem onClick={handleClose}>
+            <MenuItem onClick={() => onCategorySelected('Music')}>
                 <ListItemIcon>
                     <LibraryMusicIcon fontSize="small" />
                 </ListItemIcon>
