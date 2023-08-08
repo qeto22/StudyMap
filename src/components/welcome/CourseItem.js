@@ -1,5 +1,6 @@
 import { Button, Card, CardActions, CardContent, CardMedia, Rating, Typography } from "@mui/material";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import "./CourseItem.css"
 
 function CourseItem() {
@@ -13,9 +14,16 @@ function CourseItem() {
                 image="https://cdn.dribbble.com/users/1189961/screenshots/3546540/14._google_-_pixel_art_logo.jpg"
             />
             <CardContent style={{ background: "#121212", color: "white" }}>
-                <Typography className="course-title">Path to Google</Typography>
+                <div style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between"
+                }}>
+                    <Typography className="course-title">Path to Google</Typography>
+                    <Typography className="">$100.00</Typography>
+                </div>
                 <div className="course-author-wrapper">
-                    <img alt="mee" src="https://scontent.ftbs4-2.fna.fbcdn.net/v/t39.30808-6/334927478_557547446353999_719690127249826865_n.jpg?_nc_cat=101&cb=99be929b-59f725be&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=S-QTKw7kRGcAX_3Vuj3&_nc_oc=AQnCaFYxT4FFjJ7xHbN8eH_c5FVYdSs6VDtQytI9lqck19f4fDhNnJJmf4P_aozFPDE&_nc_ht=scontent.ftbs4-2.fna&oh=00_AfBuSvgl5CGfrsUAyZxMKnKxsnR7_4nS6zJ1zYurQoOHgA&oe=64CB92F8" />
+                    <img alt="mee" src="https://media.licdn.com/dms/image/C4D03AQEV9v3FiWwyuw/profile-displayphoto-shrink_800_800/0/1635665530246?e=2147483647&v=beta&t=3H--_iRB_mZuKpjExzlFiS_PKRwBnfnUMAJhDpoMa5c" />
                     <Typography>Ketevan Bachalashvili</Typography>
                 </div>
                 <div className="course-rating-wrapper">
@@ -32,7 +40,7 @@ function CourseItem() {
                 </div>
             </CardContent>
             <CardActions style={{ background: "#121212", color: "white", display: "flex", justifyContent: "space-between"}}>
-                <Typography style={{marginLeft: "7px"}}>$100.00</Typography>
+                <Button size="small"><AccountTreeIcon></AccountTreeIcon>&nbsp;Visualize</Button>
                 <Button size="small"><AddShoppingCartIcon></AddShoppingCartIcon>&nbsp;Add to Cart</Button>
             </CardActions>
         </Card>

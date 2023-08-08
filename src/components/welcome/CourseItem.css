@@ -2,6 +2,10 @@
     font-size: 18px !important;
 }
 
+.course-price {
+    color: rgba(255, 255, 255, 0.8);
+}
+
 .course-author-wrapper {
     display: flex;
     flex-direction: row;
@@ -35,8 +39,4 @@
     font-size: 14px !important;
     text-align: center;
     color: #c7c9ca; 
-}
-
-.course-price {
-    margin-top: 15px !important;
 }

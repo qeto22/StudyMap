@@ -1,9 +1,13 @@
-import { Box, Container, Grid, MenuItem, Select } from "@mui/material";
+import { Box, Container, Grid, Hidden, MenuItem, Select, useMediaQuery } from "@mui/material";
 import { useState } from "react";
 import SearchFilters from "./SearchFilters";
+import SearchResults from "./SearchResults";
 
 function SearchBody() {
     const [sortBy, setSortBy] = useState('most-popular');
+    
+    
+    const isLargeScreen = useMediaQuery((theme) => theme.breakpoints.up("lg"));
 
     return (
         <Container maxWidth="xl" style={{ marginTop: "30px", marginBottom: "30px" }}>
@@ -16,13 +20,17 @@ function SearchBody() {
                     <MenuItem value={'oldest'}>Oldest</MenuItem>
                 </Select>
             </Box>
-            <Grid container>
-                <Grid item md={2.5}>
-                    <SearchFilters />
-                </Grid>
-                <Grid item md={0.5}></Grid>
-                <Grid item md={9}>
-                    Test
+            <Grid container style={{ marginTop: "20px" }}>
+                <Hidden lgDown>
+                    <Grid item xs={2.5}>
+                        <SearchFilters />
+                    </Grid>
+                </Hidden>
+
+                <Grid item xs={0.5}></Grid>
+
+                <Grid item xs={!isLargeScreen ? 12 : 9}>
+                    <SearchResults />
                 </Grid>
             </Grid>
         </Container>
