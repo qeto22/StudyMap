@@ -15,7 +15,7 @@ function App() {
             <Route path="/" element={<WelcomeContent />} />
             <Route path="/login" element={<LoginContent />} />
             <Route path="/search" element={<SearchContent />} />
-            <Route path="/author" element={<AuthorContent />} />
+            <Route path="/author/:author" element={<AuthorContent />} />
           </Routes>
         </Router>
       </AuthProvider>
