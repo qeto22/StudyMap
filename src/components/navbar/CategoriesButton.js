@@ -13,7 +13,6 @@ import CameraEnhanceIcon from '@mui/icons-material/CameraEnhance';
 import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { escape } from "lodash";
 
 function CategoriesButton() {
     const navigate = useNavigate();

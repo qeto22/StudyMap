@@ -112,6 +112,13 @@ const theme = createTheme({
                 },
             },
         },
+        MuiRating: {
+            styleOverrides: {
+                iconEmpty: {
+                    color: "rgba(255, 255, 255, 0.5)",
+                },
+            },
+        },
     }
 });
 
