@@ -40,7 +40,7 @@ function LoginBody() {
                     }} variant="filled" severity="error" open>{errorMessage}</Alert>
                 </Collapse>
                 <FormTextInput  onChange={e => setUsernameOrEmail(e.target.value)} label="Username or email address" />
-                <FormTextInput onChange={e => setPassword(e.target.value)} style={{
+                <FormTextInput onChange={e => setPassword(e.target.value)} type="password" style={{
                     marginTop: "10px"
                 }} label="Password" />
                 <Button onClick={handleLogin} sx={{

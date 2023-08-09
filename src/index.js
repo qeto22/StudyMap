@@ -7,6 +7,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const theme = createTheme({
     palette: {
+        mode: 'dark',
         primary: {
             main: '#fff'
         },
@@ -41,11 +42,11 @@ const theme = createTheme({
         MuiAccordion: {
             styleOverrides: {
                 root: {
-                    backgroundColor: 'transparent',
+                    backgroundColor: '#12181B',
                     color: 'white'
                 },
                 expanded: {
-                    backgroundColor: 'transparent',
+                    backgroundColor: '#12181B',
                     color: 'white'
                 },
                 rounded: {
@@ -56,11 +57,11 @@ const theme = createTheme({
         MuiAccordionSummary: {
             styleOverrides: {
                 root: {
-                    backgroundColor: 'transparent',
+                    backgroundColor: '#12181B',
                     color: 'white'
                 },
                 expanded: {
-                    backgroundColor: 'transparent',
+                    backgroundColor: '#12181B',
                     color: 'white'
                 },
             },
@@ -68,7 +69,7 @@ const theme = createTheme({
         MuiAccordionDetails: {
             styleOverrides: {
                 root: {
-                    backgroundColor: 'transparent',
+                    backgroundColor: '#12181B',
                     color: 'white'
                 },
             },
@@ -116,6 +117,28 @@ const theme = createTheme({
             styleOverrides: {
                 iconEmpty: {
                     color: "rgba(255, 255, 255, 0.5)",
+                },
+            },
+        },
+        MuiDialogTitle: {
+            styleOverrides: {
+                root: {
+                    backgroundColor: '#12181B',
+                },
+            },
+        },
+        MuiDialogContent: {
+            styleOverrides: {
+                root: {
+                    backgroundColor: '#12181B',
+                    color: 'white',
+                },
+            },
+        },
+        MuiDialogActions: {
+            styleOverrides: {
+                root: {
+                    backgroundColor: '#12181B',
                 },
             },
         },

@@ -1,10 +1,13 @@
 import { TextField } from "@mui/material";
 
-function FormTextInput({ label, style, onChange }) {
+function FormTextInput({ label, multiline, type, style, defaultValue, onChange }) {
     return (<div style={style}>
         <label className="form-label">{label}</label>
         <TextField
             size="small"
+            multiline={multiline == null ? false : multiline}
+            type={type == null ? "text" : type}
+            defaultValue={defaultValue}
             style={{
                 width: "100%",
                 marginTop: "7px"

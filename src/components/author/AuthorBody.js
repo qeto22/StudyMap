@@ -1,11 +1,26 @@
-import { Button, Container, Grid, Typography } from "@mui/material";
+import { Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, Grid, Typography } from "@mui/material";
 import "./AuthorBody.css";
 import CountUp from 'react-countup';
 import AnimatedRating from "./AnimatedRating";
 import CourseItem from "../welcome/CourseItem"
 import HandshakeIcon from '@mui/icons-material/Handshake';
+import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
+import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
+import { useState } from "react";
+import FormTextInput from "../login/FormTextInput";
 
 function AuthorBody() {
+    const [isMentorshipRequestDialogOpen, setMentorshipRequestDialogOpen] = useState(false);
+    const [sessionsCount, setSessionsCount] = useState(1);
+
+    const onHireMeClicked = () => {
+        setMentorshipRequestDialogOpen(true);
+    };
+
+    const handleClose = () => {
+        setMentorshipRequestDialogOpen(false);
+    };
+
     return (
         <Container maxWidth="lg" style={{
             marginTop: "30px",
@@ -15,9 +30,13 @@ function AuthorBody() {
                 <img className="author-image" alt="me" src="https://media.licdn.com/dms/image/C4D03AQEV9v3FiWwyuw/profile-displayphoto-shrink_800_800/0/1635665530246?e=2147483647&v=beta&t=3H--_iRB_mZuKpjExzlFiS_PKRwBnfnUMAJhDpoMa5c" />
                 <Typography variant="h5" className="author-name">Ketevan Bachalashvili</Typography>
                 <Typography variant="h6" className="author-profession">Software Engineer</Typography>
-                <Button startIcon={<HandshakeIcon />} variant="contained" color="material" style={{
-                    margin: "15px auto 25px auto"
-                }}>Hire me as a Mentor</Button>
+                <Button startIcon={<HandshakeIcon />}
+                    variant="contained"
+                    color="material"
+                    onClick={onHireMeClicked}
+                    style={{
+                        margin: "15px auto 25px auto"
+                    }}>Hire me as a Mentor</Button>
             </div>
             <div className="author-course-stats">
                 <Grid container>
@@ -86,6 +105,53 @@ function AuthorBody() {
                     </Grid>
                 </Grid>
             </div>
+
+            <Dialog
+                open={isMentorshipRequestDialogOpen}
+                onClose={handleClose}
+                aria-labelledby="hire-mentor-dialog-title"
+                aria-describedby="hire-mentor-dialog-description"
+            >
+                <DialogTitle id="hire-mentor-dialog-title">Hire Ketevan Bachalashvili</DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="hire-mentor-dialog-description">
+                        <div className="mentorship-session-details">
+                            <div className="mentorship-detail">
+                                <MonetizationOnIcon style={{
+                                    color: "#60d61a"
+                                }} /> 25 per Session
+                            </div>
+                            <div className="mentorship-detail">
+                                <SupervisorAccountIcon style={{
+                                    color: "#2f81f7"
+                                }} /> 2 Sessions Minimum
+                            </div>
+                        </div>
+                        <FormTextInput style={{
+                            marginTop: "15px"
+                        }} label="Session" type="number" defaultValue={"1"} onChange={(e) => setSessionsCount(Number(e.target.value))} />
+                        <FormTextInput style={{
+                            marginTop: "8px",
+                        }} label="Optional message to Ketevan" defaultValue={"Hello Ketevan,"} multiline={true} />
+                        <Divider light style={{
+                            marginTop: "15px",
+                            marginBottom: "8px",
+                            color: "white"
+                        }} />
+                        <Typography style={{
+                            color: "white"
+                        }}><span style={{ color: "#EC6652", fontWeight: "bold" }}>Total cost: </span> ${sessionsCount * 25}</Typography>
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose} color="primary">
+                        Request
+                    </Button>
+                    <Button onClick={handleClose} color="primary">
+                        Close
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </Container>
     );
 }
