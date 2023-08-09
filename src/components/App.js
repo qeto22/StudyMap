@@ -4,6 +4,7 @@ import WelcomeContent from './welcome/WelcomeContent';
 import LoginContent from './login/LoginContent';
 import { AuthProvider } from "./AuthProvider";
 import SearchContent from "./search/SearchContent";
+import AuthorContent from "./author/AuthorContent";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
             <Route path="/" element={<WelcomeContent />} />
             <Route path="/login" element={<LoginContent />} />
             <Route path="/search" element={<SearchContent />} />
+            <Route path="/author" element={<AuthorContent />} />
           </Routes>
         </Router>
       </AuthProvider>

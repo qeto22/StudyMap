@@ -15,6 +15,12 @@
     gap: 5px
 }
 
+
+.course-author:hover {
+    color: #EC6652 !important;
+    cursor: pointer;
+}
+
 .course-author-wrapper img {
     width: 24px;
     height: 24px;
