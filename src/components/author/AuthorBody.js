@@ -6,16 +6,28 @@ import CourseItem from "../welcome/CourseItem"
 import HandshakeIcon from '@mui/icons-material/Handshake';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
-import { useState } from "react";
+import { useContext, useState } from "react";
 import FormTextInput from "../login/FormTextInput";
+import { AuthContext } from "../AuthProvider";
+import { useNavigate } from "react-router-dom";
 
 function AuthorBody() {
+    const { isAuthenticated } = useContext(AuthContext);
+    const navigate = useNavigate();
+
     const [isMentorshipRequestDialogOpen, setMentorshipRequestDialogOpen] = useState(false);
     const [sessionsCount, setSessionsCount] = useState(1);
 
     const onHireMeClicked = () => {
         setMentorshipRequestDialogOpen(true);
     };
+
+    const onRequestMentorship = () => {
+        if (!isAuthenticated) {
+            navigate('/login');
+            return;
+        }
+    }
 
     const handleClose = () => {
         setMentorshipRequestDialogOpen(false);
@@ -144,7 +156,7 @@ function AuthorBody() {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose} color="primary">
+                    <Button onClick={onRequestMentorship} color="primary">
                         Request
                     </Button>
                     <Button onClick={handleClose} color="primary">

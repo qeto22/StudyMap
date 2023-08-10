@@ -5,8 +5,11 @@ import Typed from "typed.js";
 import SkillSlider from "./SkillSlider";
 import CourseItem from "./CourseItem";
 import { AuthContext } from "../AuthProvider";
+import { useNavigate } from "react-router-dom";
 
 function WelcomeBody() {
+    const navigate = useNavigate();
+
     const { isAuthenticated } = useContext(AuthContext);
     const isLargeScreen = useMediaQuery((theme) => theme.breakpoints.up("md"));
 
@@ -30,6 +33,9 @@ function WelcomeBody() {
         };
     });
 
+    const onExploreClicked = () => {
+        navigate('/search')
+    }
 
     return (
         <div>
@@ -46,7 +52,7 @@ function WelcomeBody() {
                                     letterSpacing: "1px",
                                     marginTop: "15px",
                                     color: "black"
-                                }} variant="contained" color="light">Explore StudyMaps</Button>
+                                }} onClick={onExploreClicked} variant="contained" color="light">Explore StudyMaps</Button>
                             ) : (<></>)}
 
                             {!isAuthenticated ? (
