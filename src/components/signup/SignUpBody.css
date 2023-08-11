@@ -1,0 +1,85 @@
+.signup-form-wrapper {
+    width: 100%;
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 35px;
+    margin-bottom: 35px;
+}
+
+.logo {
+    width: 64px;
+    height: 64px;
+}
+
+.signup-title {
+    margin-top: 10px !important;
+    font-family: "cubano" !important;
+    font-size: 20px !important;
+}
+
+.signup-form-content {
+    width: 300px !important;
+    background-color: #161B22;
+    margin-top: 25px;
+    padding: 15px;
+    border: 1px solid #21262d;
+    border-radius: 6px;
+}
+
+.form-label {
+    font-size: 14px;
+    margin-bottom: 5px !important;
+    color: #fff;
+}
+
+.form-input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #444;
+    border-radius: 4px;
+    background-color: #20232a;
+    color: #fff;
+    margin-top: 5px;
+    font-size: 14px;
+}
+
+.create-account-wrapper {
+    font-size: 14px !important;
+    color: #fff;
+    text-align: center;
+    margin-top: 15px;
+}
+
+.create-account-link {
+    color: #4CAF50;
+    text-decoration: none;
+}
+
+.mentor-button {
+    color: rgb(236, 102, 82) !important;
+    background-color: aliceblue !important;
+    margin-top: 25px !important;
+    border-color: rgb(236, 102, 82) !important;
+    margin-left: 10px !important;
+    border-radius: 5px !important;
+}
+
+.mentee-button {
+    background-color: aliceblue !important;
+    color: rgb(236, 102, 82) !important;
+    margin-top: 25px !important;
+    border-color: rgb(236, 102, 82) !important;
+    margin-right: 10px !important;
+    border-radius: 5px !important;
+}
+
+.mentor-button.selected {
+    background-color: rgb(236, 102, 82) !important;
+    color: aliceblue !important;
+}
+
+.mentee-button.selected {
+    background-color: rgb(236, 102, 82) !important;
+    color: aliceblue !important;
+}
