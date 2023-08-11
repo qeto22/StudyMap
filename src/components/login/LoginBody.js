@@ -20,7 +20,7 @@ function LoginBody() {
             if (response.status === 200) {
                 localStorage.setItem('token', response.data.token);
                 setIsAuthenticated(true);
-            } if (response.status !== 403) {
+            } else if (response.status !== 403) {
                 setErrorMessage('Invalid username, email or password!')
             }
         } catch (error) {
