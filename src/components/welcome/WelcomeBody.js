@@ -15,6 +15,14 @@ function WelcomeBody() {
 
     const typedRef = useRef(null);
 
+    const handleLoginClick = () => {
+        navigate('/login');
+    };
+
+    const handleSignupClick = () => {
+        navigate("/signup")
+    }
+
     useEffect(() => {
         const options = {
             strings: ['Code', 'Drive', 'Hike'], // An array of strings to be typed
@@ -56,7 +64,7 @@ function WelcomeBody() {
                             ) : (<></>)}
 
                             {!isAuthenticated ? (
-                                <Button sx={{
+                                <Button onClick={handleLoginClick} sx={{
                                     width: "130px",
                                     fontFamily: "cubano",
                                     letterSpacing: "1px"
@@ -64,7 +72,7 @@ function WelcomeBody() {
                             ) : (<></>) } 
                             
                             {!isAuthenticated ? (
-                                <Button sx={{
+                                <Button onClick={handleSignupClick} sx={{
                                     width: "130px",
                                     fontFamily: "cubano",
                                     letterSpacing: "1px",
