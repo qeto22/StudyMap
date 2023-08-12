@@ -7,6 +7,7 @@ import { AuthProvider } from "./AuthProvider";
 import SearchContent from "./search/SearchContent";
 import AuthorContent from "./author/AuthorContent";
 import CourseContent from "./course/CourseContent";
+import StudyMapContent from "./studymap/StudyMapContent";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
             <Route path="/search" element={<SearchContent />} />
             <Route path="/author/:author" element={<AuthorContent />} />
             <Route path="/course/:courseId" element={<CourseContent />} />
+            <Route path="/map/:mapId" element={<StudyMapContent/>} />
           </Routes>
         </Router>
       </AuthProvider>
