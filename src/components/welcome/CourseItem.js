@@ -1,6 +1,6 @@
 import { Button, Card, CardActions, CardContent, CardMedia, Rating, Typography } from "@mui/material";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import AccountTreeIcon from '@mui/icons-material/AccountTree';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import "./CourseItem.css"
 import { useNavigate } from "react-router-dom";
 
@@ -56,7 +56,7 @@ function CourseItem() {
                 </div>
             </CardContent>
             <CardActions style={{ background: "#121212", color: "white", display: "flex", justifyContent: "space-between" }}>
-                <Button size="small"><AccountTreeIcon></AccountTreeIcon>&nbsp;Visualize</Button>
+                <Button size="small"><VisibilityIcon></VisibilityIcon>&nbsp;OverView</Button>
                 <Button size="small"><AddShoppingCartIcon></AddShoppingCartIcon>&nbsp;Add to Cart</Button>
             </CardActions>
         </Card>

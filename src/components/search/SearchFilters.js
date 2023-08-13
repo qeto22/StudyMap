@@ -5,6 +5,7 @@ import { useState } from "react";
 import AmountRange from "./AmountRange";
 import StartRatingsRadioButtonGroup from "./StartRatingsRadioButtonGroup";
 import CategoriesList from "./CategoriesList";
+import ContentTypeCombo from "./ContentTypeCombo";
 
 function SearchFilters() {
   const [isCategoriesFilterOpen, setCategoriesFilterOpen] = useState(true);
@@ -13,6 +14,7 @@ function SearchFilters() {
 
   return (
     <div className="search-filters-wrapper">
+      <ContentTypeCombo></ContentTypeCombo>
       <Accordion expanded={isCategoriesFilterOpen} onChange={() => setCategoriesFilterOpen(!isCategoriesFilterOpen)}>
         <AccordionSummary
           expandIcon={<ExpandMoreOutlined color="primary" />}
