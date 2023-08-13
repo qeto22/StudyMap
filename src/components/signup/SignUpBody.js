@@ -6,8 +6,13 @@ import * as React from 'react';
 import axios from "axios";
 import FormTextInput from "../login/FormTextInput";
 import "./SignUpBody.css";
+import { AuthContext } from "../AuthProvider";
 
 function SignUpBody() {
+    const { setIsAuthenticated } = React.useContext(AuthContext);
+
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -18,17 +23,26 @@ function SignUpBody() {
     const handleSignup = async () => {
         setErrorMessage('');
         try {
+            if (password !== confirmPassword) {
+                setErrorMessage('Passwords are not matching!');
+                return;
+            }
             const response = await axios.post('http://localhost:8080/api/v1/auth/signup', {
+                firstName,
+                lastName,
+                userType,
                 username,
                 email,
                 password,
-                confirmPassword,
             });
-            if (response.status === 201) {
-                // Handle successful signup, such as showing a success message or redirecting
+            if (response.status === 200) {
+                localStorage.setItem('token', response.data.token);
+                setIsAuthenticated(true);
+            } else if (response.status !== 403) {
+                setErrorMessage('Invalid username, email or password!')
             }
         } catch (error) {
-            setErrorMessage('Error signing up. Please check your information.');
+            setErrorMessage('Invalid username, email or password!')
         }
     }
 
@@ -48,14 +62,14 @@ function SignUpBody() {
                 aria-label="Platform"
             >
                 <ToggleButton
-                    value="mentee"
-                    className={`mentee-button ${userType === "mentee" ? "selected" : ""}`}
+                    value="MENTEE"
+                    className={`mentee-button ${userType === "MENTEE" ? "selected" : ""}`}
                 >
                     Mentee
                 </ToggleButton>
                 <ToggleButton
-                    value="mentor"
-                    className={`mentor-button ${userType === "mentor" ? "selected" : ""}`}
+                    value="MENTOR"
+                    className={`mentor-button ${userType === "MENTOR" ? "selected" : ""}`}
                 >
                     Mentor
                 </ToggleButton>
@@ -67,7 +81,13 @@ function SignUpBody() {
                         fontSize: "14px"
                     }} variant="filled" severity="error" open>{errorMessage}</Alert>
                 </Collapse>
-                <FormTextInput onChange={e => setUsername(e.target.value)} label="Username" />
+                <FormTextInput onChange={e => setFirstName(e.target.value)} label="First Name" />
+                <FormTextInput onChange={e => setLastName(e.target.value)} label="Last Name" style={{
+                    marginTop: "10px"
+                }} />
+                <FormTextInput onChange={e => setUsername(e.target.value)} label="Username" style={{
+                    marginTop: "10px"
+                }} />
                 <FormTextInput onChange={e => setEmail(e.target.value)} style={{
                     marginTop: "10px"
                 }} label="Email" />
