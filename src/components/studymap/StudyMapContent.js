@@ -1,11 +1,12 @@
 import Footer from "../footer/Footer";
 import NavigationBar from "../navbar/NavigationBar";
+import StudyMapBody from "./StudyMapBody";
 
 function StudyMapContent() {
     return (
         <div>
             <NavigationBar />
-            <h1>StudyMap will go here!</h1>
+            <StudyMapBody></StudyMapBody>
             <Footer />
         </div>
     )
