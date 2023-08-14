@@ -1,8 +1,19 @@
 import { Button, Typography } from "@mui/material";
 import Person2Icon from '@mui/icons-material/Person2';
 import HandshakeIcon from '@mui/icons-material/Handshake';
+import { useNavigate } from "react-router-dom";
 
 function Author() {
+    const navigate = useNavigate();
+
+    const onViewProfileClicked = () => {
+        navigate('/author/ketevan-bachalashvili');
+    }
+
+    const onHireMeClicked = () => {
+        navigate('/author/ketevan-bachalashvili?hire-me');
+    }
+
     return (<div style={{ margin: '50px 0px' }}>
         <Typography variant="h5" style={{ fontFamily: "cubano" }}>Author</Typography>
         <div style={{ margin: '20px 0px', display: 'flex', gap: '50px' }}>
@@ -11,12 +22,12 @@ function Author() {
             <div>
                 <Typography variant="h5">Keti Bachalashvili</Typography>
                 <Typography style={{ marginTop: '8px' }}>I'm an experienced software engineer, currently working at AzRy as a Java developer. I've been in this industry for over 2 years and I've gained much experience</Typography>
-                <Button startIcon={<HandshakeIcon />} sx={{
+                <Button onClick={onHireMeClicked} startIcon={<HandshakeIcon />} sx={{
                     marginTop: '20px',
                     fontFamily: "cubano",
                     letterSpacing: "1px",
                 }} variant="contained" color="material">Hire me</Button>
-                <Button startIcon={<Person2Icon />}
+                <Button onClick={onViewProfileClicked} startIcon={<Person2Icon />}
                     sx={{
                         marginTop: '20px',
                         marginLeft: '8px',

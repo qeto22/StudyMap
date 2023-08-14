@@ -9,13 +9,17 @@ import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import { useContext, useState } from "react";
 import FormTextInput from "../login/FormTextInput";
 import { AuthContext } from "../AuthProvider";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function AuthorBody() {
     const { isAuthenticated } = useContext(AuthContext);
     const navigate = useNavigate();
 
-    const [isMentorshipRequestDialogOpen, setMentorshipRequestDialogOpen] = useState(false);
+    const location = useLocation();
+    const params = new URLSearchParams(location.search);
+    const hireMePresent = params.get('hire-me');
+
+    const [isMentorshipRequestDialogOpen, setMentorshipRequestDialogOpen] = useState(hireMePresent !== null);
     const [sessionsCount, setSessionsCount] = useState(1);
 
     const onHireMeClicked = () => {
