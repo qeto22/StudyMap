@@ -1,4 +1,4 @@
-import { Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, Grid, Typography } from "@mui/material";
+import { Button, Card, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, Grid, Typography } from "@mui/material";
 import "./AuthorBody.css";
 import CountUp from 'react-countup';
 import AnimatedRating from "./AnimatedRating";
@@ -9,13 +9,17 @@ import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import { useContext, useState } from "react";
 import FormTextInput from "../login/FormTextInput";
 import { AuthContext } from "../AuthProvider";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function AuthorBody() {
     const { isAuthenticated } = useContext(AuthContext);
     const navigate = useNavigate();
 
-    const [isMentorshipRequestDialogOpen, setMentorshipRequestDialogOpen] = useState(false);
+    const location = useLocation();
+    const params = new URLSearchParams(location.search);
+    const hireMePresent = params.get('hire-me');
+
+    const [isMentorshipRequestDialogOpen, setMentorshipRequestDialogOpen] = useState(hireMePresent !== null);
     const [sessionsCount, setSessionsCount] = useState(1);
 
     const onHireMeClicked = () => {
@@ -42,6 +46,10 @@ function AuthorBody() {
                 <img className="author-image" alt="me" src="https://media.licdn.com/dms/image/C4D03AQEV9v3FiWwyuw/profile-displayphoto-shrink_800_800/0/1635665530246?e=2147483647&v=beta&t=3H--_iRB_mZuKpjExzlFiS_PKRwBnfnUMAJhDpoMa5c" />
                 <Typography variant="h5" className="author-name">Ketevan Bachalashvili</Typography>
                 <Typography variant="h6" className="author-profession">Software Engineer</Typography>
+                <Card elevation={5} style={{width: "50%", background: "transparent", padding: "15px", margin: "10px auto", border: "1px solid rgba(255, 255, 255, 0.5)"}}>
+
+                    <Typography variant="h8" >Hello 👋 <br/><br/> I'm an experienced software engineer, currently working at AzRy as a Java developer. I've been in this industry for over 2 years and I've gained much experience</Typography>
+                </Card>
                 <Button startIcon={<HandshakeIcon />}
                     variant="contained"
                     color="material"

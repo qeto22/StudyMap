@@ -71,8 +71,24 @@ function StudyMapVisualisation() {
         setCyInstance(cy);
 
         cy.on('click', 'node', event => {
-            setAnchorEl(event.target);
-            console.log(event.target.renderedPosition());
+            const cyDiv = document.getElementById('cy');
+            const cytoscapePosition = cyDiv.getBoundingClientRect();
+            console.log(cytoscapePosition);
+
+
+            const node = event.target;
+            const renderedPosition = node.renderedPosition();
+            const renderedWidth = node.renderedWidth();
+            console.log(renderedPosition)
+
+            const newPosX = cytoscapePosition.x + renderedPosition.x + 10;
+            const newPosY = cytoscapePosition.y + renderedPosition.y - 15;
+
+            setAnchorEl({
+                x: newPosX,
+                y: newPosY,
+                width: renderedWidth
+            });
         });
 
         return () => {
@@ -127,30 +143,12 @@ function StudyMapVisualisation() {
         {
             anchorEl ? (<Popover
                 open={Boolean(anchorEl)}
-                anchorReference="anchorPosition" // Set the reference type to 'anchorPosition'
-                anchorPosition={{ top: anchorEl.y, left: anchorEl.x }} // Use the x and y values
+                anchorPosition={{ top: anchorEl.y, left: anchorEl.x + (anchorEl.width / 2) }}
+                anchorReference="anchorPosition"
                 onClose={closePopup}
-                anchorOrigin={{
-                    vertical: 'center',
-                    horizontal: 'right',
-                }}
-                transformOrigin={{
-                    vertical: 'center',
-                    horizontal: 'right',
-                }}
-                style={{
-                    position: 'fixed',
-                    left: (anchorEl.renderedPosition().x + 60).toString() + "px",
-                    top: anchorEl.renderedPosition().y + 150,
-                    backgroundColor: "#121212",
-                    color: 'white',
-                    width: '300px',
-                    height: '150px',
-                    border: '1px solid white',
-                    borderRadius: '6px'
-                }}>
-                <Paper style={{ padding: '10px' }}>
-                    qeto magari
+                >
+                <Paper style={{ padding: '10px', fontSize: "15px", maxWidth: "225px" }}>
+                    Hello, here goes the text, if not link, text will go here!
                 </Paper>
             </Popover>) : (<> </>)
         }
