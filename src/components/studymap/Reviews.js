@@ -5,7 +5,7 @@ import { Typography } from "@mui/material";
 function Reviews() {
     return (<div style={{
     }}>
-        <Typography variant="h5" style={{ fontFamily: "cubano" }}>Reviews</Typography>
+        <Typography variant="h6" style={{ fontWeight: "bold" }}>Reviews</Typography>
         <ReviewInput/>
         <Review
             reviewText="This roadmap is so cool. It helped me a lot. This is super duper. JUST WOW"

@@ -1,10 +1,10 @@
-import { Grid, Rating, Typography } from "@mui/material";
+import { Divider, Grid, Rating, Typography } from "@mui/material";
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
 
 function Review(props) {
     return (
-        <div style={{ backgroundColor: 'primary',  padding: '15px', borderBottom: '0.1px solid rgb(244 136 120)', marginBottom: '10px' }}>
+        <div style={{ backgroundColor: 'primary',  padding: '15px', marginBottom: '10px' }}>
             <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center' }}>
                 <img
                     alt="kitketo"
@@ -40,7 +40,7 @@ function Review(props) {
                     <Typography variant="body2">{4}</Typography>
                 </div>
             </div>
-
+            <Divider style={{marginTop: "20px"}}></Divider>
         </div>
     );
 }
