@@ -1,11 +1,12 @@
 import Footer from "../footer/Footer";
 import NavigationBar from "../navbar/NavigationBar";
+import CourseBody from "./CourseBody";
 
 function CourseContent() {
     return (
         <div>
             <NavigationBar />
-            <h1>Course Content will go here!</h1>
+            <CourseBody />
             <Footer />
         </div>
     )

@@ -48,7 +48,7 @@ function AuthorBody() {
                 <Typography variant="h6" className="author-profession">Software Engineer</Typography>
                 <Card elevation={5} style={{width: "50%", background: "transparent", padding: "15px", margin: "10px auto", border: "1px solid rgba(255, 255, 255, 0.5)"}}>
 
-                    <Typography variant="h8" >Hello 👋 <br/><br/> I'm an experienced software engineer, currently working at AzRy as a Java developer. I've been in this industry for over 2 years and I've gained much experience</Typography>
+                    <Typography variant="h8" >Hello 👋<br/><br/> I'm an experienced software engineer, currently working at AzRy as a Java developer. I've been in this industry for over 2 years and I've gained much experience</Typography>
                 </Card>
                 <Button startIcon={<HandshakeIcon />}
                     variant="contained"

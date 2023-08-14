@@ -56,7 +56,7 @@ function CourseItem() {
                 </div>
             </CardContent>
             <CardActions style={{ background: "#121212", color: "white", display: "flex", justifyContent: "space-between" }}>
-                <Button size="small"><VisibilityIcon></VisibilityIcon>&nbsp;OverView</Button>
+                <Button size="small" onClick={() => {onCourseClicked()}}><VisibilityIcon></VisibilityIcon>&nbsp;OverView</Button>
                 <Button size="small"><AddShoppingCartIcon></AddShoppingCartIcon>&nbsp;Add to Cart</Button>
             </CardActions>
         </Card>

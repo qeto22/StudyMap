@@ -15,7 +15,7 @@ function Author() {
     }
 
     return (<div style={{ margin: '50px 0px' }}>
-        <Typography variant="h5" style={{ fontFamily: "cubano" }}>Author</Typography>
+        <Typography variant="h6" style={{ fontWeight: "bold" }}>Author</Typography>
         <div style={{ margin: '20px 0px', display: 'flex', gap: '50px' }}>
             <img alt="mee" src="https://media.licdn.com/dms/image/C4D03AQEV9v3FiWwyuw/profile-displayphoto-shrink_800_800/0/1635665530246?e=2147483647&v=beta&t=3H--_iRB_mZuKpjExzlFiS_PKRwBnfnUMAJhDpoMa5c"
                 style={{ width: '150px', height: '150px', borderRadius: '50%' }}></img>

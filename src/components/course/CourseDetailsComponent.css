@@ -1,0 +1,6 @@
+.course-detail {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+    padding-bottom: 5px;
+}
