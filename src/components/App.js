@@ -8,6 +8,7 @@ import SearchContent from "./search/SearchContent";
 import AuthorContent from "./author/AuthorContent";
 import CourseContent from "./course/CourseContent";
 import StudyMapContent from "./studymap/StudyMapContent";
+import PaymentContent from "./payment/PaymentContent";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route path="/author/:author" element={<AuthorContent />} />
             <Route path="/course/:courseId" element={<CourseContent />} />
             <Route path="/map/:mapId" element={<StudyMapContent/>} />
+            <Route path="/order/:orderId" element={<PaymentContent/>} />
           </Routes>
         </Router>
       </AuthProvider>
