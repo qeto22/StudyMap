@@ -13,10 +13,10 @@ function WatchCourseContent() {
         setIsDrawerOpen(open);
     };
 
-    const playerWidth = isDrawerOpen ? "75%" : "100%";
+    const playerWidth = isDrawerOpen ? "75vw" : "100vw";
 
     return (
-        <div style={{ width: "100vw", height: "100vh", background: "red" }}>
+        <div style={{ width: "100vw", height: "100vh" }}>
 
             <div style={{ width: playerWidth, height: "100%", transition: 'width 0.3s', overflow: 'hidden' }}>
                 <Player

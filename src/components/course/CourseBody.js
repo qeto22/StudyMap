@@ -41,7 +41,7 @@ function CourseBody() {
                 <Divider style={{ marginTop: "15px" }}></Divider>
                 <CourseDescription></CourseDescription>
                 <Divider style={{ marginTop: "20px" }}></Divider>
-                <CourseSections></CourseSections>
+                <CourseSections showTitle={true}></CourseSections>
             </Grid>
             <Grid item md={0.5}></Grid>
             <Grid item xs={12} md={4.5}>
