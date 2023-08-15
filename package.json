@@ -20,8 +20,10 @@
     "react-router-dom": "^6.14.2",
     "react-scripts": "5.0.1",
     "react-slick": "^0.29.0",
+    "redux": "^4.2.1",
     "slick-carousel": "^1.8.1",
-    "typed.js": "^2.0.16"
+    "typed.js": "^2.0.16",
+    "video-react": "^0.16.0"
   },
   "scripts": {
     "start": "react-scripts start",

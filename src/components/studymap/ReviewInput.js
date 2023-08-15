@@ -1,14 +1,14 @@
-// import { useContext } from "react";
-// import { AuthContext } from "../AuthProvider";
+import { useContext } from "react";
+import { AuthContext } from "../AuthProvider";
 import { Button, Divider, Grid, Rating } from "@mui/material";
 import FormTextInput from "../login/FormTextInput";
 
 function ReviewInput() {
-    // const { isAuthenticated } = useContext(AuthContext);
+    const { isAuthenticated } = useContext(AuthContext);
 
-    // if (!isAuthenticated) {
-    //     return (<></>);
-    // }
+    if (!isAuthenticated) {
+        return (<></>);
+    }
     return (<Grid container style={{ marginTop: "20px", marginBottom: '15px', paddingBottom: '20px' }}>
         <Grid item xs={1} style={{ display: "flex", marginTop: '30px', justifyContent: "center" }}>
             <img alt="kitketo" src="https://media.licdn.com/dms/image/C4D03AQEV9v3FiWwyuw/profile-displayphoto-shrink_800_800/0/1635665530246?e=2147483647&v=beta&t=3H--_iRB_mZuKpjExzlFiS_PKRwBnfnUMAJhDpoMa5c"

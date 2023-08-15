@@ -8,12 +8,12 @@ import {
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-function CourseSections() {
+function CourseSections({ showTitle }) {
     return (
         <div style={{ marginTop: "20px" }}>
-            <Typography variant="h6" fontWeight={"bold"}>
+            {showTitle ? (<Typography variant="h6" fontWeight={"bold"}>
                 Course Content
-            </Typography>
+            </Typography>) : (<></>)}
 
             <Accordion style={{ marginTop: "20px" }} disableGutters>
                 <AccordionSummary
