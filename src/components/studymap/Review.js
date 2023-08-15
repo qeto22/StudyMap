@@ -1,4 +1,4 @@
-import { Divider, Grid, Rating, Typography } from "@mui/material";
+import { Divider, Rating, Typography } from "@mui/material";
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
 

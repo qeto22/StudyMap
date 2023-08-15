@@ -8,6 +8,7 @@ import SearchContent from "./search/SearchContent";
 import AuthorContent from "./author/AuthorContent";
 import CourseContent from "./course/CourseContent";
 import StudyMapContent from "./studymap/StudyMapContent";
+import WatchCourseContent from "./watch/WatchCourseContent";
 
 function App() {
   return (
@@ -21,7 +22,8 @@ function App() {
             <Route path="/search" element={<SearchContent />} />
             <Route path="/author/:author" element={<AuthorContent />} />
             <Route path="/course/:courseId" element={<CourseContent />} />
-            <Route path="/map/:mapId" element={<StudyMapContent/>} />
+            <Route path="/map/:mapId" element={<StudyMapContent />} />
+            <Route path="/watch/:courseId" element={<WatchCourseContent />} />
           </Routes>
         </Router>
       </AuthProvider>
