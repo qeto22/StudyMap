@@ -108,7 +108,7 @@ function NavigationBarDesktop() {
                         onMouseLeave={() => setProfileAnchorEl(null)}  // Add onMouseLeave to the Popover
                     >
                         <List style={{ width: '220px', backgroundColor: '#121212', border: "1px solid rgba(255, 255, 255, 0.4)" }}>  {/* Adjust width as per your need */}
-                            <ListItemButton divider style={{ padding: '8px' }}>
+                            <ListItemButton divider onClick={() => navigate('/profile')} style={{ padding: '8px' }}>
                                 <ListItemIcon>
                                     <AccountCircleIcon style={{ fontSize: '23px' }} />
                                 </ListItemIcon>

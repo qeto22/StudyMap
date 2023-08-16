@@ -12,6 +12,7 @@ import WatchCourseContent from "./watch/WatchCourseContent";
 import PaymentContent from "./payment/PaymentContent";
 import CallContent from "./call/CallContent";
 import SecuredRoute from "./SecuredRoute";
+import ProfileContent from "./profile/ProfileContent";
 
 function App() {
   return (
@@ -59,6 +60,13 @@ function App() {
               element={
                 <SecuredRoute>
                   <CallContent />
+                </SecuredRoute>
+              } />
+            <Route
+              path="/profile"
+              element={
+                <SecuredRoute>
+                  <ProfileContent />
                 </SecuredRoute>
               } />
           </Routes>
