@@ -16,7 +16,7 @@ function LoginBody() {
     const handleLogin = async () => {
         setErrorMessage('');
         try {
-            const response = await axios.post('http://localhost:8080/api/v1/auth/authenticate', { usernameOrEmail, password });
+            const response = await axios.post('http://' + window.location.hostname + ':8080/api/v1/auth/authenticate', { usernameOrEmail, password });
             if (response.status === 200) {
                 localStorage.setItem('token', response.data.token);
                 setIsAuthenticated(true);

@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }) => {
             };
 
             try {
-                const response = await axios.get('http://localhost:8080/api/v1/user', config);
+                const response = await axios.get('http://' + window.location.hostname + ':8080/api/v1/user', config);
                 if (response.status === 200) {
                     setUser(response.data);
                 } else {

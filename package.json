@@ -22,6 +22,7 @@
     "react-slick": "^0.29.0",
     "redux": "^4.2.1",
     "slick-carousel": "^1.8.1",
+    "twilio-video": "^2.27.0",
     "typed.js": "^2.0.16",
     "video-react": "^0.16.0"
   },

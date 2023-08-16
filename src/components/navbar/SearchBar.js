@@ -12,7 +12,7 @@ function SearchBar({ width, marginLeft }) {
   const [query, setQuery] = useState('');
 
   const fetchCourses = (query) => {
-    axios.get('http://localhost:8080/api/v1/marketing/courses', {
+    axios.get('http://' + window.location.hostname + ':8080/api/v1/marketing/courses', {
       params: {
         query: query
       }
