@@ -1,4 +1,4 @@
-import { Button, Container, Grid, Typography, useMediaQuery } from "@mui/material";
+import { Button, Container, Grid, Hidden, Typography, useMediaQuery } from "@mui/material";
 import { useContext, useEffect, useRef } from "react";
 import "@fontsource/roboto";
 import Typed from "typed.js";
@@ -69,8 +69,8 @@ function WelcomeBody() {
                                     fontFamily: "cubano",
                                     letterSpacing: "1px"
                                 }} variant="outlined" color="light">Log in</Button>
-                            ) : (<></>) } 
-                            
+                            ) : (<></>)}
+
                             {!isAuthenticated ? (
                                 <Button onClick={handleSignupClick} sx={{
                                     width: "130px",
@@ -104,18 +104,20 @@ function WelcomeBody() {
                         </Typography>
                     </div>
                     <Grid container spacing={5} alignItems="center">
-                        <Grid item xs={3}>
+                        <Grid item xs={12} md={3}>
                             <CourseItem></CourseItem>
                         </Grid>
-                        <Grid item xs={3}>
+                        <Grid item xs={12} md={3}>
                             <CourseItem></CourseItem>
                         </Grid>
-                        <Grid item xs={3}>
-                            <CourseItem></CourseItem>
-                        </Grid>
-                        <Grid item xs={3}>
-                            <CourseItem></CourseItem>
-                        </Grid>
+                        <Hidden mdDown>
+                            <Grid item xs={0} md={3}>
+                                <CourseItem></CourseItem>
+                            </Grid>
+                            <Grid item xs={0} md={3}>
+                                <CourseItem></CourseItem>
+                            </Grid>
+                        </Hidden>
                     </Grid>
                 </Container>
             </div>
