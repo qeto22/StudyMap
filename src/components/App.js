@@ -11,6 +11,7 @@ import StudyMapContent from "./studymap/StudyMapContent";
 import WatchCourseContent from "./watch/WatchCourseContent";
 import PaymentContent from "./payment/PaymentContent";
 import CallContent from "./call/CallContent";
+import SecuredRoute from "./SecuredRoute";
 
 function App() {
   return (
@@ -18,17 +19,48 @@ function App() {
       <AuthProvider>
         <Router>
           <Routes>
-            <Route path="/" element={<WelcomeContent />} />
-            <Route path="/login" element={<LoginContent />} />
-            <Route path="/signup" element={<SignUpContent />} />
-            <Route path="/search" element={<SearchContent />} />
-            <Route path="/author/:author" element={<AuthorContent />} />
-            <Route path="/course/:courseId" element={<CourseContent />} />
-            <Route path="/map/:mapId" element={<StudyMapContent />} />
-            <Route path="/watch/:courseId" element={<WatchCourseContent />} />
-            <Route path="/map/:mapId" element={<StudyMapContent/>} />
-            <Route path="/order/:orderId" element={<PaymentContent/>} />
-            <Route path="/call/:callId" element={<CallContent />} />
+            <Route
+              path="/"
+              element={<WelcomeContent />} />
+            <Route
+              path="/login"
+              element={<LoginContent />} />
+            <Route
+              path="/signup"
+              element={<SignUpContent />} />
+            <Route
+              path="/search"
+              element={<SearchContent />} />
+            <Route
+              path="/author/:author"
+              element={<AuthorContent />} />
+            <Route
+              path="/course/:courseId"
+              element={<CourseContent />} />
+            <Route
+              path="/map/:mapId"
+              element={<StudyMapContent />} />
+            <Route
+              path="/watch/:courseId"
+              element={
+                <SecuredRoute>
+                  <WatchCourseContent />
+                </SecuredRoute>
+              } />
+            <Route
+              path="/order/:orderId"
+              element={
+                <SecuredRoute>
+                  <PaymentContent />
+                </SecuredRoute>
+              } />
+            <Route
+              path="/call/:callId"
+              element={
+                <SecuredRoute>
+                  <CallContent />
+                </SecuredRoute>
+              } />
           </Routes>
         </Router>
       </AuthProvider>
