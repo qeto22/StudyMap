@@ -10,6 +10,7 @@ import CourseContent from "./course/CourseContent";
 import StudyMapContent from "./studymap/StudyMapContent";
 import WatchCourseContent from "./watch/WatchCourseContent";
 import PaymentContent from "./payment/PaymentContent";
+import CallContent from "./call/CallContent";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
             <Route path="/watch/:courseId" element={<WatchCourseContent />} />
             <Route path="/map/:mapId" element={<StudyMapContent/>} />
             <Route path="/order/:orderId" element={<PaymentContent/>} />
+            <Route path="/call/:callId" element={<CallContent />} />
           </Routes>
         </Router>
       </AuthProvider>

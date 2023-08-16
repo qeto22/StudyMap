@@ -27,7 +27,7 @@ function SignUpBody() {
                 setErrorMessage('Passwords are not matching!');
                 return;
             }
-            const response = await axios.post('http://localhost:8080/api/v1/auth/signup', {
+            const response = await axios.post('http://' + window.location.hostname + ':8080/api/v1/auth/signup', {
                 firstName,
                 lastName,
                 userType,
