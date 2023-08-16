@@ -21,6 +21,8 @@ function CallContent() {
     const [cameraDisabled, setCameraDisabled] = useState(false);
     const [isFullScreen, setFullScreen] = useState(false);
 
+    const localVideoTrackRef = useRef();
+    const localAudioTrackRef = useRef();
 
     const [roomDuration, setRoomDuration] = useState(0);
 
@@ -28,6 +30,8 @@ function CallContent() {
 
     const attachTrack = (track) => {
         if (track && track.kind === 'video') {
+            track.on('disabled', detachTrack);
+            track.on('enabled', attachTrack);
             remoteVideoRef.current.appendChild(track.attach());
         }
     };
@@ -39,7 +43,7 @@ function CallContent() {
             });
         }
     };
-    
+
     const attachParticipantTracks = (participant) => {
         participant.tracks.forEach(publication => attachTrack(publication.track));
         participant.on('trackSubscribed', handleTrackSubscribed);
@@ -90,9 +94,18 @@ function CallContent() {
         })
             .then(response => {
                 const token = response.data.token;
-                return Video.connect(token, {
-                    name: response.data.roomName
-                });
+                return Video.createLocalTracks({
+                    audio: true,
+                    video: true
+                }).then(localTracks => {
+                    localVideoTrackRef.current = localTracks.find(track => track.kind === 'video');
+                    localAudioTrackRef.current = localTracks.find(track => track.kind === 'audio');
+
+                    return Video.connect(token, {
+                        name: response.data.roomName,
+                        tracks: localTracks
+                    });
+                })
             })
             .then(room => {
                 Video.createLocalVideoTrack().then(track => {
@@ -158,36 +171,48 @@ function CallContent() {
         }
     }, [isFullScreen]);
 
-return (
-    <div>
-        <div style={{ width: "90vw", height: "90vh", margin: "0 auto" }}>
-            <div ref={remoteVideoRef} className='remote-video-wrapper'></div>
-            <div ref={localVideoRef} className='local-video-wrapper'></div>
-        </div>
-        <Divider />
-        <div style={{ height: "9vh", width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <div style={{ marginLeft: "15px" }}>
-                <Typography style={{ fontFamily: "cubano" }}>{formatDuration(roomDuration)}</Typography>
+    useEffect(() => {
+        if (localVideoTrackRef && localVideoTrackRef.current) {
+            localVideoTrackRef.current.enable(!cameraDisabled);
+        }
+    }, [cameraDisabled]);
+
+    useEffect(() => {
+        if (localAudioTrackRef && localAudioTrackRef.current) {
+            localAudioTrackRef.current.enable(!microphoneMuted);
+        }
+    }, [microphoneMuted]);
+
+    return (
+        <div>
+            <div style={{ width: "90vw", height: "90vh", margin: "0 auto" }}>
+                <div ref={remoteVideoRef} className='remote-video-wrapper'></div>
+                <div ref={localVideoRef} className='local-video-wrapper' style={cameraDisabled ? { display: "none" } : {}}></div>
             </div>
-            <div style={{ display: "flex", gap: "15px" }}>
-                <Button onClick={() => setMicrophoneMuted(!microphoneMuted)} className={microphoneMuted ? 'action-btn disabled-action-btn' : 'action-btn enabled-action-btn'}>
-                    {microphoneMuted ? (<MicOffIcon fontSize='small'></MicOffIcon>) : (<MicIcon fontSize='small'></MicIcon>)}
-                </Button>
-                <Button onClick={() => setCameraDisabled(!cameraDisabled)} className={cameraDisabled ? 'action-btn disabled-action-btn' : 'action-btn enabled-action-btn'}>
-                    {cameraDisabled ? (<NoPhotographyIcon fontSize='small'></NoPhotographyIcon>) : (<PhotoCameraIcon fontSize='small'></PhotoCameraIcon>)}
-                </Button>
-                <Button className={'action-btn disabled-action-btn'}>
-                    <CallEndIcon fontSize="small"></CallEndIcon>
-                </Button>
+            <Divider />
+            <div style={{ height: "9vh", width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <div style={{ marginLeft: "15px" }}>
+                    <Typography style={{ fontFamily: "cubano" }}>{formatDuration(roomDuration)}</Typography>
+                </div>
+                <div style={{ display: "flex", gap: "15px" }}>
+                    <Button onClick={() => setMicrophoneMuted(!microphoneMuted)} className={microphoneMuted ? 'action-btn disabled-action-btn' : 'action-btn enabled-action-btn'}>
+                        {microphoneMuted ? (<MicOffIcon fontSize='small'></MicOffIcon>) : (<MicIcon fontSize='small'></MicIcon>)}
+                    </Button>
+                    <Button onClick={() => setCameraDisabled(!cameraDisabled)} className={cameraDisabled ? 'action-btn disabled-action-btn' : 'action-btn enabled-action-btn'}>
+                        {cameraDisabled ? (<NoPhotographyIcon fontSize='small'></NoPhotographyIcon>) : (<PhotoCameraIcon fontSize='small'></PhotoCameraIcon>)}
+                    </Button>
+                    <Button className={'action-btn disabled-action-btn'}>
+                        <CallEndIcon fontSize="small"></CallEndIcon>
+                    </Button>
+                </div>
+                <div>
+                    <Button onClick={() => setFullScreen(!isFullScreen)} className={'action-btn enabled-action-btn'} style={{ marginRight: "15px" }}>
+                        {isFullScreen ? (<FullscreenExitIcon fontSize='small'></FullscreenExitIcon>) : (<FullscreenIcon fontSize="small"></FullscreenIcon>)}
+                    </Button>
+                </div>
             </div>
-            <div>
-                <Button onClick={() => setFullScreen(!isFullScreen)} className={'action-btn enabled-action-btn'} style={{ marginRight: "15px" }}>
-                    {isFullScreen ? (<FullscreenExitIcon fontSize='small'></FullscreenExitIcon>) : (<FullscreenIcon fontSize="small"></FullscreenIcon>)}
-                </Button>
-            </div>
-        </div>
-    </div>
-);
+        </div >
+    );
 }
 
 export default CallContent;
