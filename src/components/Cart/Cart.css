@@ -1,0 +1,16 @@
+.cart-container {
+    border: 1px solid white;
+    border-radius: 3px;
+    max-height: 300px; 
+    overflow-y: auto;
+    position: relative;
+    width: 80%;
+    padding: 2px 15px;
+  }
+  
+  .cart {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  

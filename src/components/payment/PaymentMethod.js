@@ -1,9 +1,6 @@
 import { Grid, Typography } from "@mui/material";
 import { useState } from "react";
 import "./PaymentMethod.css";
-import Checkbox from '@mui/material/Checkbox';
-import CircleCheckedFilled from '@mui/icons-material/CheckCircle';
-import CircleUnchecked from '@mui/icons-material/RadioButtonUnchecked';
 
 function PaymentMethod() {
     const paymentMethods = [
@@ -22,11 +19,11 @@ function PaymentMethod() {
 
     return (<div>
         <div style={{
-            width: "100%",
+            width: "83%",
             border: '1px solid white',
-            borderRadius: '10px',
+            borderRadius: '6px',
             justifyContent: 'center',
-            margin: '30px',
+            margin: '30px 0px',
             display: 'table'
         }}>
             <Typography style={{

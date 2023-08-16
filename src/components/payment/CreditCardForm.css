@@ -15,9 +15,10 @@
   }
 
   .details{
-    display: flex;
+    display: flex !important;
     justify-content: start;
     align-items: center;
     gap: 35px;
+    width: max-content;
   }
 

@@ -7,17 +7,17 @@ function PaymentContent() {
     return (
         <div>
             <NavigationBar />
-            <Container maxWidth='lg'>
+            {/* <Container maxWidth='lg' style={{justifyContent: 'flex-start', display: 'flex'}}>
                 <Grid container>
-                    <Grid item md={7.5}>
+                    <Grid item md={7.5}> */}
                         <PaymentBody></PaymentBody>
-                    </Grid>
+                    {/* </Grid>
                     <Grid item md={0.5}></Grid>
                     <Grid item md={4.5}>
-                        Other stuff goes here!
-                    </Grid>
-                </Grid>
-            </Container>
+                        {/* Other stuff goes here! */}
+                    {/* </Grid> */}
+                {/* </Grid> */}
+            {/* </Container> */} 
             <Footer />
         </div>
     )
