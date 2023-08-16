@@ -33,7 +33,7 @@ function SkillSlider() {
     };
 
     return (
-        <Slider {...settings} style={{maxWidth: "98.7%"}}>
+        <Slider {...settings} style={{maxWidth: "100vw", overflow: "hidden"}}>
             <Card style={{ width: "200px" }} variant="outlined">
                 <CardContent style={styles.cardcontent}>
                     <img src="/coding.png" alt="coding" style={{ width: "32px", height: "32px" }} />
