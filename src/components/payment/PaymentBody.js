@@ -1,7 +1,9 @@
-import Cart from "../Cart/Cart";
+import { Container } from "@mui/system";
+import Cart from "../cart/Cart";
 import CreditCardForm from "./CreditCardForm";
 import OrderSummary from "./OrderSummary";
 import PaymentMethod from "./PaymentMethod";
+import { Grid, Typography } from "@mui/material";
 
 function PaymentBody() {
 
@@ -46,15 +48,33 @@ function PaymentBody() {
         // ... other cart items
     ];
 
-    return (<div style={{justifyContent: 'flex-start !important', display: 'flex', width: 'fit-content', padding: '20px'}}>
-        <div>
-            <Cart initialCartItems={initialCartItems}></Cart>
-            <PaymentMethod></PaymentMethod>
-        </div>
-        <OrderSummary subtotal={25} serviceFee={5}/>
-        <CreditCardForm />
 
-    </div>)
+    //     <div>
+    //     <Cart initialCartItems={initialCartItems}></Cart>
+    //     <PaymentMethod></PaymentMethod>
+    // </div>
+    // <OrderSummary subtotal={25} serviceFee={5}/>
+    // <CreditCardForm />
+
+
+    return (<Container maxWidth="lg" style={{
+        // backgroundColor: "red",
+        margin: "25px auto"
+    }}>
+        <Typography variant="h6">Billing & Payment</Typography>
+        <Grid container style={{ border: "1px solid rgba(255, 255, 255, 0.4)", borderRadius: "6px", padding: "30px", marginTop: "20px" }}>
+            <Grid item md={8.25}>
+                <Cart initialCartItems={initialCartItems}></Cart>
+                <PaymentMethod></PaymentMethod>
+            </Grid>
+            <Grid item md={0.5}>
+            </Grid>
+            <Grid item md={3.25}>
+                <OrderSummary subtotal={25} serviceFee={5} />
+                <CreditCardForm />
+            </Grid>
+        </Grid>
+    </Container>)
 }
 
 export default PaymentBody;

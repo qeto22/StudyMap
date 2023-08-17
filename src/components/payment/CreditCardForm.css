@@ -1,17 +1,14 @@
   
   .credit-card-form {
-    /* Add styling for your CreditCardForm component */
-    border: 1px solid white !important;
-    border-radius: 8px !important;
-    padding: 30px 30px;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    border-radius: 6px !important;
     justify-content: center;
-    width: fit-content;
-    display: grid;
-    margin: 30px;
+    width: 100%;
+    margin-top: 30px;
   }
   
   .input-group {
-    margin-bottom: 25px;
+    margin-bottom: 15px;
   }
 
   .details{

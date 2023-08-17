@@ -1,30 +1,30 @@
 .payment-method {
-    display: inline-block;
-    cursor: pointer;
-    padding: 10px;
-    border-radius: 10px;
-  }
-  
-  .payment-method.selected {
-    border: 1px solid rgb(244 136 120);
-    
-  }
-  
-  .payment-method-div {
-    display: flex;
-    justify-content: space-between; 
-    align-items: center;
-    flex-wrap: wrap;
-    padding: 15px 10px;
-    margin: 5px 5px;
-  }
+  display: inline-block;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 6px;
+}
 
-  .payment-method-div.selected {
-    width: 152px;
-    height: 62px;
-  }
-  .payment-method img {
-    max-width: 100px; 
-    max-height: 150px; 
-  }
-  
+.payment-method.selected {
+  border: 1px solid rgb(244 136 120);
+
+}
+
+.payment-method-div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 15px 30px;
+  margin: 5px 5px;
+}
+
+.payment-method-div.selected {
+  width: 152px;
+  height: 62px;
+}
+
+.payment-method img {
+  max-width: 100px;
+  max-height: 150px;
+}

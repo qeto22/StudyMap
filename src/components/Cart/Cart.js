@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import CartItem from './CartItem'; // Import the CartItem component
 import "./Cart.css"
-import { Typography } from '@mui/material';
+import { Divider, Typography } from '@mui/material';
+import { width } from '@mui/system';
 
 const Cart = ({ initialCartItems }) => {
   const [cartItems, setCartItems] = useState(initialCartItems);
@@ -14,15 +15,19 @@ const Cart = ({ initialCartItems }) => {
   return (
     <div className="cart-container">
       <Typography style={{
-                margin: '10px 40px',
-                marginBottom: '40px',
-                fontSize: '20px',
-                fontFamily: 'cubano',
-                textAlign: 'center'
-            }}>Check your cart</Typography>
+        margin: '10px 0',
+        fontSize: '20px',
+        fontFamily: 'cubano',
+        textAlign: 'center',
+        width: "100%"
+      }}>Check your cart</Typography>
+      <Divider></Divider>
       <div className="cart">
         {cartItems.map((item, index) => (
-          <CartItem key={index} item={item} onRemove={handleRemoveItem} />
+          <div>
+            <CartItem key={index} item={item} onRemove={handleRemoveItem} />
+            <Divider></Divider>
+          </div>
         ))}
       </div>
     </div>

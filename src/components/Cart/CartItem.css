@@ -1,25 +1,15 @@
 .cart-item {
-    padding: 5px 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 50px;
+    width: 100%;
+    padding: 15px 0;
 }
 
 .details {
     display: inline-table !important;
-    margin: 5px;
-}
-
-.image {
-    margin: 10px 5px;
 }
 
 .remove-button {
-    background-color: rgb(212, 36, 36);
-    color: rgb(224, 214, 214);
     border-radius: 8px;
-    width: 89px;
+    width: 80%;
     font-size: 13px;
     text-size-adjust: 10p;
     height: 30px;
