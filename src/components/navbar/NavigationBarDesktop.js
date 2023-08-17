@@ -73,7 +73,7 @@ function NavigationBarDesktop() {
 
             {isAuthenticated ? (
                 <div className='navbar-item'>
-                    <Button
+                    <Button  onClick={() => navigate('/profile?tab=courses')}
                         sx={{
                             width: "130px",
                             fontFamily: "cubano",
@@ -114,19 +114,19 @@ function NavigationBarDesktop() {
                                 </ListItemIcon>
                                 <ListItemText primary="Profile" primaryTypographyProps={{ fontSize: '15px' }} />
                             </ListItemButton>
-                            <ListItemButton style={{ padding: '8px' }}>
+                            <ListItemButton onClick={() => navigate('/profile?tab=my-paths')} style={{ padding: '8px' }}>
                                 <ListItemIcon>
                                     <AccountTreeIcon style={{ fontSize: '23px' }} />
                                 </ListItemIcon>
                                 <ListItemText primary="My Paths" primaryTypographyProps={{ fontSize: '15px' }} />
                             </ListItemButton>
-                            <ListItemButton divider style={{ padding: '8px' }}>
+                            <ListItemButton onClick={() => navigate('/profile?tab=mentor-meetings')} divider style={{ padding: '8px' }}>
                                 <ListItemIcon>
                                     <SupervisorAccountIcon style={{ fontSize: '23px' }} />
                                 </ListItemIcon>
                                 <ListItemText primary="Meeting with Mentors" primaryTypographyProps={{ fontSize: '15px' }} />
                             </ListItemButton>
-                            <ListItemButton divider style={{ padding: '8px' }}>
+                            <ListItemButton onClick={() => navigate('/profile?tab=settings')} divider style={{ padding: '8px' }}>
                                 <ListItemIcon>
                                     <SettingsIcon style={{ fontSize: '23px' }} />
                                 </ListItemIcon>
