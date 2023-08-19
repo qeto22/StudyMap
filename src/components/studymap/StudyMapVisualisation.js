@@ -21,7 +21,7 @@ function StudyMapVisualisation() {
             container: document.getElementById('cy'),
             elements: [
                 // Sample nodes
-                { data: { id: 'jsRoot', label: 'Javascript', locked: true } },
+                { data: { id: 'jsRoot', label: 'Javascript'} },
                 { data: { id: 'basics', label: 'Basics' } },
                 { data: { id: 'variableTypes', label: 'Variable Types' } },
                 { data: { id: 'loops', label: 'Loops' } },

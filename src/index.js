@@ -32,7 +32,6 @@ const theme = createTheme({
                 select: {
                     color: "white",
                     fontSize: "14px",
-                    border: "1px solid white"
                 },
                 icon: {
                     color: "white"

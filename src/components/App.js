@@ -13,6 +13,7 @@ import PaymentContent from "./payment/PaymentContent";
 import CallContent from "./call/CallContent";
 import SecuredRoute from "./SecuredRoute";
 import ProfileContent from "./profile/ProfileContent";
+import StudyMapCreationContent from "./studymap/StudyMapCreationContent";
 
 function App() {
   return (
@@ -67,6 +68,13 @@ function App() {
               element={
                 <SecuredRoute>
                   <ProfileContent />
+                </SecuredRoute>
+              } />
+            <Route
+              path="/map/create"
+              element={
+                <SecuredRoute>
+                  <StudyMapCreationContent />
                 </SecuredRoute>
               } />
           </Routes>
