@@ -1,18 +1,28 @@
 import * as React from 'react';
-import { Container } from "@mui/material";
+import { Alert, Container, LinearProgress, Typography } from "@mui/material";
 import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import FormTextInput from '../login/FormTextInput';
 import StudyMapVisualisationCreation from './StudyMapVisualisationCreation';
+import axios from 'axios';
+import { useNavigate } from 'react-router';
+import Typed from 'typed.js';
 
 const steps = ['StudyMap Name', 'StudyMap Visualisation', 'StudyMap Description'];
 
 function StudyMapCreationBody() {
+    const navigate = useNavigate();
+
+    const [mapUrl, setMapUrl] = React.useState(null);
+    const [uploadErrorMessage, setUploadErrorMessage] = React.useState(null);
+
     const [activeStep, setActiveStep] = React.useState(0);
+
+    const typedRef = React.useRef(null);
 
     const [mapTitle, setMapTitle] = React.useState('');
     const [nodeData, setNodeData] = React.useState([]);
@@ -26,9 +36,32 @@ function StudyMapCreationBody() {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
-    const handleReset = () => {
-        setActiveStep(0);
-    };
+    const uploadStudyMap = async () => {
+        const token = localStorage.getItem('token');
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        };
+
+        try {
+            const response = await axios.post('http://' + window.location.hostname + ':8080/api/v1/map/create', {
+                mapTitle,
+                nodeData,
+                mapDescription
+            }, config);
+
+            if (response.status === 200) {
+                setMapUrl(`/map/${response.data.id}`);
+            } else {
+                setUploadErrorMessage('Error occurred uploading StudyMap!');
+            }
+        } catch (ex) {
+            setUploadErrorMessage('Error occurred uploading StudyMap!');
+        }
+
+
+    }
 
     let content;
     switch (activeStep) {
@@ -48,10 +81,36 @@ function StudyMapCreationBody() {
                     onChange={(e) => setMapDescription(e.target.value)} />
             </div>
             break;
+        case 3:
+            handleNext()
+            uploadStudyMap();
+            break;
         default:
             content = null;
             break;
     }
+
+    React.useEffect(() => {
+        if (activeStep !== steps.length) {
+            return;
+        }
+
+        const options = {
+            strings: ['Uploading the StudyMap...', 'Please do not close the window!', 'Still Working on it...', 'Little bit more'],
+            typeSpeed: 50,
+            backSpeed: 75,
+            backDelay: 300,
+            loop: true,
+            parse: true
+        }
+
+        // Create a new instance of Typed.js
+        typedRef.current = new Typed('.typed-text', options);
+
+        return () => {
+            typedRef.current.destroy();
+        };
+    }, [activeStep]);
 
     return (
         <Container maxWidth="md">
@@ -68,15 +127,32 @@ function StudyMapCreationBody() {
                         );
                     })}
                 </Stepper>
-                {activeStep === steps.length ? (
+                {activeStep >= steps.length ? (
                     <React.Fragment>
-                        <Typography sx={{ mt: 2, mb: 1 }}>
-                            All steps completed - you&apos;re finished
-                        </Typography>
-                        <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-                            <Box sx={{ flex: '1 1 auto' }} />
-                            <Button onClick={handleReset}>Reset</Button>
-                        </Box>
+
+                        {mapUrl ? (
+                            <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
+                                <Button color='success' variant='contained'
+                                    onClick={() => { navigate(mapUrl) }}
+                                    style={{ margin: "40px", color: "white" }}>
+                                    <OpenInNewIcon fontSize='small' /> &nbsp;&nbsp; View StudyMap
+                                </Button>
+                            </div>
+                        ) : (<></>)}
+
+                        {uploadErrorMessage ? (
+                            <div style={{ width: "100%", display: "flex", justifyContent: "center", margin: "30px auto" }}>
+                                <Alert severity="error" style={{ background: "rgb(211, 47, 47)" }} variant="contained">{uploadErrorMessage}</Alert>
+                            </div>
+                        ) : (<></>)}
+
+                        {!mapUrl && !uploadErrorMessage ? (
+                            <div style={{ width: "80%", margin: "0 auto" }}>
+                                <Typography style={{ fontSize: "16px", textAlign: "center", marginTop: "40px" }}><span className='typed-text'></span></Typography>
+                                <LinearProgress color="material" sx={{ mt: "15px" }} />
+                            </div>
+                        ) : (<></>)}
+
                     </React.Fragment>
                 ) : (
                     <React.Fragment>
