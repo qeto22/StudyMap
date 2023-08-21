@@ -88,7 +88,8 @@ function StudyMapCreationBody() {
             content = <div style={{ width: "60%", margin: "15px auto" }}>
                 <Typography align='center'>Preview</Typography>
                 <div style={{ width: "300px", margin: "15px auto" }}>
-                    <ContentItem type={'Map'}
+                    <ContentItem id={1}
+                        type={'Map'}
                         hideOverview={true}
                         title={mapTitle}
                         imageSrc={imageFile ? URL.createObjectURL(imageFile) : ''}

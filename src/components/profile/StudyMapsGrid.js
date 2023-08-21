@@ -34,12 +34,16 @@ function StudyMapsGrid() {
         setOwnStudyMapsError(null);
     }
 
+    console.log("Prepase")
+    console.log(ownStudyMaps);
+
     return (
         <Grid container>
 
             {ownStudyMaps ? (ownStudyMaps.map((item, index) => (
                 <Grid item md={4} style={{ padding: "0 10px" }}>
-                    <ContentItem type={'Map'}
+                    <ContentItem id={item.mapId}
+                        type={'Map'}
                         title={item.mapTitle}
                         imageSrc={"http://" + window.location.hostname + ":8080" + item.imagePath}
                         authorName={item.author.name}></ContentItem>

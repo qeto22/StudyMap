@@ -5,11 +5,15 @@ import "./ContentItem.css"
 import { useNavigate } from "react-router-dom";
 
 
-function ContentItem({ type, title, imageSrc, authorName, hideOverview }) {
+function ContentItem({ id, type, title, imageSrc, authorName, hideOverview }) {
     const navigate = useNavigate();
 
     const onContentClicked = () => {
-        navigate('/course/1/');
+        if (type === 'Course') {
+            navigate(`/course/${id}`);
+        } else {
+            navigate(`/map/${id}`)
+        }
     }
 
     const onAuthorClicked = () => {
