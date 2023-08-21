@@ -1,11 +1,11 @@
 import { Button, Card, CardActions, CardContent, CardMedia, Chip, Rating, Typography } from "@mui/material";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import "./CourseItem.css"
+import "./ContentItem.css"
 import { useNavigate } from "react-router-dom";
 
 
-function ContentItem({ type }) {
+function ContentItem({ type, title, imageSrc, authorName, hideOverview }) {
     const navigate = useNavigate();
 
     const onContentClicked = () => {
@@ -21,9 +21,8 @@ function ContentItem({ type }) {
             <div style={{ position: 'relative' }}>
                 <CardMedia
                     component="img"
-                    alt="green iguana"
                     height="180"
-                    image="https://cdn.dribbble.com/users/1189961/screenshots/3546540/14._google_-_pixel_art_logo.jpg"
+                    image={imageSrc}
                     style={{
                         cursor: "pointer"
                     }}
@@ -38,12 +37,12 @@ function ContentItem({ type }) {
                     justifyContent: "space-between",
                     cursor: "pointer"
                 }} onClick={onContentClicked}>
-                    <Typography className="content-title">Path to Google</Typography>
-                    <Typography className="">$100.00</Typography>
+                    <Typography className="content-title">{title}</Typography>
+                    {type === 'Course' ? <Typography className="">$100.00</Typography> : <></>}
                 </div>
                 <div className="content-author-wrapper">
                     <img alt="mee" src="https://media.licdn.com/dms/image/C4D03AQEV9v3FiWwyuw/profile-displayphoto-shrink_800_800/0/1635665530246?e=2147483647&v=beta&t=3H--_iRB_mZuKpjExzlFiS_PKRwBnfnUMAJhDpoMa5c" />
-                    <Typography className="content-author" onClick={onAuthorClicked}>Ketevan Bachalashvili</Typography>
+                    <Typography className="content-author" onClick={onAuthorClicked}>{authorName}</Typography>
                 </div>
                 <div className="content-rating-wrapper">
                     <Typography className="content-rating-text">5/5</Typography>
@@ -59,7 +58,7 @@ function ContentItem({ type }) {
                 </div>
             </CardContent>
             <CardActions style={{ background: "#121212", color: "white", display: "flex", justifyContent: "space-between" }}>
-                <Button size="small" onClick={() => { onContentClicked() }}><VisibilityIcon></VisibilityIcon>&nbsp;OverView</Button>
+                {hideOverview ? <></> : <Button size="small" onClick={() => { onContentClicked() }}><VisibilityIcon></VisibilityIcon>&nbsp;OverView</Button>}
                 {type === 'Course' ? <Button size="small"><AddShoppingCartIcon></AddShoppingCartIcon>&nbsp;Add to Cart</Button> : <></>}
             </CardActions>
         </Card>

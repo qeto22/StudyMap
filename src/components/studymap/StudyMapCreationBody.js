@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Alert, Container, LinearProgress, Typography } from "@mui/material";
+import { Alert, Container, Divider, LinearProgress, Typography } from "@mui/material";
 import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
@@ -11,10 +11,16 @@ import StudyMapVisualisationCreation from './StudyMapVisualisationCreation';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
 import Typed from 'typed.js';
+import ContentItem from '../welcome/ContentItem';
+import { AuthContext } from '../AuthProvider';
 
 const steps = ['StudyMap Name', 'StudyMap Visualisation', 'StudyMap Description'];
 
 function StudyMapCreationBody() {
+    const { user } = React.useContext(AuthContext);
+    console.log(user);
+    const userName = user === null ? '' : (user.firstName.concat(' ').concat(user.lastName));
+
     const navigate = useNavigate();
 
     const [mapUrl, setMapUrl] = React.useState(null);
@@ -24,9 +30,17 @@ function StudyMapCreationBody() {
 
     const typedRef = React.useRef(null);
 
+    const [imageFile, setImageFile] = React.useState(null);
     const [mapTitle, setMapTitle] = React.useState('');
     const [nodeData, setNodeData] = React.useState([]);
     const [mapDescription, setMapDescription] = React.useState('');
+
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setImageFile(file);
+        }
+    };
 
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -41,15 +55,20 @@ function StudyMapCreationBody() {
         const config = {
             headers: {
                 Authorization: `Bearer ${token}`,
+                'Content-Type': 'multipart/form-data',
             },
         };
 
+        const formData = new FormData();
+        formData.append("request", new Blob([JSON.stringify({
+            mapTitle,
+            nodeData,
+            mapDescription
+        })], { type: 'application/json' }));
+        formData.append("image", imageFile, imageFile.name);
+
         try {
-            const response = await axios.post('http://' + window.location.hostname + ':8080/api/v1/map/create', {
-                mapTitle,
-                nodeData,
-                mapDescription
-            }, config);
+            const response = await axios.post('http://' + window.location.hostname + ':8080/api/v1/map/create', formData, config);
 
             if (response.status === 200) {
                 setMapUrl(`/map/${response.data.id}`);
@@ -66,8 +85,27 @@ function StudyMapCreationBody() {
     let content;
     switch (activeStep) {
         case 0:
-            content = <div style={{ width: "60%", margin: "0 auto" }}>
-                <FormTextInput label={"StudyMap Name"} defaultValue={mapTitle} onChange={(e) => setMapTitle(e.target.value)} />
+            content = <div style={{ width: "60%", margin: "15px auto" }}>
+                <Typography align='center'>Preview</Typography>
+                <div style={{ width: "300px", margin: "15px auto" }}>
+                    <ContentItem type={'Map'}
+                        hideOverview={true}
+                        title={mapTitle}
+                        imageSrc={imageFile ? URL.createObjectURL(imageFile) : ''}
+                        authorName={userName}>
+
+                    </ContentItem>
+                </div>
+
+                <Divider></Divider>
+                <FormTextInput label={"StudyMap Image"}
+                    type={'file'}
+                    onChange={handleImageChange}
+                    accept={'image/*'}
+                    style={{ marginBottom: "10px" }}></FormTextInput>
+                <FormTextInput label={"StudyMap Name"}
+                    defaultValue={mapTitle}
+                    onChange={(e) => setMapTitle(e.target.value)} />
             </div>;
             break;
         case 1:

@@ -2,7 +2,7 @@ import { Button, Card, Container, Dialog, DialogActions, DialogContent, DialogCo
 import "./AuthorBody.css";
 import CountUp from 'react-countup';
 import AnimatedRating from "./AnimatedRating";
-import CourseItem from "../welcome/CourseItem"
+import ContentItem from "../welcome/ContentItem"
 import HandshakeIcon from '@mui/icons-material/Handshake';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
@@ -112,16 +112,28 @@ function AuthorBody() {
                     marginTop: "15px"
                 }} alignItems="center">
                     <Grid item xs={4}>
-                        <CourseItem type={'Course'}></CourseItem>
+                        <ContentItem type={'Course'}
+                            title={'How to work at Google'}
+                            imageSrc={"https://cdn.dribbble.com/users/1189961/screenshots/3546540/14._google_-_pixel_art_logo.jpg"}
+                            authorName={'Ketevan Bachalashvili'}></ContentItem>
                     </Grid>
                     <Grid item xs={4}>
-                        <CourseItem type={'Course'}></CourseItem>
+                        <ContentItem type={'Course'}
+                            title={'How to work at Google'}
+                            imageSrc={"https://cdn.dribbble.com/users/1189961/screenshots/3546540/14._google_-_pixel_art_logo.jpg"}
+                            authorName={'Ketevan Bachalashvili'}></ContentItem>
                     </Grid>
                     <Grid item xs={4}>
-                        <CourseItem type={'Course'}></CourseItem>
+                        <ContentItem type={'Course'}
+                            title={'How to work at Google'}
+                            imageSrc={"https://cdn.dribbble.com/users/1189961/screenshots/3546540/14._google_-_pixel_art_logo.jpg"}
+                            authorName={'Ketevan Bachalashvili'}></ContentItem>
                     </Grid>
                     <Grid item xs={4}>
-                        <CourseItem type={'Course'}></CourseItem>
+                        <ContentItem type={'Course'}
+                            title={'How to work at Google'}
+                            imageSrc={"https://cdn.dribbble.com/users/1189961/screenshots/3546540/14._google_-_pixel_art_logo.jpg"}
+                            authorName={'Ketevan Bachalashvili'}></ContentItem>
                     </Grid>
                 </Grid>
             </div>
