@@ -1,5 +1,5 @@
 import { Container } from "@mui/system";
-import Cart from "../Cart/Cart";
+import Cart from "../cart/Cart";
 import CreditCardForm from "./CreditCardForm";
 import OrderSummary from "./OrderSummary";
 import PaymentMethod from "./PaymentMethod";
@@ -47,15 +47,6 @@ function PaymentBody() {
         },
         // ... other cart items
     ];
-
-
-    //     <div>
-    //     <Cart initialCartItems={initialCartItems}></Cart>
-    //     <PaymentMethod></PaymentMethod>
-    // </div>
-    // <OrderSummary subtotal={25} serviceFee={5}/>
-    // <CreditCardForm />
-
 
     return (<Container maxWidth="lg" style={{
         // backgroundColor: "red",
