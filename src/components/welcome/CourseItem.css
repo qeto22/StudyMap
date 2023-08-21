@@ -1,12 +1,12 @@
-.course-title {
+.content-title {
     font-size: 18px !important;
 }
 
-.course-price {
+.content-price {
     color: rgba(255, 255, 255, 0.8);
 }
 
-.course-author-wrapper {
+.content-author-wrapper {
     display: flex;
     flex-direction: row;
     margin-top: 8px;
@@ -16,18 +16,18 @@
 }
 
 
-.course-author:hover {
+.content-author:hover {
     color: #EC6652 !important;
     cursor: pointer;
 }
 
-.course-author-wrapper img {
+.content-author-wrapper img {
     width: 24px;
     height: 24px;
     border-radius: 50%;
 }
 
-.course-rating-wrapper {
+.content-rating-wrapper {
     display: flex;
     flex-direction: row;
     gap: 8px;
@@ -35,13 +35,13 @@
     margin-top: 8px;
 }
 
-.course-rating-text {
+.content-rating-text {
     font-size: 14px !important;
     text-align: center;
     color: #FAAF00 !important;
 }
 
-.course-rating-count {
+.content-rating-count {
     font-size: 14px !important;
     text-align: center;
     color: #c7c9ca; 

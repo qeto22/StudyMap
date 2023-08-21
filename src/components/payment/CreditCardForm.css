@@ -13,7 +13,7 @@
 
   .details{
     display: flex !important;
-    justify-content: start;
+    justify-content: flex-start;
     align-items: center;
     gap: 35px;
     width: max-content;

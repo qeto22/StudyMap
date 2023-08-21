@@ -9,16 +9,16 @@ function SearchResults() {
     return (
         <Grid container spacing={5} alignItems="center">
             <Grid item xs={itemSize}>
-                <CourseItem></CourseItem>
+                <CourseItem type={'Course'}></CourseItem>
             </Grid>
             <Grid item xs={itemSize}>
-                <CourseItem></CourseItem>
+                <CourseItem type={'Course'}></CourseItem>
             </Grid>
             <Grid item xs={itemSize}>
-                <CourseItem></CourseItem>
+                <CourseItem type={'Course'}></CourseItem>
             </Grid>
             <Grid item xs={itemSize}>
-                <CourseItem></CourseItem>
+                <CourseItem type={'Course'}></CourseItem>
             </Grid>
         </Grid>
     );

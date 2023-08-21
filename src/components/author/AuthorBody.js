@@ -46,9 +46,9 @@ function AuthorBody() {
                 <img className="author-image" alt="me" src="https://media.licdn.com/dms/image/C4D03AQEV9v3FiWwyuw/profile-displayphoto-shrink_800_800/0/1635665530246?e=2147483647&v=beta&t=3H--_iRB_mZuKpjExzlFiS_PKRwBnfnUMAJhDpoMa5c" />
                 <Typography variant="h5" className="author-name">Ketevan Bachalashvili</Typography>
                 <Typography variant="h6" className="author-profession">Software Engineer</Typography>
-                <Card elevation={5} style={{width: "50%", background: "transparent", padding: "15px", margin: "10px auto", border: "1px solid rgba(255, 255, 255, 0.5)"}}>
+                <Card elevation={5} style={{ width: "50%", background: "transparent", padding: "15px", margin: "10px auto", border: "1px solid rgba(255, 255, 255, 0.5)" }}>
 
-                    <Typography variant="h8" >Hello 👋<br/><br/> I'm an experienced software engineer, currently working at AzRy as a Java developer. I've been in this industry for over 2 years and I've gained much experience</Typography>
+                    <Typography variant="h8" >Hello 👋<br /><br /> I'm an experienced software engineer, currently working at AzRy as a Java developer. I've been in this industry for over 2 years and I've gained much experience</Typography>
                 </Card>
                 <Button startIcon={<HandshakeIcon />}
                     variant="contained"
@@ -112,16 +112,16 @@ function AuthorBody() {
                     marginTop: "15px"
                 }} alignItems="center">
                     <Grid item xs={4}>
-                        <CourseItem></CourseItem>
+                        <CourseItem type={'Course'}></CourseItem>
                     </Grid>
                     <Grid item xs={4}>
-                        <CourseItem></CourseItem>
+                        <CourseItem type={'Course'}></CourseItem>
                     </Grid>
                     <Grid item xs={4}>
-                        <CourseItem></CourseItem>
+                        <CourseItem type={'Course'}></CourseItem>
                     </Grid>
                     <Grid item xs={4}>
-                        <CourseItem></CourseItem>
+                        <CourseItem type={'Course'}></CourseItem>
                     </Grid>
                 </Grid>
             </div>

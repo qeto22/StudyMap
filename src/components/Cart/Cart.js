@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import CartItem from './CartItem'; // Import the CartItem component
 import "./Cart.css"
 import { Divider, Typography } from '@mui/material';
-import { width } from '@mui/system';
 
 const Cart = ({ initialCartItems }) => {
   const [cartItems, setCartItems] = useState(initialCartItems);

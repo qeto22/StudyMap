@@ -1,5 +1,5 @@
 import { Container } from "@mui/system";
-import Cart from "../cart/Cart";
+import Cart from "../Cart/Cart";
 import CreditCardForm from "./CreditCardForm";
 import OrderSummary from "./OrderSummary";
 import PaymentMethod from "./PaymentMethod";

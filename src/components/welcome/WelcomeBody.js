@@ -105,17 +105,17 @@ function WelcomeBody() {
                     </div>
                     <Grid container spacing={5} alignItems="center">
                         <Grid item xs={12} md={3}>
-                            <CourseItem></CourseItem>
+                            <CourseItem type={'Course'}></CourseItem>
                         </Grid>
                         <Grid item xs={12} md={3}>
-                            <CourseItem></CourseItem>
+                            <CourseItem type={'Course'}></CourseItem>
                         </Grid>
                         <Hidden mdDown>
                             <Grid item xs={0} md={3}>
-                                <CourseItem></CourseItem>
+                                <CourseItem type={'Course'}></CourseItem>
                             </Grid>
                             <Grid item xs={0} md={3}>
-                                <CourseItem></CourseItem>
+                                <CourseItem type={'Course'}></CourseItem>
                             </Grid>
                         </Hidden>
                     </Grid>
