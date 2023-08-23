@@ -18,7 +18,6 @@ const steps = ['StudyMap Name', 'StudyMap Visualisation', 'StudyMap Description'
 
 function StudyMapCreationBody() {
     const { user } = React.useContext(AuthContext);
-    console.log(user);
     const userName = user === null ? '' : (user.firstName.concat(' ').concat(user.lastName));
 
     const navigate = useNavigate();

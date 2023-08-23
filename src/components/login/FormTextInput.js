@@ -1,6 +1,6 @@
 import { TextField } from "@mui/material";
 
-function FormTextInput({ label, multiline, type, style, accept, fieldStyle, defaultValue, onChange }) {
+function FormTextInput({ label, multiline, type, style, accept, fieldStyle, defaultValue, onChange, InputProps }) {
     return (<div style={style}>
         <label className="form-label">{label}</label>
         <TextField
@@ -14,6 +14,7 @@ function FormTextInput({ label, multiline, type, style, accept, fieldStyle, defa
             }}
             accept={accept}
             onChange={onChange}
+            InputProps={InputProps}
             sx={{
                 "& .MuiInputBase-input": {
                     ...fieldStyle,
