@@ -7,6 +7,7 @@ import { Settings } from "@mui/icons-material";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import StudyMapsGrid from "./StudyMapsGrid";
+import CourseGrid from "./CourseGrid";
 
 function useQuery() {
     return new URLSearchParams(useLocation().search);
@@ -21,6 +22,9 @@ function ProfileBody() {
     switch (selectedItem) {
         case "my-paths":
             content = <StudyMapsGrid />;
+            break;
+        case "courses":
+            content = <CourseGrid />;
             break;
         default:
             content = null;

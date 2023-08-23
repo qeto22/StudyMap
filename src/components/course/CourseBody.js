@@ -68,7 +68,12 @@ function CourseBody() {
                 </Card>
             </Grid>
         </Grid>
-        <Author></Author>
+        <Author author={{
+            username: "ketevan-bachalashvili",
+            imageUrl: "https://media.licdn.com/dms/image/C4D03AQEV9v3FiWwyuw/profile-displayphoto-shrink_800_800/0/1635665530246?e=2147483647&v=beta&t=3H--_iRB_mZuKpjExzlFiS_PKRwBnfnUMAJhDpoMa5c",
+            name: "Ketevan Bachalashvili",
+            description: "Hello everyone"
+        }}></Author>
         <Reviews></Reviews>
         <Snackbar anchorOrigin={{ vertical: "bottom", horizontal: "right" }} open={snackBarOpen}>
             <Alert severity="warning" sx={{ width: '100%' }} variant="filled" style={{color: "white"}}>

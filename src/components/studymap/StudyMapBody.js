@@ -24,7 +24,6 @@ const StudyMapBody = () => {
                 'Authorization': `Bearer ${token}`
             }
         };
-        console.log("http://" + window.location.hostname + ":8080/api/v1/map/" + params.mapId);
         axios.get("http://" + window.location.hostname + ":8080/api/v1/map/" + params.mapId, config)
             .then((response) => {
                 setStudyMap(response.data);

@@ -3,8 +3,11 @@ import AddGridItem from "./AddGridItem";
 import ContentItem from "../welcome/ContentItem";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function StudyMapsGrid() {
+    const navigate = useNavigate();
+
     const [ownStudyMaps, setOwnStudyMaps] = useState(null);
     const [ownStudyMapsError, setOwnStudyMapsError] = useState(null);
 
@@ -71,7 +74,7 @@ function StudyMapsGrid() {
             </Snackbar>
 
             <Grid item md={4} style={{ padding: "0 10px" }}>
-                <AddGridItem />
+                <AddGridItem label={"Add StudyMap"} onClick={() => navigate('/map/create')} />
             </Grid>
         </Grid>
     )
