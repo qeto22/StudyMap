@@ -1,9 +1,12 @@
-import { Box, Button, Container, Divider, InputAdornment, Stack, Step, StepLabel, Stepper, Typography } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Container, Divider, IconButton, InputAdornment, Stack, Step, StepLabel, Stepper, Typography } from "@mui/material";
 import React from "react";
 import ContentItem from "../welcome/ContentItem";
 import FormTextInput from "../login/FormTextInput";
 import { AuthContext } from "../AuthProvider";
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import { Delete, ExpandMore } from "@mui/icons-material";
+import VideoLibraryIcon from '@mui/icons-material/VideoLibrary';
+import VideoFileIcon from '@mui/icons-material/VideoFile';
 
 const steps = ['Course Title, Image & Price', 'Course Sections & Videos', 'Course Description & Tags'];
 
@@ -24,6 +27,51 @@ function CourseCreationBody() {
             setImageFile(file);
         }
     };
+
+    const addSection = () => {
+        const newSection = {
+            title: '',
+            videos: []
+        }
+        setSections([...sections, newSection]);
+    }
+
+    const addVideo = (sectionIndex) => {
+        const newSections = [...sections];
+        newSections[sectionIndex].videos.push({
+            title: '',
+            url: ''
+        });
+        setSections(newSections);
+    }
+
+    const deleteSection = (index) => {
+        setSections(sections.filter((item, i) => i !== index));
+    }
+
+    const deleteVideo = (sectionIndex, videoIndex) => {
+        const newSections = [...sections];
+        newSections[sectionIndex].videos = newSections[sectionIndex].videos.filter((item, i) => i !== videoIndex);
+        setSections(newSections);
+    }
+
+    const setSectionTitle = (index, title) => {
+        const newSections = [...sections];
+        newSections[index].title = title;
+        setSections(newSections);
+    }
+
+    const setVideoTitle = (sectionIndex, videoIndex, title) => {
+        const newSections = [...sections];
+        newSections[sectionIndex].videos[videoIndex].title = title;
+        setSections(newSections);
+    }
+
+    const setVideoFile = (sectionIndex, videoIndex, url) => {
+        const newSections = [...sections];
+        newSections[sectionIndex].videos[videoIndex].url = url;
+        setSections(newSections);
+    }
 
     let content;
     switch (activeStep) {
@@ -65,12 +113,76 @@ function CourseCreationBody() {
             </div>;
             break;
         case 1:
+            // Todo: Move this as a component
             content = <div style={{ marginTop: "25px" }}>
                 <div style={{ display: "flex", justifyContent: "right" }}>
-                    <Button variant="outlined" color="material" style={{ marginLeft: "auto" }}>Add a Section</Button>
+                    <Button variant="outlined" color="material" style={{ marginLeft: "auto" }} onClick={addSection}>Add a Section</Button>
                 </div>
-                <Stack spacing={2}>
-                    {/* Loop throught sections and create a dynamic sections */}
+                <Stack spacing={2} style={{ marginTop: "15px" }}>
+                    {sections.map((item, index) => (
+                        <Accordion key={index}>
+                            <AccordionSummary
+                                expandIcon={<ExpandMore />}
+                            >
+                                <VideoLibraryIcon size="small" style={{ marginRight: "8px", alignSelf: "center" }} />
+                                <Typography style={{ flexGrow: 1, alignSelf: "center", color: item.title === '' ? 'rgba(255, 255, 255, 0.5)' : 'white' }}>{item.title === '' ? 'Please enter section title' : item.title}</Typography>
+                                <IconButton
+                                    color="material"
+                                    aria-label="delete section"
+                                    component="span"
+                                    size="small"
+                                    onClick={(e) => {
+                                        e.stopPropagation(); // Prevent accordion from expanding/collapsing when deleting
+                                        deleteSection(index);
+                                    }}
+                                >
+                                    <Delete />
+                                </IconButton>
+                            </AccordionSummary>
+                            <AccordionDetails>
+                                <FormTextInput label={"Section Title"} onChange={(e) => setSectionTitle(index, e.target.value)}></FormTextInput>
+                                <label style={{ fontSize: "14px", display: "inline-block", marginTop: "15px" }}>Videos</label>
+                                <div style={{ display: "flex", justifyContent: "right" }}>
+                                    <Button variant="outlined" color="success" style={{ marginLeft: "auto" }} size="small" onClick={() => addVideo(index)}>Add a Video</Button>
+                                </div>
+                                {item.videos.map((video, videoIndex) => (
+                                    // Todo: make this accordion smaller
+                                    <Accordion size="small" key={`${index}.${videoIndex}`} style={{
+                                        marginTop: "10px",
+                                        border: "1px solid rgba(255, 255, 255, 0.3)",
+                                        borderRadius: "6px"
+                                    }}>
+                                        <AccordionSummary
+                                            expandIcon={<ExpandMore />}
+                                        >
+                                            <VideoFileIcon size="small" style={{ marginRight: "8px", alignSelf: "center" }} />
+                                            <Typography style={{ flexGrow: 1, alignSelf: "center", color: video.title === '' ? 'rgba(255, 255, 255, 0.5)' : 'white' }}>{video.title === '' ? 'Please enter video title' : video.title}</Typography>
+                                            <IconButton
+                                                color="material"
+                                                aria-label="delete section"
+                                                component="span"
+                                                size="small"
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    deleteVideo(index, videoIndex);
+                                                }}
+                                            >
+                                                <Delete />
+                                            </IconButton>
+                                        </AccordionSummary>
+                                        <AccordionDetails>
+                                            <FormTextInput label={"Video Title"}
+                                                onChange={(event) => setVideoTitle(index, videoIndex, event.target.value)}></FormTextInput>
+                                            <FormTextInput label={"Video File (Supports MP4, AVI, MKV, MOV...)"}
+                                                type={'file'}
+                                                style={{ marginTop: "10px" }}
+                                                onChange={(event) => setVideoFile(index, videoIndex, event.target.value)}></FormTextInput>
+                                        </AccordionDetails>
+                                    </Accordion>
+                                ))}
+                            </AccordionDetails>
+                        </Accordion>
+                    ))}
                 </Stack>
             </div>
             break;
