@@ -5,7 +5,7 @@ import "./ContentItem.css"
 import { useNavigate } from "react-router-dom";
 
 
-function ContentItem({ id, type, title, imageSrc, authorName, hideOverview }) {
+function ContentItem({ id, type, title, imageSrc, authorName, authorImageSrc, hideOverview }) {
     const navigate = useNavigate();
 
     const onContentClicked = () => {
@@ -45,7 +45,7 @@ function ContentItem({ id, type, title, imageSrc, authorName, hideOverview }) {
                     {type === 'Course' ? <Typography className="">$100.00</Typography> : <></>}
                 </div>
                 <div className="content-author-wrapper">
-                    <img alt="mee" src="https://media.licdn.com/dms/image/C4D03AQEV9v3FiWwyuw/profile-displayphoto-shrink_800_800/0/1635665530246?e=2147483647&v=beta&t=3H--_iRB_mZuKpjExzlFiS_PKRwBnfnUMAJhDpoMa5c" />
+                    <img alt="mee" src={authorImageSrc ? authorImageSrc : '/default-icon.png'} />
                     <Typography className="content-author" onClick={onAuthorClicked}>{authorName}</Typography>
                 </div>
                 <div className="content-rating-wrapper">

@@ -6,7 +6,7 @@ import DownloadIcon from '@mui/icons-material/Download';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import { LockOpen } from "@mui/icons-material";
 
-function StudyMapVisualisation() {
+function StudyMapVisualisation({ studyMapData }) {
     const [anchorEl, setAnchorEl] = useState(null);
     const [cyInstance, setCyInstance] = useState(null);
     const [visualisationLocked, setVisualisationLocked] = useState(true);
@@ -19,17 +19,7 @@ function StudyMapVisualisation() {
             userPanningEnabled: !visualisationLocked,
             panningEnabled: !visualisationLocked,
             container: document.getElementById('cy'),
-            elements: [
-                // Sample nodes
-                { data: { id: 'jsRoot', label: 'Javascript'} },
-                { data: { id: 'basics', label: 'Basics' } },
-                { data: { id: 'variableTypes', label: 'Variable Types' } },
-                { data: { id: 'loops', label: 'Loops' } },
-                // Sample edges
-                { data: { id: 'basicsEdge', source: 'jsRoot', target: 'basics' } },
-                { data: { id: 'variableBasicEdge', source: 'basics', target: 'variableTypes' } },
-                { data: { id: 'loopsBasicEdge', source: 'basics', target: 'loops' } },
-            ],
+            elements: studyMapData,
             style: [
                 {
                     selector: 'node',
