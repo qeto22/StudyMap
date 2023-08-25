@@ -1,10 +1,11 @@
-import { Box, Button, Container, Divider, InputAdornment, Step, StepLabel, Stepper, Typography } from "@mui/material";
+import { Box, Button, Container, Divider, InputAdornment, MenuItem, OutlinedInput, Select, Step, StepLabel, Stepper, Typography } from "@mui/material";
 import React from "react";
 import ContentItem from "../welcome/ContentItem";
 import FormTextInput from "../login/FormTextInput";
 import { AuthContext } from "../AuthProvider";
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import CourseVideoUpload from "./CourseVideoUpload";
+import { categories } from "../search/CategoriesList";
 
 const steps = ['Course Title, Image & Price', 'Course Sections & Videos', 'Course Description & Tags'];
 
@@ -89,15 +90,53 @@ function CourseCreationBody() {
                 </div>
 
                 <Divider></Divider>
-                <FormTextInput label={"StudyMap Image"}
+                <FormTextInput label={"Course Image"}
                     type={'file'}
                     onChange={handleImageChange}
                     accept={'image/*'}
-                    style={{ marginBottom: "10px" }}></FormTextInput>
-                <FormTextInput label={"StudyMap Name"}
+                    style={{ marginTop: "10px" }}></FormTextInput>
+                <FormTextInput style={{ marginTop: "10px" }} label={"Course Name"}
                     defaultValue={courseTitle}
                     onChange={(e) => setCourseTitle(e.target.value)} />
-                <FormTextInput label={"Price"}
+                <div style={{ marginTop: "10px" }}>
+                    <label style={{ fontSize: "14px", marginBottom: "5px" }}>Category</label>
+                    <Select
+                        size="small"
+                        variant="outlined"
+                        style={{
+                            marginTop: "10px",
+                            width: "100%"
+                        }}
+                        input={
+                            <OutlinedInput
+                                sx={{
+                                    '&.MuiOutlinedInput-root': {
+                                        '&:hover .MuiOutlinedInput-notchedOutline': {
+                                            borderColor: 'rgba(255, 255, 255, 0.3)',
+                                        },
+                                        '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                            borderColor: 'rgb(47, 129, 247)',
+                                        },
+                                        '.MuiOutlinedInput-notchedOutline': {
+                                            borderColor: 'rgba(255, 255, 255, 0.3)',
+                                        },
+                                    },
+                                }}
+                            />
+                        }
+                    >
+                        {/* Loop through categories and show menu item with icons on the left */}
+                        {categories.map((category) => (
+                            <MenuItem key={category.name} value={category.name}>
+                                <div style={{ display: "flex", justifyContent: "left", alignItems: "center", gap: "15px" }}>
+                                    {category.icon}
+                                    <Typography style={{ fontSize: "14px" }}> {category.name} </Typography>
+                                </div>
+                            </MenuItem>
+                        ))}
+                    </Select>
+                </div>
+                <FormTextInput style={{ marginTop: "10px" }} label={"Price"}
                     type={'number'}
                     defaultValue={coursePrice}
                     InputProps={{
@@ -112,18 +151,19 @@ function CourseCreationBody() {
             break;
         case 1:
             content = <CourseVideoUpload
-                        addSection={addSection}
-                        sections={sections}
-                        deleteSection={deleteSection}
-                        addVideo={addVideo}
-                        deleteVideo={deleteVideo}
-                        setSectionTitle={setSectionTitle}
-                        setVideoTitle={setVideoTitle}
-                        setVideoFile={setVideoFile} />
+                addSection={addSection}
+                sections={sections}
+                deleteSection={deleteSection}
+                addVideo={addVideo}
+                deleteVideo={deleteVideo}
+                setSectionTitle={setSectionTitle}
+                setVideoTitle={setVideoTitle}
+                setVideoFile={setVideoFile} />
             break;
         case 2:
             content = <div>
-                <h1>Third Step</h1>
+                <FormTextInput label={"Course Description"} multiline={true} rows={4} />
+                <FormTextInput label={"Course Tags (seperated by commas)"} style={{ marginTop: "15px" }} multiline={false} rows={1} />
             </div>;
             break;
         default:

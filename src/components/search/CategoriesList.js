@@ -12,26 +12,26 @@ import CameraEnhanceIcon from '@mui/icons-material/CameraEnhance';
 import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
 import { useLocation, useNavigate } from "react-router-dom";
 
+const categories = [
+    { name: 'Development', icon: <CodeIcon color="primary" fontSize="small" /> },
+    { name: 'Business', icon: <WorkIcon color="primary" fontSize="small" /> },
+    { name: 'Finance & Accounting', icon: <AccountBalanceIcon color="primary" fontSize="small" /> },
+    { name: 'IT & Software', icon: <CloudIcon color="primary" fontSize="small" /> },
+    { name: 'Office Productivity', icon: <HomeWorkIcon color="primary" fontSize="small" /> },
+    { name: 'Personal Development', icon: <SettingsAccessibilityIcon color="primary" fontSize="small" /> },
+    { name: 'Design', icon: <BrushIcon color="primary" fontSize="small" /> },
+    { name: 'Marketing', icon: <CampaignIcon color="primary" fontSize="small" /> },
+    { name: 'Lifestyle', icon: <FitnessCenterIcon color="primary" fontSize="small" /> },
+    { name: 'Photography & Video', icon: <CameraEnhanceIcon color="primary" fontSize="small" /> },
+    { name: 'Music', icon: <LibraryMusicIcon color="primary" fontSize="small" /> }
+];
+
 function CategoriesList() {
     const navigate = useNavigate();
 
     const location = useLocation();
     const params = new URLSearchParams(location.search);
     const currentCategory = params.get('category');
-
-    const categories = [
-        { name: 'Development', icon: <CodeIcon color="primary" fontSize="small" /> },
-        { name: 'Business', icon: <WorkIcon color="primary" fontSize="small" /> },
-        { name: 'Finance & Accounting', icon: <AccountBalanceIcon color="primary" fontSize="small" /> },
-        { name: 'IT & Software', icon: <CloudIcon color="primary" fontSize="small" /> },
-        { name: 'Office Productivity', icon: <HomeWorkIcon color="primary" fontSize="small" /> },
-        { name: 'Personal Development', icon: <SettingsAccessibilityIcon color="primary" fontSize="small" /> },
-        { name: 'Design', icon: <BrushIcon color="primary" fontSize="small" /> },
-        { name: 'Marketing', icon: <CampaignIcon color="primary" fontSize="small" /> },
-        { name: 'Lifestyle', icon: <FitnessCenterIcon color="primary" fontSize="small" /> },
-        { name: 'Photography & Video', icon: <CameraEnhanceIcon color="primary" fontSize="small" /> },
-        { name: 'Music', icon: <LibraryMusicIcon color="primary" fontSize="small" /> }
-    ];
 
     const onCategoryClick = (category) => {
         navigate('/search?category=' + encodeURIComponent(category));
@@ -54,3 +54,4 @@ function CategoriesList() {
 }
 
 export default CategoriesList;
+export { categories };
