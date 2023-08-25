@@ -77,8 +77,6 @@ function StudyMapCreationBody() {
         } catch (ex) {
             setUploadErrorMessage('Error occurred uploading StudyMap!');
         }
-
-
     }
 
     let content;

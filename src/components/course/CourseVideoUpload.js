@@ -68,7 +68,7 @@ function CourseVideoUpload({ addSection, sections, deleteSection, addVideo, dele
                                     <FormTextInput label={"Video File (Supports MP4, AVI, MKV, MOV...)"}
                                         type={'file'}
                                         style={{ marginTop: "10px" }}
-                                        onChange={(event) => setVideoFile(index, videoIndex, event.target.value)}></FormTextInput>
+                                        onChange={(event) => setVideoFile(index, videoIndex, event.target.files[0])}></FormTextInput>
                                 </AccordionDetails>
                             </Accordion>
                         ))}

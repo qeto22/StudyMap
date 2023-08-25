@@ -1,11 +1,14 @@
-import { Box, Button, Container, Divider, InputAdornment, MenuItem, OutlinedInput, Select, Step, StepLabel, Stepper, Typography } from "@mui/material";
-import React from "react";
+import { Alert, Box, Button, Container, Divider, InputAdornment, LinearProgress, MenuItem, OutlinedInput, Select, Step, StepLabel, Stepper, Typography } from "@mui/material";
+import React, { useEffect } from "react";
 import ContentItem from "../welcome/ContentItem";
 import FormTextInput from "../login/FormTextInput";
 import { AuthContext } from "../AuthProvider";
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import CourseVideoUpload from "./CourseVideoUpload";
 import { categories } from "../search/CategoriesList";
+import axios from "axios";
+import { OpenInNew } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 const steps = ['Course Title, Image & Price', 'Course Sections & Videos', 'Course Description & Tags'];
 
@@ -13,12 +16,29 @@ function CourseCreationBody() {
     const { user } = React.useContext(AuthContext);
     const userName = user === null ? '' : (user.firstName.concat(' ').concat(user.lastName));
 
+    const navigate = useNavigate();
+
     const [activeStep, setActiveStep] = React.useState(0);
 
-    const [courseTitle, setCourseTitle] = React.useState('');
     const [imageFile, setImageFile] = React.useState(null);
+    const [courseTitle, setCourseTitle] = React.useState('');
+    const [courseCategory, setCourseCategory] = React.useState(null);
     const [coursePrice, setCoursePrice] = React.useState(null);
-    const [sections, setSections] = React.useState([]);
+    const [courseSections, setCourseSections] = React.useState([]);
+    const [courseDescription, setCourseDescription] = React.useState('');
+    const [courseTags, setCourseTags] = React.useState('');
+
+    const [courseId, setCourseId] = React.useState(null);
+    const [uploadedCourseSections, setUploadedCourseSections] = React.useState([]);
+    const [courseUploadError, setCourseUploadError] = React.useState(null);
+
+    const handleNext = () => {
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    };
+
+    const handleBack = () => {
+        setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    };
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
@@ -32,45 +52,130 @@ function CourseCreationBody() {
             title: '',
             videos: []
         }
-        setSections([...sections, newSection]);
+        setCourseSections([...courseSections, newSection]);
     }
 
     const addVideo = (sectionIndex) => {
-        const newSections = [...sections];
+        const newSections = [...courseSections];
         newSections[sectionIndex].videos.push({
             title: '',
             url: ''
         });
-        setSections(newSections);
+        setCourseSections(newSections);
     }
 
     const deleteSection = (index) => {
-        setSections(sections.filter((item, i) => i !== index));
+        setCourseSections(courseSections.filter((item, i) => i !== index));
     }
 
     const deleteVideo = (sectionIndex, videoIndex) => {
-        const newSections = [...sections];
+        const newSections = [...courseSections];
         newSections[sectionIndex].videos = newSections[sectionIndex].videos.filter((item, i) => i !== videoIndex);
-        setSections(newSections);
+        setCourseSections(newSections);
     }
 
     const setSectionTitle = (index, title) => {
-        const newSections = [...sections];
+        const newSections = [...courseSections];
         newSections[index].title = title;
-        setSections(newSections);
+        setCourseSections(newSections);
     }
 
     const setVideoTitle = (sectionIndex, videoIndex, title) => {
-        const newSections = [...sections];
+        const newSections = [...courseSections];
         newSections[sectionIndex].videos[videoIndex].title = title;
-        setSections(newSections);
+        setCourseSections(newSections);
     }
 
     const setVideoFile = (sectionIndex, videoIndex, url) => {
-        const newSections = [...sections];
+        const newSections = [...courseSections];
         newSections[sectionIndex].videos[videoIndex].url = url;
-        setSections(newSections);
+        setCourseSections(newSections);
     }
+
+    const uploadCourse = async () => {
+        const token = localStorage.getItem('token');
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'multipart/form-data',
+            },
+        };
+
+        const formData = new FormData();
+        formData.append("request", new Blob([JSON.stringify({
+            courseTitle,
+            courseCategory,
+            coursePrice,
+            courseDescription,
+            courseTags,
+        })], { type: 'application/json' }));
+        formData.append("image", imageFile, imageFile.name);
+
+        try {
+            const response = await axios.post('http://' + window.location.hostname + ':8080/api/v1/course/create', formData, config);
+            console.log(response);
+            if (response.status === 200) {
+                setCourseId(response.data.id);
+            } else {
+                setCourseUploadError('Error occurred uploading Course Details!');
+            }
+        } catch (ex) {
+            console.log(ex);
+            setCourseUploadError('Error occurred uploading Course Details!');
+        }
+    }
+
+    const uploadCourseSection = async (section) => {
+        const token = localStorage.getItem('token');
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'multipart/form-data',
+            },
+        };
+        
+        const formData = new FormData();
+        formData.append("request", new Blob([JSON.stringify({
+            courseId,
+            sectionTitle: section.title,
+            videoTitles: section.videos.map((video) => video.title)
+        })], { type: 'application/json' }));
+
+        for (let i = 0; i < section.videos.length; i++) {
+            const video = section.videos[i];
+            formData.append("videos", video.url, video.url.name);
+        }
+
+        try {
+            const response = await axios.post('http://' + window.location.hostname + ':8080/api/v1/course/section', formData, config);
+            if (response.status !== 200) {
+                setCourseUploadError(`Error occurred uploading Section ${section.title}!`);
+            } else {
+                setUploadedCourseSections([...uploadedCourseSections, section]);
+            }
+        } catch (ex) {
+            setCourseUploadError(`Error occurred uploading Section ${section.title}!`);
+        }
+    }
+
+    useEffect(() => {
+        if (courseId === null) {
+            return;
+        }
+
+        const sectionsToUpload = courseSections.filter((section, index) => !uploadedCourseSections.includes(section))
+        
+        for (let i = 0; i < sectionsToUpload.length; i++) {
+            console.log("Shemovida");
+            const section = sectionsToUpload[i];
+            if (courseUploadError) {
+                break;
+            }
+            console.log("Movida 2");
+            uploadCourseSection(section);
+        }
+    }, [courseId]);
+
 
     let content;
     switch (activeStep) {
@@ -107,6 +212,8 @@ function CourseCreationBody() {
                             marginTop: "10px",
                             width: "100%"
                         }}
+                        value={courseCategory}
+                        onChange={(e) => setCourseCategory(e.target.value)}
                         input={
                             <OutlinedInput
                                 sx={{
@@ -152,7 +259,7 @@ function CourseCreationBody() {
         case 1:
             content = <CourseVideoUpload
                 addSection={addSection}
-                sections={sections}
+                sections={courseSections}
                 deleteSection={deleteSection}
                 addVideo={addVideo}
                 deleteVideo={deleteVideo}
@@ -162,22 +269,18 @@ function CourseCreationBody() {
             break;
         case 2:
             content = <div>
-                <FormTextInput label={"Course Description"} multiline={true} rows={4} />
-                <FormTextInput label={"Course Tags (seperated by commas)"} style={{ marginTop: "15px" }} multiline={false} rows={1} />
+                <FormTextInput value={courseDescription} onChange={(e) => setCourseDescription(e.target.value)} label={"Course Description"} multiline={true} rows={4} />
+                <FormTextInput value={courseTags} onChange={(e) => setCourseTags(e.target.value)} label={"Course Tags (seperated by commas)"} style={{ marginTop: "15px" }} multiline={false} rows={1} />
             </div>;
+            break;
+        case 3:
+            handleNext()
+            uploadCourse();
             break;
         default:
             content = null;
             break;
     }
-
-    const handleNext = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    };
-
-    const handleBack = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    };
 
     return (<Container maxWidth="md">
         <Box sx={{ width: '100%', marginTop: "40px", marginBottom: "40px" }}>
@@ -193,27 +296,61 @@ function CourseCreationBody() {
                     );
                 })}
             </Stepper>
-            <React.Fragment>
-                <div style={{ margin: "15px auto" }}>
-                    {content}
-                </div>
-                <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-                    <Button
-                        color="material"
-                        variant="contained"
-                        disabled={activeStep === 0}
-                        onClick={handleBack}
-                        sx={{ mr: 1, width: "100px" }}
-                    >
-                        Back
-                    </Button>
-                    <Box sx={{ flex: '1 1 auto' }} />
+            {activeStep >= steps.length ? (
+                <React.Fragment>
+                    {courseId && uploadedCourseSections.length === courseSections.length ? (
+                        <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
+                            <Button color='success' variant='contained'
+                                onClick={() => { navigate(`/course/${courseId}`) }}
+                                style={{ margin: "40px", color: "white" }}>
+                                <OpenInNew fontSize='small' /> &nbsp;&nbsp; View Course Page
+                            </Button>
+                        </div>
+                    ) : (<></>)}
 
-                    <Button onClick={handleNext} color="material" variant="contained" style={{ width: "100px" }}>
-                        {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-                    </Button>
-                </Box>
-            </React.Fragment>
+                    {courseUploadError ? (
+                        <div style={{ width: "100%", display: "flex", justifyContent: "center", margin: "30px auto" }}>
+                            <Alert severity="error" style={{ background: "rgb(211, 47, 47)" }} variant="contained">{courseUploadError}</Alert>
+                        </div>
+                    ) : (<></>)}
+
+                    {!courseId ? (
+                        <div style={{ width: "80%", margin: "0 auto" }}>
+                            <Typography style={{ fontSize: "16px", textAlign: "center", marginTop: "40px" }}>Uploading Course Data</Typography>
+                            <LinearProgress color="material" sx={{ mt: "15px" }} />
+                        </div>
+                    ) : (<></>)}
+
+                    {courseId && uploadedCourseSections.length !== courseSections.length ? (
+                        <div style={{ width: "80%", margin: "0 auto" }}>
+                            <Typography style={{ fontSize: "16px", textAlign: "center", marginTop: "40px" }}>Uploading Videos</Typography>
+                            <LinearProgress color="material" value={(uploadedCourseSections.length / courseSections.length) * 100} sx={{ mt: "15px" }} />
+                        </div>
+                    ) : (<></>)}
+
+                </React.Fragment>
+            ) : (
+                <React.Fragment>
+                    <div style={{ margin: "15px auto" }}>
+                        {content}
+                    </div>
+                    <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+                        <Button
+                            color="material"
+                            variant="contained"
+                            disabled={activeStep === 0}
+                            onClick={handleBack}
+                            sx={{ mr: 1, width: "100px" }}
+                        >
+                            Back
+                        </Button>
+                        <Box sx={{ flex: '1 1 auto' }} />
+
+                        <Button onClick={handleNext} color="material" variant="contained" style={{ width: "100px" }}>
+                            {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                        </Button>
+                    </Box>
+                </React.Fragment>)}
         </Box>
     </Container>);
 }
