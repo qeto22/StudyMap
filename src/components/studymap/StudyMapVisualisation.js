@@ -63,13 +63,10 @@ function StudyMapVisualisation({ studyMapData }) {
         cy.on('click', 'node', event => {
             const cyDiv = document.getElementById('cy');
             const cytoscapePosition = cyDiv.getBoundingClientRect();
-            console.log(cytoscapePosition);
-
 
             const node = event.target;
             const renderedPosition = node.renderedPosition();
             const renderedWidth = node.renderedWidth();
-            console.log(renderedPosition)
 
             const newPosX = cytoscapePosition.x + renderedPosition.x + 10;
             const newPosY = cytoscapePosition.y + renderedPosition.y - 15;

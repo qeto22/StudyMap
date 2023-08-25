@@ -18,7 +18,6 @@ function SearchBar({ width, marginLeft }) {
       }
     })
       .then(response => {
-        console.log(response.data.courses);
         setSearchResults(response.data.courses);
       })
       .catch(error => {

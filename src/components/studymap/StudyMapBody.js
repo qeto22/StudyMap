@@ -50,7 +50,7 @@ const StudyMapBody = () => {
             <Skeleton height={450}></Skeleton>
         </Container>)
     }
-    console.log(studyMap);
+    
     return (
         <Container maxWidth="lg">
             <Typography style={{

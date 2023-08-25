@@ -13,12 +13,6 @@ const CreditCardForm = () => {
     const [cvv, setCvv] = useState('');
 
     const handleBuyClick = () => {
-        // Handle the buy button click action here
-        console.log('Buy button clicked');
-        console.log('Holder Name:', holderName);
-        console.log('Card Number:', cardNumber);
-        console.log('Expiration Date:', expirationDate);
-        console.log('CVV:', cvv);
     };
 
     return (

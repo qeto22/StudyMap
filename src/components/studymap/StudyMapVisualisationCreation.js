@@ -58,7 +58,6 @@ function StudyMapVisualisationCreation({nodeData, setNodeData}) {
             const currNodeId = node.data().id;
             for (let i = 0; i < nodeData.length; i++) {
                 if (currNodeId === nodeData[i].data.id) {
-                    console.log(nodeData[i]);
                     setSelectedNode(node.data());
                     break;
                 }

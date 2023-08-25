@@ -113,14 +113,12 @@ function CourseCreationBody() {
 
         try {
             const response = await axios.post('http://' + window.location.hostname + ':8080/api/v1/course/create', formData, config);
-            console.log(response);
             if (response.status === 200) {
                 setCourseId(response.data.id);
             } else {
                 setCourseUploadError('Error occurred uploading Course Details!');
             }
         } catch (ex) {
-            console.log(ex);
             setCourseUploadError('Error occurred uploading Course Details!');
         }
     }
@@ -166,12 +164,10 @@ function CourseCreationBody() {
         const sectionsToUpload = courseSections.filter((section, index) => !uploadedCourseSections.includes(section))
         
         for (let i = 0; i < sectionsToUpload.length; i++) {
-            console.log("Shemovida");
             const section = sectionsToUpload[i];
             if (courseUploadError) {
                 break;
             }
-            console.log("Movida 2");
             uploadCourseSection(section);
         }
     }, [courseId]);

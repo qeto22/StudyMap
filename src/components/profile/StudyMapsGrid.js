@@ -37,9 +37,6 @@ function StudyMapsGrid() {
         setOwnStudyMapsError(null);
     }
 
-    console.log("Prepase")
-    console.log(ownStudyMaps);
-
     return (
         <Grid container>
 
