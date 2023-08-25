@@ -31,7 +31,7 @@ function CourseVideoUpload({ addSection, sections, deleteSection, addVideo, dele
                         </IconButton>
                     </AccordionSummary>
                     <AccordionDetails>
-                        <FormTextInput label={"Section Title"} onChange={(e) => setSectionTitle(index, e.target.value)}></FormTextInput>
+                        <FormTextInput label={"Section Title"} defaultValue={item.title} onChange={(e) => setSectionTitle(index, e.target.value)}></FormTextInput>
                         <label style={{ fontSize: "14px", display: "inline-block", marginTop: "15px" }}>Videos</label>
                         <div style={{ display: "flex", justifyContent: "right" }}>
                             <Button variant="outlined" color="success" style={{ marginLeft: "auto" }} size="small" onClick={() => addVideo(index)}>Add a Video</Button>
@@ -64,6 +64,7 @@ function CourseVideoUpload({ addSection, sections, deleteSection, addVideo, dele
                                 </AccordionSummary>
                                 <AccordionDetails>
                                     <FormTextInput label={"Video Title"}
+                                        defaultValue={video.title}
                                         onChange={(event) => setVideoTitle(index, videoIndex, event.target.value)}></FormTextInput>
                                     <FormTextInput label={"Video File (Supports MP4, AVI, MKV, MOV...)"}
                                         type={'file'}

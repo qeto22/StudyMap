@@ -26,6 +26,7 @@ function CourseCreationBody() {
     const [coursePrice, setCoursePrice] = React.useState(null);
     const [courseSections, setCourseSections] = React.useState([]);
     const [courseDescription, setCourseDescription] = React.useState('');
+    const [courseLearningObjectives, setCourseLearningObjectives] = React.useState('');
     const [courseTags, setCourseTags] = React.useState('');
 
     const [courseId, setCourseId] = React.useState(null);
@@ -108,6 +109,7 @@ function CourseCreationBody() {
             coursePrice,
             courseDescription,
             courseTags,
+            courseLearningObjectives
         })], { type: 'application/json' }));
         formData.append("image", imageFile, imageFile.name);
 
@@ -228,7 +230,6 @@ function CourseCreationBody() {
                             />
                         }
                     >
-                        {/* Loop through categories and show menu item with icons on the left */}
                         {categories.map((category) => (
                             <MenuItem key={category.name} value={category.name}>
                                 <div style={{ display: "flex", justifyContent: "left", alignItems: "center", gap: "15px" }}>
@@ -265,8 +266,9 @@ function CourseCreationBody() {
             break;
         case 2:
             content = <div>
-                <FormTextInput value={courseDescription} onChange={(e) => setCourseDescription(e.target.value)} label={"Course Description"} multiline={true} rows={4} />
-                <FormTextInput value={courseTags} onChange={(e) => setCourseTags(e.target.value)} label={"Course Tags (seperated by commas)"} style={{ marginTop: "15px" }} multiline={false} rows={1} />
+                <FormTextInput defaultValue={courseDescription} onChange={(e) => setCourseDescription(e.target.value)} label={"Course Description"} multiline={true} rows={4} />
+                <FormTextInput defaultValue={courseLearningObjectives} onChange={(e) => setCourseLearningObjectives(e.target.value)} label={"What you'll learn"} multiline={true} rows={4} style={{ marginTop: "10px" }} />
+                <FormTextInput defaultValue={courseTags} onChange={(e) => setCourseTags(e.target.value)} label={"Course Tags (seperated by commas)"} style={{ marginTop: "10px" }} multiline={false} rows={1} />
             </div>;
             break;
         case 3:
