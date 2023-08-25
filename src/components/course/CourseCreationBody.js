@@ -147,27 +147,28 @@ function CourseCreationBody() {
                                 </div>
                                 {item.videos.map((video, videoIndex) => (
                                     // Todo: make this accordion smaller
-                                    <Accordion size="small" key={`${index}.${videoIndex}`} style={{
+                                    <Accordion key={`${index}.${videoIndex}`} style={{
                                         marginTop: "10px",
                                         border: "1px solid rgba(255, 255, 255, 0.3)",
                                         borderRadius: "6px"
-                                    }}>
+                                    }} size="small" >
                                         <AccordionSummary
                                             expandIcon={<ExpandMore />}
+                                            style={{ height: "20px" }}
                                         >
-                                            <VideoFileIcon size="small" style={{ marginRight: "8px", alignSelf: "center" }} />
-                                            <Typography style={{ flexGrow: 1, alignSelf: "center", color: video.title === '' ? 'rgba(255, 255, 255, 0.5)' : 'white' }}>{video.title === '' ? 'Please enter video title' : video.title}</Typography>
+                                            <VideoFileIcon style={{ marginRight: "8px", alignSelf: "center", fontSize: "17px" }} />
+                                            <Typography style={{ flexGrow: 1, alignSelf: "center", fontSize: "14px", color: video.title === '' ? 'rgba(255, 255, 255, 0.5)' : 'white' }}>{video.title === '' ? 'Please enter video title' : video.title}</Typography>
                                             <IconButton
                                                 color="material"
                                                 aria-label="delete section"
                                                 component="span"
-                                                size="small"
                                                 onClick={(e) => {
                                                     e.stopPropagation();
                                                     deleteVideo(index, videoIndex);
                                                 }}
                                             >
-                                                <Delete />
+                                                <Delete
+                                                    style={{ fontSize: "17px" }} />
                                             </IconButton>
                                         </AccordionSummary>
                                         <AccordionDetails>
