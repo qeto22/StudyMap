@@ -42,7 +42,7 @@ function ContentItem({ id, type, title, imageSrc, authorName, authorImageSrc, hi
                     cursor: "pointer"
                 }} onClick={onContentClicked}>
                     <Typography className="content-title">{title}</Typography>
-                    {type === 'Course' ? <Typography className="">{price !== null && price >= 0 ? `$${price}` : 'FREE'}</Typography> : <></>}
+                    {type === 'Course' ? <Typography className="">{price !== null && price > 0 ? `$${(Math.round(price * 100) / 100).toFixed(2)}` : 'FREE'}</Typography> : <></>}
                 </div>
                 <div className="content-author-wrapper">
                     <img alt="mee" src={authorImageSrc ? authorImageSrc : '/default-icon.png'} />
