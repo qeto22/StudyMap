@@ -4,16 +4,19 @@ import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import { Container, Grid, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography } from "@mui/material";
 import { Settings } from "@mui/icons-material";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useLocation } from "react-router-dom";
 import StudyMapsGrid from "./StudyMapsGrid";
 import CourseGrid from "./CourseGrid";
+import { AuthContext } from "../AuthProvider";
 
 function useQuery() {
     return new URLSearchParams(useLocation().search);
 }
 
 function ProfileBody() {
+    const { user } = useContext(AuthContext);
+
     const query = useQuery();
     const tabValue = query.get("tab") || "profile";
     const [selectedItem, setSelectedItem] = useState(tabValue);
@@ -73,7 +76,7 @@ function ProfileBody() {
                             <ListItemIcon>
                                 <SupervisorAccountIcon style={{ fontSize: '23px' }} />
                             </ListItemIcon>
-                            <ListItemText primary="Meeting with Mentors" primaryTypographyProps={{ fontSize: '15px' }} />
+                            <ListItemText primary={"Meeting with " + (user && user.type === 'MENTOR' ? 'Mentee' : 'Mentors')} primaryTypographyProps={{ fontSize: '15px' }} />
                         </ListItemButton>
                     </ListItem>
                     <ListItem divider disablePadding>
