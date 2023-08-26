@@ -143,7 +143,7 @@ function WelcomeBody() {
                         </Typography>
                     </div>
                     <Grid container spacing={5} alignItems="center">
-                        {topStudyMaps ? (topStudyMaps.map((item, index) => (
+                        {topStudyMaps && topStudyMaps.length > 0 ? (topStudyMaps.map((item, index) => (
                             <Grid item xs={12} md={3}>
                                 <ContentItem id={item.mapId}
                                     type={'Map'}
@@ -177,7 +177,7 @@ function WelcomeBody() {
                         </Typography>
                     </div>
                     <Grid container spacing={5} alignItems="center">
-                        {topCourses ? (topCourses.map((item, index) => (
+                        {topCourses  && topCourses.length > 0 ? (topCourses.map((item, index) => (
                             <Grid item xs={12} md={3}>
                                 <ContentItem id={item.id}
                                     type={'Course'}
