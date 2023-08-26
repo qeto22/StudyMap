@@ -153,16 +153,16 @@ function WelcomeBody() {
                             </Grid>
                         ))) : <></>}
 
-                        {topStudyMaps === null ? <Grid item xs={12} md={3}>
+                        {topStudyMaps === null || topStudyMaps.length === 0 ? <Grid item xs={12} md={3}>
                             <LoadingContentItem />
                         </Grid> : <></>}
-                        {topStudyMaps === null ? <Grid item xs={12} md={3}>
+                        {topStudyMaps === null || topStudyMaps.length === 0 ? <Grid item xs={12} md={3}>
                             <LoadingContentItem />
                         </Grid> : <></>}
-                        {topStudyMaps === null ? <Grid item xs={12} md={3}>
+                        {topStudyMaps === null || topStudyMaps.length === 0 ? <Grid item xs={12} md={3}>
                             <LoadingContentItem />
                         </Grid> : <></>}
-                        {topStudyMaps === null ? <Grid item xs={12} md={3}>
+                        {topStudyMaps === null || topStudyMaps.length === 0 ? <Grid item xs={12} md={3}>
                             <LoadingContentItem />
                         </Grid> : <></>}
                     </Grid>
@@ -177,7 +177,7 @@ function WelcomeBody() {
                         </Typography>
                     </div>
                     <Grid container spacing={5} alignItems="center">
-                        {topCourses  && topCourses.length > 0 ? (topCourses.map((item, index) => (
+                        {topCourses && topCourses.length > 0 ? (topCourses.map((item, index) => (
                             <Grid item xs={12} md={3}>
                                 <ContentItem id={item.id}
                                     type={'Course'}
@@ -187,16 +187,16 @@ function WelcomeBody() {
                             </Grid>
                         ))) : <></>}
 
-                        {topCourses === null ? <Grid item xs={12} md={3}>
+                        {topCourses === null || topCourses.length === 0 ? <Grid item xs={12} md={3}>
                             <LoadingContentItem />
                         </Grid> : <></>}
-                        {topCourses === null ? <Grid item xs={12} md={3}>
+                        {topCourses === null || topCourses.length === 0 ? <Grid item xs={12} md={3}>
                             <LoadingContentItem />
                         </Grid> : <></>}
-                        {topCourses === null ? <Grid item xs={12} md={3}>
+                        {topCourses === null || topCourses.length === 0 ? <Grid item xs={12} md={3}>
                             <LoadingContentItem />
                         </Grid> : <></>}
-                        {topCourses === null ? <Grid item xs={12} md={3}>
+                        {topCourses === null || topCourses.length === 0 ? <Grid item xs={12} md={3}>
                             <LoadingContentItem />
                         </Grid> : <></>}
                     </Grid>
