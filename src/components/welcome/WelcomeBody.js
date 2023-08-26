@@ -1,11 +1,14 @@
 import { Button, Container, Grid, Hidden, Typography, useMediaQuery } from "@mui/material";
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import "@fontsource/roboto";
 import Typed from "typed.js";
 import SkillSlider from "./SkillSlider";
 import ContentItem from "./ContentItem";
 import { AuthContext } from "../AuthProvider";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import StudyMapsGrid from "../profile/StudyMapsGrid";
+import LoadingContentItem from "../profile/LoadingContentItem";
 
 function WelcomeBody() {
     const navigate = useNavigate();
@@ -14,6 +17,9 @@ function WelcomeBody() {
     const isLargeScreen = useMediaQuery((theme) => theme.breakpoints.up("md"));
 
     const typedRef = useRef(null);
+
+    const [topCourses, setTopCourses] = useState(null);
+    const [topStudyMaps, setTopStudyMaps] = useState(null);
 
     const handleLoginClick = () => {
         navigate('/login');
@@ -25,9 +31,9 @@ function WelcomeBody() {
 
     useEffect(() => {
         const options = {
-            strings: ['Code', 'Drive', 'Hike'], // An array of strings to be typed
-            typeSpeed: 100, // Typing speed in milliseconds
-            backSpeed: 150, // Backspacing speed in milliseconds
+            strings: ['Code', 'Drive', 'Hike', 'Teach'],
+            typeSpeed: 100,
+            backSpeed: 150,
             backDelay: 300,
             loop: true,
             parse: true
@@ -40,6 +46,39 @@ function WelcomeBody() {
             typedRef.current.destroy();
         };
     });
+
+    useEffect(() => {
+        if (topCourses) {
+            return;
+        }
+
+        axios.get("http://" + window.location.hostname + ":8080/api/v1/marketing/top-courses")
+            .then((response) => {
+                setTopCourses(response.data);
+            })
+            .catch((error) => {
+                setTopCourses([]);
+                console.error(error);
+            });
+    }, [topCourses]);
+
+    useEffect(() => {
+        if (topStudyMaps) {
+            return;
+        }
+
+        axios.get("http://" + window.location.hostname + ":8080/api/v1/marketing/top-study-maps")
+            .then((response) => {
+                setTopStudyMaps(response.data);
+            })
+            .catch((error) => {
+                setTopStudyMaps([]);
+                console.error(error);
+            });
+
+    }, [topStudyMaps]);
+
+    console.log(topCourses);
 
     const onExploreClicked = () => {
         navigate('/search')
@@ -104,36 +143,62 @@ function WelcomeBody() {
                         </Typography>
                     </div>
                     <Grid container spacing={5} alignItems="center">
-                        <Grid item xs={12} md={3}>
-                            <ContentItem id={1}
-                                type={'Course'}
-                                title={'How to work at Google'}
-                                imageSrc={"https://cdn.dribbble.com/users/1189961/screenshots/3546540/14._google_-_pixel_art_logo.jpg"}
-                                authorName={'Ketevan Bachalashvili'}></ContentItem>
-                        </Grid>
-                        <Grid item xs={12} md={3}>
-                            <ContentItem id={1}
-                                type={'Course'}
-                                title={'How to work at Google'}
-                                imageSrc={"https://cdn.dribbble.com/users/1189961/screenshots/3546540/14._google_-_pixel_art_logo.jpg"}
-                                authorName={'Ketevan Bachalashvili'}></ContentItem>
-                        </Grid>
-                        <Hidden mdDown>
-                            <Grid item xs={0} md={3}>
-                                <ContentItem id={1}
-                                    type={'Course'}
-                                    title={'How to work at Google'}
-                                    imageSrc={"https://cdn.dribbble.com/users/1189961/screenshots/3546540/14._google_-_pixel_art_logo.jpg"}
-                                    authorName={'Ketevan Bachalashvili'}></ContentItem>
+                        {topStudyMaps ? (topStudyMaps.map((item, index) => (
+                            <Grid item xs={12} md={3}>
+                                <ContentItem id={item.mapId}
+                                    type={'Map'}
+                                    title={item.mapTitle}
+                                    imageSrc={"http://" + window.location.hostname + ":8080" + item.imagePath}
+                                    authorName={item.author.name}></ContentItem>
                             </Grid>
-                            <Grid item xs={0} md={3}>
-                                <ContentItem id={1}
+                        ))) : <></>}
+
+                        {topStudyMaps === null ? <Grid item xs={12} md={3}>
+                            <LoadingContentItem />
+                        </Grid> : <></>}
+                        {topStudyMaps === null ? <Grid item xs={12} md={3}>
+                            <LoadingContentItem />
+                        </Grid> : <></>}
+                        {topStudyMaps === null ? <Grid item xs={12} md={3}>
+                            <LoadingContentItem />
+                        </Grid> : <></>}
+                        {topStudyMaps === null ? <Grid item xs={12} md={3}>
+                            <LoadingContentItem />
+                        </Grid> : <></>}
+                    </Grid>
+                </Container>
+            </div>
+            <div style={{ marginTop: isLargeScreen ? "100px" : "80px", marginBottom: "80px" }}>
+                <Container maxWidth="xl" style={{ marginBottom: "25px" }}>
+                    <div style={{ display: "flex", justifyContent: "center", marginBottom: "15px" }}>
+
+                        <Typography variant="h6" fontFamily="cubano" textAlign="center" height="40px" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                            Popular Courses
+                        </Typography>
+                    </div>
+                    <Grid container spacing={5} alignItems="center">
+                        {topCourses ? (topCourses.map((item, index) => (
+                            <Grid item xs={12} md={3}>
+                                <ContentItem id={item.id}
                                     type={'Course'}
-                                    title={'How to work at Google'}
-                                    imageSrc={"https://cdn.dribbble.com/users/1189961/screenshots/3546540/14._google_-_pixel_art_logo.jpg"}
-                                    authorName={'Ketevan Bachalashvili'}></ContentItem>
+                                    title={item.title}
+                                    imageSrc={"http://" + window.location.hostname + ":8080" + item.imageUrl}
+                                    authorName={item.author.name}></ContentItem>
                             </Grid>
-                        </Hidden>
+                        ))) : <></>}
+
+                        {topCourses === null ? <Grid item xs={12} md={3}>
+                            <LoadingContentItem />
+                        </Grid> : <></>}
+                        {topCourses === null ? <Grid item xs={12} md={3}>
+                            <LoadingContentItem />
+                        </Grid> : <></>}
+                        {topCourses === null ? <Grid item xs={12} md={3}>
+                            <LoadingContentItem />
+                        </Grid> : <></>}
+                        {topCourses === null ? <Grid item xs={12} md={3}>
+                            <LoadingContentItem />
+                        </Grid> : <></>}
                     </Grid>
                 </Container>
             </div>
