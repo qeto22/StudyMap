@@ -17,6 +17,7 @@ const StudyMapBody = () => {
         if (studyMap) {
             return;
         }
+
         const token = localStorage.getItem('token');
 
         const config = {
@@ -26,10 +27,14 @@ const StudyMapBody = () => {
         };
         axios.get("http://" + window.location.hostname + ":8080/api/v1/map/" + params.mapId, config)
             .then((response) => {
+                if (response.status !== 200) {
+                    setStudyMapError("StudyMap does not exists or you do not have permission to view it.");
+                    return;
+                }
                 setStudyMap(response.data);
             })
             .catch((error) => {
-                setStudyMapError(error);
+                setStudyMapError("StudyMap does not exists or you do not have permission to view it.");
             });
     }, [studyMap, params.mapId]);
 
