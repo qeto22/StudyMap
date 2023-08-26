@@ -1,9 +1,10 @@
 import { Alert, Button, Card, CardContent, CardMedia, Container, Divider, Grid, Rating, Snackbar, Typography, useMediaQuery } from "@mui/material";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import LocalAtmIcon from '@mui/icons-material/LocalAtm';
+import LoadingCourseBody from './LoadingCourseBody'
 import CourseDetailsComponent from "./CourseDetailsComponent";
 import CourseTitle from "./CourseTitle";
-import CourseDescription from "./CourseDescription";
+import CourseObjectives from "./CourseDescription";
 import CourseSections from "./CourseSections";
 import Author from "../studymap/Author";
 import Reviews from "../studymap/Reviews";
@@ -11,7 +12,7 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../AuthProvider";
 import { useNavigate } from "react-router-dom";
 
-function CourseBody() {
+function CourseBody({ course }) {
     const { isAuthenticated } = useContext(AuthContext);
     const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
     const [snackBarOpen, setSnackBarOpen] = useState(false);
@@ -34,21 +35,25 @@ function CourseBody() {
         }
     }, [snackBarOpen, navigate]);
 
+    if (course === null) {
+        return (<LoadingCourseBody></LoadingCourseBody>)
+    };
+
     return (<Container maxWidth="lg" style={{ marginTop: "50px", marginBottom: "25px" }}>
         <Grid container>
             <Grid item xs={12} md={7}>
-                <CourseTitle></CourseTitle>
+                <CourseTitle courseTitle={course.title} authorName={course.author.name} description={course.description}></CourseTitle>
                 <Divider style={{ marginTop: "15px" }}></Divider>
-                <CourseDescription></CourseDescription>
+                <CourseObjectives objectives={course.objectives}></CourseObjectives>
                 <Divider style={{ marginTop: "20px" }}></Divider>
-                <CourseSections showTitle={true}></CourseSections>
+                <CourseSections sections={course.sections} showTitle={true}></CourseSections>
             </Grid>
             <Grid item md={0.5}></Grid>
             <Grid item xs={12} md={4.5}>
                 <Card style={{ width: isSmallScreen ? "100%" : "90%", margin: "0 auto", border: "1px solid rgba(255, 255, 255, 0.3)" }}>
-                    <CardMedia sx={{ height: "200px" }} image="https://cdn.dribbble.com/users/1189961/screenshots/3546540/14._google_-_pixel_art_logo.jpg"></CardMedia>
+                    <CardMedia sx={{ height: "200px" }} image={'http://' + window.location.hostname + `:8080${course.imageUrl}`}></CardMedia>
                     <CardContent style={{ background: "#12181B" }}>
-                        <Typography variant="h5">$25.00</Typography>
+                        <Typography variant="h5">{course.price !== null && course.price > 0 ? `$${(Math.round(course.price * 100) / 100).toFixed(2)}` : 'FREE'}</Typography>
                         <Button sx={{
                             width: "100%",
                             fontFamily: "cubano",
@@ -69,10 +74,10 @@ function CourseBody() {
             </Grid>
         </Grid>
         <Author author={{
-            username: "ketevan-bachalashvili",
-            imageUrl: "https://media.licdn.com/dms/image/C4D03AQEV9v3FiWwyuw/profile-displayphoto-shrink_800_800/0/1635665530246?e=2147483647&v=beta&t=3H--_iRB_mZuKpjExzlFiS_PKRwBnfnUMAJhDpoMa5c",
-            name: "Ketevan Bachalashvili",
-            description: "Hello everyone"
+            username: course.author.username,
+            imageUrl: course.author.imageUrl,
+            name: course.author.name,
+            description: course.author.description
         }}></Author>
         <Reviews></Reviews>
         <Snackbar anchorOrigin={{ vertical: "bottom", horizontal: "right" }} open={snackBarOpen}>
