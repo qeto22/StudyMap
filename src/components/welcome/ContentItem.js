@@ -16,6 +16,21 @@ function ContentItem({ id, type, title, imageSrc, authorName, authorImageSrc, hi
         }
     }
 
+    const addToCart = () => {
+        console.log("Test");
+        const existingCartItems = localStorage.getItem('cart');
+        if (existingCartItems === null) {
+            localStorage.setItem('cart', JSON.stringify([id]));
+        } else {
+            const cartItems = JSON.parse(existingCartItems);
+            if (cartItems.find((existingId) => existingId === id)) {
+                return;
+            }
+            cartItems.push(id);
+            localStorage.setItem('cart', JSON.stringify(cartItems));
+        }
+    }
+
     const onAuthorClicked = () => {
         navigate('/author/ketevan-bachalashvili');
     }
@@ -63,7 +78,7 @@ function ContentItem({ id, type, title, imageSrc, authorName, authorImageSrc, hi
             </CardContent>
             <CardActions style={{ background: "#121212", color: "white", display: "flex", justifyContent: "space-between" }}>
                 {hideOverview ? <></> : <Button size="small" onClick={() => { onContentClicked() }}><VisibilityIcon></VisibilityIcon>&nbsp;OverView</Button>}
-                {type === 'Course' ? <Button size="small"><AddShoppingCartIcon></AddShoppingCartIcon>&nbsp;Add to Cart</Button> : <></>}
+                {type === 'Course' ? <Button onClick={addToCart} size="small"><AddShoppingCartIcon></AddShoppingCartIcon>&nbsp;Add to Cart</Button> : <></>}
             </CardActions>
         </Card>
     )

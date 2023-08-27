@@ -1,4 +1,4 @@
-import { Button, Container, Grid, Hidden, Typography, useMediaQuery } from "@mui/material";
+import { Button, Container, Grid, Typography, useMediaQuery } from "@mui/material";
 import { useContext, useEffect, useRef, useState } from "react";
 import "@fontsource/roboto";
 import Typed from "typed.js";
@@ -7,7 +7,6 @@ import ContentItem from "./ContentItem";
 import { AuthContext } from "../AuthProvider";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import StudyMapsGrid from "../profile/StudyMapsGrid";
 import LoadingContentItem from "../profile/LoadingContentItem";
 
 function WelcomeBody() {
@@ -182,6 +181,7 @@ function WelcomeBody() {
                                 <ContentItem id={item.id}
                                     type={'Course'}
                                     title={item.title}
+                                    price={item.price}
                                     imageSrc={"http://" + window.location.hostname + ":8080" + item.imageUrl}
                                     authorName={item.author.name}></ContentItem>
                             </Grid>

@@ -1,4 +1,4 @@
-import { Alert, Button, Card, CardContent, CardMedia, Container, Divider, Grid, Rating, Snackbar, Typography, useMediaQuery } from "@mui/material";
+import { Alert, Button, Card, CardContent, CardMedia, Container, Divider, Grid, Snackbar, Typography, useMediaQuery } from "@mui/material";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import LocalAtmIcon from '@mui/icons-material/LocalAtm';
 import LoadingCourseBody from './LoadingCourseBody'
@@ -23,6 +23,20 @@ function CourseBody({ course }) {
         if (!isAuthenticated) {
             setSnackBarOpen(true);
         };
+    }
+
+    const addToCart = () => {
+        const existingCartItems = localStorage.getItem('cart');
+        if (existingCartItems === null) {
+            localStorage.setItem('cart', JSON.stringify([course.id]));
+        } else {
+            const cartItems = JSON.parse(existingCartItems);
+            if (cartItems.find((existingId) => existingId === course.id)) {
+                return;
+            }
+            cartItems.push(course.id);
+            localStorage.setItem('cart', JSON.stringify(cartItems));
+        }
     }
 
     useEffect(() => {
@@ -59,7 +73,7 @@ function CourseBody({ course }) {
                             fontFamily: "cubano",
                             letterSpacing: "1px",
                             marginTop: "15px"
-                        }} startIcon={<ShoppingCartIcon></ShoppingCartIcon>} variant="contained" color="material">Add To Cart</Button>
+                        }} onClick={addToCart} startIcon={<ShoppingCartIcon></ShoppingCartIcon>} variant="contained" color="material">Add To Cart</Button>
                         <Button onClick={buyNowClicked} sx={{
                             width: "100%",
                             fontFamily: "cubano",

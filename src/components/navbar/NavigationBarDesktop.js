@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { Button, List, ListItemButton, ListItemIcon, ListItemText, Popover, Tooltip } from '@mui/material';
+import { Button, Divider, List, ListItemButton, ListItemIcon, ListItemText, Popover, Tooltip, Typography } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import NotificationsIcon from '@mui/icons-material/Notifications';
@@ -12,12 +12,22 @@ import SearchBar from './SearchBar';
 import CategoriesButton from './CategoriesButton';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../AuthProvider';
+import CartItem from '../cart/CartItem';
 
 function NavigationBarDesktop() {
     const { isAuthenticated } = useContext(AuthContext);
 
     const [profileAnchorEl, setProfileAnchorEl] = useState(null);
     const profilePopoverOpen = Boolean(profileAnchorEl);
+
+    const [cartAnchorEl, setCartAnchorElement] = useState(null);
+    const cartPopoverOpen = Boolean(cartAnchorEl);
+
+    const cartItems = JSON.parse(localStorage.getItem('cart') || '[]');
+    const onCartItemRemoved = (courseIdToDelete) => {
+        const newCartItems = cartItems.filter(existingCartId => existingCartId !== courseIdToDelete);
+        localStorage.setItem('cart', JSON.stringify(newCartItems));
+    }
 
     const navigate = useNavigate();
 
@@ -40,7 +50,9 @@ function NavigationBarDesktop() {
             <SearchBar width={600} marginLeft={5} />
             <span className='navbar-item'>
                 <Tooltip title="Cart">
-                    <ShoppingCartIcon></ShoppingCartIcon>
+                    <ShoppingCartIcon onMouseEnter={(event) => {
+                        setCartAnchorElement(event.currentTarget);
+                    }}></ShoppingCartIcon>
                 </Tooltip>
             </span>
             {!isAuthenticated ? (
@@ -73,7 +85,7 @@ function NavigationBarDesktop() {
 
             {isAuthenticated ? (
                 <div className='navbar-item'>
-                    <Button  onClick={() => navigate('/profile?tab=courses')}
+                    <Button onClick={() => navigate('/profile?tab=courses')}
                         sx={{
                             width: "130px",
                             fontFamily: "cubano",
@@ -150,6 +162,37 @@ function NavigationBarDesktop() {
                     letterSpacing: "1px"
                 }} variant="outlined"><LightModeIcon></LightModeIcon></Button>
             </Tooltip>
+
+            <Popover
+                id={cartPopoverOpen ? 'simple-popover' : undefined}
+                open={cartPopoverOpen}
+                anchorEl={cartAnchorEl}
+                onClose={() => setCartAnchorElement(null)}
+                style={{ marginTop: "15px" }}
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'center',
+                }}
+                transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'center',
+                }}
+            >
+                <div style={{ width: "325px" }}>
+                    {cartItems.length === 0 ?
+                        (<Typography style={{ width: "100%", textAlign: "center", marginTop: "15px", fontSize: "14px", color: "rgba(255, 255, 255, 0.5)" }}>Your cart is empty</Typography>) : <></>}
+                    {cartItems.length > 0 ? cartItems.map((couseId, index) => {
+                        return (<div style={{ marginTop: "8px" }}>
+                            <CartItem size='small' onRemove={() => onCartItemRemoved(couseId)}></CartItem>
+                        </div>)
+                    }) : <></>}
+                    <Divider style={{ marginTop: "15px" }}></Divider>
+                    <Button disabled={cartItems.length === 0}
+                        color='material'
+                        style={{ width: "100%", textTransform: "none" }}
+                        onClick={() => navigate('/order')}>View Cart</Button>
+                </div>
+            </Popover>
         </>
     );
 }

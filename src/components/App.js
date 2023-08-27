@@ -51,7 +51,7 @@ function App() {
                 </SecuredRoute>
               } />
             <Route
-              path="/order/:orderId"
+              path="/order"
               element={
                 <SecuredRoute>
                   <PaymentContent />

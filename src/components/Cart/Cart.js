@@ -23,9 +23,9 @@ const Cart = ({ initialCartItems }) => {
       <Divider></Divider>
       <div className="cart">
         {cartItems.map((item, index) => (
-          <div>
+          <div style={{ margin: "5px 0" }}>
             <CartItem key={index} item={item} onRemove={handleRemoveItem} />
-            <Divider></Divider>
+            <Divider style={{ marginTop: "10px" }}></Divider>
           </div>
         ))}
       </div>
