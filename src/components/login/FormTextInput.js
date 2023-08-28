@@ -20,8 +20,7 @@ function FormTextInput({ label, multiline, type, style, accept, fieldStyle, defa
                 "& .MuiInputBase-input": {
                     ...fieldStyle,
                     color: "white",
-                    fontSize: "14px",
-                    backgroundColor: "rgb(18, 24, 27)"
+                    fontSize: "14px"
                 },
                 "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
                     borderColor: "grey",

@@ -9,6 +9,7 @@ import { useLocation } from "react-router-dom";
 import StudyMapsGrid from "./StudyMapsGrid";
 import CourseGrid from "./CourseGrid";
 import { AuthContext } from "../AuthProvider";
+import ProfileTab from "./profile/ProfileTab";
 
 function useQuery() {
     return new URLSearchParams(useLocation().search);
@@ -28,6 +29,9 @@ function ProfileBody() {
             break;
         case "courses":
             content = <CourseGrid />;
+            break;
+        case "profile":
+            content = <ProfileTab />;
             break;
         default:
             content = null;
