@@ -10,6 +10,7 @@ import StudyMapsGrid from "./StudyMapsGrid";
 import CourseGrid from "./CourseGrid";
 import { AuthContext } from "../AuthProvider";
 import ProfileTab from "./profile/ProfileTab";
+import SettingsTab from "./SettingsTab";
 
 function useQuery() {
     return new URLSearchParams(useLocation().search);
@@ -32,6 +33,9 @@ function ProfileBody() {
             break;
         case "profile":
             content = <ProfileTab />;
+            break;
+        case "settings":
+            content = <SettingsTab />;
             break;
         default:
             content = null;
