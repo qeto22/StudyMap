@@ -181,6 +181,7 @@ function WelcomeBody() {
                                     title={item.title}
                                     price={item.price}
                                     imageSrc={"http://" + window.location.hostname + ":8080" + item.imageUrl}
+                                    authorImageSrc={item.author.imageUrl}
                                     authorName={item.author.name}></ContentItem>
                             </Grid>
                         ))) : <></>}

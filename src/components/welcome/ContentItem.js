@@ -75,7 +75,7 @@ function ContentItem({ id, type, title, imageSrc, authorName, authorImageSrc, hi
                     {type === 'Course' ? <Typography className="">{price !== null && price > 0 ? `$${(Math.round(price * 100) / 100).toFixed(2)}` : 'FREE'}</Typography> : <></>}
                 </div>
                 <div className="content-author-wrapper">
-                    <img alt="mee" src={authorImageSrc ? authorImageSrc : '/default-icon.png'} />
+                    <img alt="mee" src={authorImageSrc ? "http://" + window.location.hostname + ":8080/image/" + authorImageSrc : '/default-icon.png'} />
                     <Typography className="content-author" onClick={onAuthorClicked}>{authorName}</Typography>
                 </div>
                 <div className="content-rating-wrapper">
