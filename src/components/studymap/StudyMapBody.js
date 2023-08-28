@@ -15,6 +15,7 @@ const StudyMapBody = () => {
 
     useEffect(() => {
         if (studyMap) {
+            document.title = studyMap.mapTitle + " | Map - StudyMap";;
             return;
         }
 
@@ -55,7 +56,7 @@ const StudyMapBody = () => {
             <Skeleton height={450}></Skeleton>
         </Container>)
     }
-    
+
     return (
         <Container maxWidth="lg">
             <Typography style={{

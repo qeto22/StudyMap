@@ -22,6 +22,14 @@ function CourseContent() {
             });
 
     }, [course]);
+
+    useEffect(() => {
+        if (course !== null) {
+            console.log(course);
+            document.title = course.title + " | Course - StudyMap";
+        }
+    }, [course]);
+
     return (
         <div>
             <NavigationBar />
