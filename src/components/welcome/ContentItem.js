@@ -1,12 +1,15 @@
-import { Button, Card, CardActions, CardContent, CardMedia, Chip, Rating, Typography } from "@mui/material";
+import { Alert, Button, Card, CardActions, CardContent, CardMedia, Chip, Rating, Snackbar, Typography } from "@mui/material";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import "./ContentItem.css"
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 
 function ContentItem({ id, type, title, imageSrc, authorName, authorImageSrc, hideOverview, price }) {
     const navigate = useNavigate();
+
+    const [snackbar, setSnackbar] = useState(null);
 
     const onContentClicked = () => {
         if (type === 'Course') {
@@ -23,11 +26,24 @@ function ContentItem({ id, type, title, imageSrc, authorName, authorImageSrc, hi
         } else {
             const cartItems = JSON.parse(existingCartItems);
             if (cartItems.find((existingId) => existingId === id)) {
+                setSnackbar({
+                    severity: 'warning',
+                    text: `"${title}" is already in the cart!`
+                });
                 return;
             }
             cartItems.push(id);
             localStorage.setItem('cart', JSON.stringify(cartItems));
         }
+
+        setSnackbar({
+            severity: 'success',
+            text: `${title} added to cart!`
+        });
+    }
+
+    const handleSnackbarClose = (event, reason) => {
+        setSnackbar(null);
     }
 
     const onAuthorClicked = () => {
@@ -79,6 +95,18 @@ function ContentItem({ id, type, title, imageSrc, authorName, authorImageSrc, hi
                 {hideOverview ? <></> : <Button size="small" onClick={() => { onContentClicked() }}><VisibilityIcon></VisibilityIcon>&nbsp;OverView</Button>}
                 {type === 'Course' ? <Button onClick={addToCart} size="small"><AddShoppingCartIcon></AddShoppingCartIcon>&nbsp;Add to Cart</Button> : <></>}
             </CardActions>
+            <Snackbar open={snackbar != null}
+                onClose={handleSnackbarClose}
+                autoHideDuration={3000}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}>
+                <Alert variant="filled"
+                    onClose={handleSnackbarClose}
+                    style={{ color: 'white' }}
+                    severity={snackbar != null ? snackbar.severity : 'warning'}
+                    sx={{ width: '100%' }}>
+                    {snackbar !== null ? snackbar.text : null}
+                </Alert>
+            </Snackbar>
         </Card>
     )
 }
