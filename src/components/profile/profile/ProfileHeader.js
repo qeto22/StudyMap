@@ -17,7 +17,7 @@ function ProfileHeader({ user }) {
                 width: "100px",
                 height: "100px",
                 borderRadius: "50%"
-            }} alt="mee" src={user != null && user.imageUrl ? user.imageUrl : '/default-icon.png'} />
+            }} alt="mee" src={user != null && user.imageUrl ? 'http://' + window.location.hostname + `:8080/image/${user.imageUrl}` : '/default-icon.png'} />
             <div>
                 <Typography style={{
                     fontSize: "20px",
