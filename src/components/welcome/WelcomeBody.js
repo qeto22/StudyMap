@@ -77,8 +77,6 @@ function WelcomeBody() {
 
     }, [topStudyMaps]);
 
-    console.log(topCourses);
-
     const onExploreClicked = () => {
         navigate('/search')
     }

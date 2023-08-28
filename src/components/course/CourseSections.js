@@ -11,7 +11,6 @@ import VideoLibraryIcon from '@mui/icons-material/VideoLibrary';
 import VideoFileIcon from '@mui/icons-material/VideoFile';
 
 function CourseSections({ sections, showTitle }) {
-    console.log(sections);
     return (
         <div style={{ marginTop: "20px" }}>
             {showTitle ? (<Typography variant="h6" fontWeight={"bold"}>

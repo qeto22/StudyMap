@@ -17,7 +17,6 @@ function ContentItem({ id, type, title, imageSrc, authorName, authorImageSrc, hi
     }
 
     const addToCart = () => {
-        console.log("Test");
         const existingCartItems = localStorage.getItem('cart');
         if (existingCartItems === null) {
             localStorage.setItem('cart', JSON.stringify([id]));
