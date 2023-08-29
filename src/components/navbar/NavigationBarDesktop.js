@@ -10,7 +10,7 @@ import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import SettingsIcon from '@mui/icons-material/Settings';
 import SearchBar from './SearchBar';
 import CategoriesButton from './CategoriesButton';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../AuthProvider';
 import CartItem from '../cart/CartItem';
 
@@ -23,11 +23,36 @@ function NavigationBarDesktop() {
     const [cartAnchorEl, setCartAnchorElement] = useState(null);
     const cartPopoverOpen = Boolean(cartAnchorEl);
 
-    const cartItems = JSON.parse(localStorage.getItem('cart') || '[]');
+    const [cartItemIds, setCartItemIds] = useState([]);
+    const [cartItems, setCartItems] = useState([]);
+
     const onCartItemRemoved = (courseIdToDelete) => {
-        const newCartItems = cartItems.filter(existingCartId => existingCartId !== courseIdToDelete);
+        const newCartItems = cartItemIds.filter(existingCartId => existingCartId !== courseIdToDelete);
         localStorage.setItem('cart', JSON.stringify(newCartItems));
+        setCartItemIds(newCartItems);
     }
+
+    useEffect(() => {
+        if (cartAnchorEl) {
+            setCartItemIds(JSON.parse(localStorage.getItem('cart') || '[]'));
+        }
+    }, [cartAnchorEl]);
+
+    useEffect(() => {
+        if (cartItemIds.length === 0) {
+            setCartItems([]);
+            return;
+        }
+        const fetchCartItems = async () => {
+            const cartItems = await Promise.all(cartItemIds.map(async (cartItemId) => {
+                const response = await fetch(`http://localhost:8080/api/v1/course/${cartItemId}`);
+                const course = await response.json();
+                return course;
+            }));
+            setCartItems(cartItems);
+        }
+        fetchCartItems();
+    }, [cartItemIds]);
 
     const navigate = useNavigate();
 
@@ -181,9 +206,9 @@ function NavigationBarDesktop() {
                 <div style={{ width: "325px" }}>
                     {cartItems.length === 0 ?
                         (<Typography style={{ width: "100%", textAlign: "center", marginTop: "15px", fontSize: "14px", color: "rgba(255, 255, 255, 0.5)" }}>Your cart is empty</Typography>) : <></>}
-                    {cartItems.length > 0 ? cartItems.map((couseId, index) => {
+                    {cartItems.length > 0 ? cartItems.map((course, index) => {
                         return (<div style={{ marginTop: "8px" }}>
-                            <CartItem size='small' onRemove={() => onCartItemRemoved(couseId)}></CartItem>
+                            <CartItem size='small' item={course} onRemove={() => onCartItemRemoved(course.id)}></CartItem>
                         </div>)
                     }) : <></>}
                     <Divider style={{ marginTop: "15px" }}></Divider>

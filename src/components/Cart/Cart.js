@@ -1,15 +1,8 @@
-import React, { useState } from 'react';
-import CartItem from './CartItem'; // Import the CartItem component
+import CartItem from './CartItem';
 import "./Cart.css"
 import { Divider, Typography } from '@mui/material';
 
-const Cart = ({ initialCartItems }) => {
-  const [cartItems, setCartItems] = useState(initialCartItems);
-
-  const handleRemoveItem = (itemToRemove) => {
-    const updatedCart = cartItems.filter(item => item !== itemToRemove);
-    setCartItems(updatedCart);
-  };
+const Cart = ({ cartItems, removeCartItem }) => {
 
   return (
     <div className="cart-container">
@@ -24,7 +17,7 @@ const Cart = ({ initialCartItems }) => {
       <div className="cart">
         {cartItems.map((item, index) => (
           <div style={{ margin: "5px 0" }}>
-            <CartItem key={index} item={item} onRemove={handleRemoveItem} />
+            <CartItem key={index} item={item} onRemove={removeCartItem} />
             <Divider style={{ marginTop: "10px" }}></Divider>
           </div>
         ))}

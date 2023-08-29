@@ -1,11 +1,15 @@
 import { Container } from "@mui/material";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AuthContext } from "../AuthProvider";
 import AlreadyLoggedInBody from "../login/AlreadyLoggedInBody"
 import SignUpBody from "./SignUpBody";
 
 function SignUpContent() {
     const { isAuthenticated } = useContext(AuthContext);
+
+    useEffect(() => {
+        document.title = "Sign up to StudyMap - Roadmap to your Success!";
+    });
 
     return (
         <Container maxWidth="md">
