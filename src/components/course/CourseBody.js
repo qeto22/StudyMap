@@ -12,7 +12,7 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../AuthProvider";
 import { useNavigate } from "react-router-dom";
 
-function CourseBody({ course }) {
+function CourseBody({ course, onReviewSubmit }) {
     const { isAuthenticated } = useContext(AuthContext);
     const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
     const [snackBarOpen, setSnackBarOpen] = useState(false);
@@ -93,7 +93,7 @@ function CourseBody({ course }) {
             name: course.author.name,
             description: course.author.description
         }}></Author>
-        <Reviews></Reviews>
+        <Reviews reviews={course.reviews} onReviewSubmit={onReviewSubmit}></Reviews>
         <Snackbar anchorOrigin={{ vertical: "bottom", horizontal: "right" }} open={snackBarOpen}>
             <Alert severity="warning" sx={{ width: '100%' }} variant="filled" style={{color: "white"}}>
                 You are not logged in!

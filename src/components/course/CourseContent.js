@@ -7,7 +7,7 @@ import { Alert, Container } from "@mui/material";
 
 function CourseContent() {
     const [course, setCourse] = useState(null);
-    const [courseFetchignError, setCourseFetchingError] = useState(null);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         if (course !== null) return;
@@ -18,7 +18,7 @@ function CourseContent() {
             .then(res => {
                 setCourse(res.data);
             }).catch((err) => {
-                setCourseFetchingError('Course does not exist or could not be fetched!');
+                setError('Course does not exist or could not be fetched!');
             });
 
     }, [course]);
@@ -30,17 +30,45 @@ function CourseContent() {
         }
     }, [course]);
 
+    const onReviewSubmit = (review) => {
+        const token = localStorage.getItem('token');
+
+        const config = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+
+        axios.post("http://" + window.location.hostname + ":8080/api/v1/course/" + window.location.pathname.split("/")[2] + "/review", review, config)
+            .then((response) => {
+                if (response.status !== 200) {
+                    setError("Error occurred posting the review. Please refresh the page and try again!");
+                    return;
+                }
+                
+                setCourse((prevState) => {
+                    return {
+                        ...prevState,
+                        reviews: [...prevState.reviews, response.data]
+                    }
+                });
+            })
+            .catch((error) => {
+                setError("Error occurred posting the review. Please refresh the page and try again!");
+            });
+    }
+
     return (
         <div>
             <NavigationBar />
-            {courseFetchignError ? (
+            {error ? (
                 <Container maxWidth="sm" style={{ marginTop: "50px", marginBottom: "50px" }}>
                     <Alert style={{
                         marginBottom: "10px",
                         fontSize: "14px"
-                    }} variant="filled" severity="error" open>{courseFetchignError}</Alert>
+                    }} variant="filled" severity="error" open>{error}</Alert>
                 </Container>)
-                : <CourseBody course={course} />}
+                : <CourseBody course={course} onReviewSubmit={onReviewSubmit} />}
             <Footer />
         </div>
     )
