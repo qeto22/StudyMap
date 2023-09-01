@@ -19,14 +19,7 @@ const StudyMapBody = () => {
             return;
         }
 
-        const token = localStorage.getItem('token');
-
-        const config = {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        };
-        axios.get("http://" + window.location.hostname + ":8080/api/v1/map/" + params.mapId, config)
+        axios.get("http://" + window.location.hostname + ":8080/api/v1/map/" + params.mapId)
             .then((response) => {
                 if (response.status !== 200) {
                     setStudyMapError("StudyMap does not exists or you do not have permission to view it.");
@@ -38,6 +31,35 @@ const StudyMapBody = () => {
                 setStudyMapError("StudyMap does not exists or you do not have permission to view it.");
             });
     }, [studyMap, params.mapId]);
+
+    const onReviewSubmit = (review) => {
+        const token = localStorage.getItem('token');
+
+        const config = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+
+        axios.post("http://" + window.location.hostname + ":8080/api/v1/map/" + params.mapId + "/review", review, config)
+            .then((response) => {
+                if (response.status !== 200) {
+                    setStudyMapError("Error occurred posting the review. Please refresh the page and try again!");
+                    return;
+                }
+                
+                // push response.data to studyMap.reviews and setStudyMap
+                setStudyMap((prevState) => {
+                    return {
+                        ...prevState,
+                        reviews: [...prevState.reviews, response.data]
+                    }
+                });
+            })
+            .catch((error) => {
+                setStudyMapError("Error occurred posting the review. Please refresh the page and try again!");
+            });
+    }
 
     if (studyMapError !== null) {
         return (<Container maxWidth="lg">
@@ -69,7 +91,7 @@ const StudyMapBody = () => {
             <StudyMapVisualisation studyMapData={studyMap.nodeData}></StudyMapVisualisation>
             <StudyMapDescription description={studyMap.mapDescription}></StudyMapDescription>
             <Author author={studyMap.author}></Author>
-            <Reviews></Reviews>
+            <Reviews reviews={studyMap.reviews} onReviewSubmit={onReviewSubmit}></Reviews>
         </Container>
     );
 };

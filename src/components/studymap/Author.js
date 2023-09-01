@@ -17,7 +17,7 @@ function Author({ author }) {
     return (<div style={{ margin: '50px 0px' }}>
         <Typography variant="h6" style={{ fontWeight: "bold" }}>Author</Typography>
         <div style={{ margin: '20px 0px', display: 'flex', gap: '50px' }}>
-            <img alt="mee" src={author.imageUrl ? author.imageUrl : '/default-icon.png'}
+            <img alt="mee" src={author != null && author.imageUrl ? 'http://' + window.location.hostname + `:8080/image/${author.imageUrl}` : '/default-icon.png'}
                 style={{ width: '150px', height: '150px', borderRadius: '50%' }}></img>
             <div>
                 <Typography variant="h5">{ author.name }</Typography>

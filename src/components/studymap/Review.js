@@ -1,19 +1,17 @@
 import { Divider, Rating, Typography } from "@mui/material";
-import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
-import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
 
-function Review(props) {
+function Review({rating, reviewText, reviewAuthor}) {
     return (
         <div style={{ backgroundColor: 'primary',  padding: '15px', marginBottom: '10px' }}>
             <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center' }}>
                 <img
                     alt="kitketo"
-                    src="https://media.licdn.com/dms/image/C4D03AQEV9v3FiWwyuw/profile-displayphoto-shrink_800_800/0/1635665530246?e=2147483647&v=beta&t=3H--_iRB_mZuKpjExzlFiS_PKRwBnfnUMAJhDpoMa5c"
+                    src={reviewAuthor != null && reviewAuthor.imageUrl ? 'http://' + window.location.hostname + `:8080/image/${reviewAuthor.imageUrl}` : '/default-icon.png'}
                     style={{ width: '50px', height: '50px', borderRadius: '50px', marginRight: '10px' }}
                 />
 
                 <Typography variant="body1" style={{ fontWeight: "bold" }}>
-                    {props.reviewAuthor}
+                    {reviewAuthor.name}
                 </Typography>
 
             </div>
@@ -21,24 +19,24 @@ function Review(props) {
                 name="simple-controlled"
                 size="small"
                 precision={0.5}
-                value={props.ratingValue}
+                value={rating}
                 readOnly
                 color="dark"
             />
 
             <div style={{ marginTop: '10px', marginBottom: '20px', backgroundColor: "primary" }}>
-                <Typography variant="body1" style={{ display: 'flex', }}>{props.reviewText}</Typography>
+                <Typography variant="body1" style={{ display: 'flex', }}>{reviewText}</Typography>
             </div>
 
             <div style={{ display: 'flex', alignItems: 'center'}}>
-                <div style={{ display: 'flex', alignItems: 'center', marginRight: '10px' }}>
+                {/* <div style={{ display: 'flex', alignItems: 'center', marginRight: '10px' }}>
                     <ThumbUpOffAltIcon style={{padding: '3px'}} />
                     <Typography variant="body2">{75}</Typography>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                     <ThumbDownOffAltIcon style={{padding: '3px'}}/>
                     <Typography variant="body2">{4}</Typography>
-                </div>
+                </div> */}
             </div>
             <Divider style={{marginTop: "20px"}}></Divider>
         </div>

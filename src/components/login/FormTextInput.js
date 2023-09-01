@@ -1,6 +1,6 @@
 import { TextField } from "@mui/material";
 
-function FormTextInput({ label, multiline, type, style, accept, fieldStyle, defaultValue, onChange, InputProps, rows }) {
+function FormTextInput({ label, multiline, type, style, accept, fieldStyle, defaultValue, onChange, InputProps, rows, enabled = true }) {
     return (<div style={style}>
         <label className="form-label">{label}</label>
         <TextField
@@ -8,6 +8,7 @@ function FormTextInput({ label, multiline, type, style, accept, fieldStyle, defa
             multiline={multiline == null ? false : multiline}
             type={type == null ? "text" : type}
             defaultValue={defaultValue}
+            disabled={!enabled}
             style={{
                 width: "100%",
                 marginTop: "7px"
