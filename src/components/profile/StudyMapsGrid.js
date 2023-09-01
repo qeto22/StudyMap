@@ -1,4 +1,4 @@
-import { Alert, Grid, Skeleton, Snackbar } from "@mui/material";
+import { Alert, Grid, Snackbar } from "@mui/material";
 import AddGridItem from "./AddGridItem";
 import ContentItem from "../welcome/ContentItem";
 import { useEffect, useState } from "react";

@@ -1,15 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { Button, Card, Divider, Typography, Snackbar } from "@mui/material";
+import React, { useState } from 'react';
+import { Button, Card, Divider, Typography } from "@mui/material";
 import FormTextInput from "../login/FormTextInput";
 import axios from 'axios';
-import jwt_decode from 'jwt-decode';
 
 
 function SettingsTab() {
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');  
-    const [snackbar, setSnackbar] = useState(null);
-    
+    const [snackbar, setSnackbar] = useState(null); // todo show snackbar
 
     const handleChangePassword = async () => {
         const token = localStorage.getItem('token');
@@ -30,7 +28,6 @@ function SettingsTab() {
             const response = await axios.post('http://' + window.location.hostname + ':8080/api/v1/user/update-password', formData, config);
 
             if (response.status === 200) {
-                // Refresh the window and remove query parameters
                 window.location.href = window.location.origin + window.location.pathname;
             } else {
                 setSnackbar({
