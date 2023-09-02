@@ -62,7 +62,7 @@ function PaymentBody() {
             </Grid>
             <Grid item md={3.25}>
                 <OrderSummary subtotal={totalPrice} serviceFee={0} />
-                <CreditCardForm />
+                <CreditCardForm cartItemIds={cartItemIds} />
             </Grid>
         </Grid>
     </Container>)
