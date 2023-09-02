@@ -6,9 +6,11 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 
-function ContentItem({ id, type, title, imageSrc, authorName, authorImageSrc, hideOverview, price }) {
+function ContentItem({ id, type, title, imageSrc, authorName, authorUsername, authorImageSrc, hideOverview, price }) {
     const navigate = useNavigate();
 
+    console.log("authorname")
+    console.log(authorName)
     const [snackbar, setSnackbar] = useState(null);
 
     const onContentClicked = () => {
@@ -47,7 +49,7 @@ function ContentItem({ id, type, title, imageSrc, authorName, authorImageSrc, hi
     }
 
     const onAuthorClicked = () => {
-        navigate('/author/ketevan-bachalashvili');
+        navigate(`/author/${authorUsername}`);
     }
 
     return (

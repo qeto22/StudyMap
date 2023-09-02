@@ -146,7 +146,9 @@ function WelcomeBody() {
                                     type={'Map'}
                                     title={item.mapTitle}
                                     imageSrc={"http://" + window.location.hostname + ":8080" + item.imagePath}
-                                    authorName={item.author.name}></ContentItem>
+                                    authorImageSrc={item.author.imageUrl}
+                                    authorName={item.author.name}
+                                    authorUsername={item.author.username}></ContentItem>
                             </Grid>
                         ))) : <></>}
 
@@ -182,7 +184,9 @@ function WelcomeBody() {
                                     price={item.price}
                                     imageSrc={"http://" + window.location.hostname + ":8080" + item.imageUrl}
                                     authorImageSrc={item.author.imageUrl}
-                                    authorName={item.author.name}></ContentItem>
+                                    authorName={item.author.name}
+                                    authorUsername={item.author.username}>
+                                </ContentItem>
                             </Grid>
                         ))) : <></>}
 

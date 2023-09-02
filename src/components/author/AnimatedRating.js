@@ -2,9 +2,9 @@ import { Rating } from "@mui/material";
 import { round } from "lodash";
 import { useEffect, useState } from "react";
 
-function AnimatedRating() {
+function AnimatedRating({ contentRating }) {
   const [rating, setRating] = useState(0);
-  const targetRating = 4.5;
+  const targetRating = contentRating;
   const animationDuration = 2000;
   const steps = round(targetRating);
   const stepValue = targetRating / steps;

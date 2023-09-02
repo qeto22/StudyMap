@@ -43,7 +43,9 @@ function CourseGrid() {
                         title={item.title}
                         imageSrc={"http://" + window.location.hostname + ":8080" + item.imageUrl}
                         price={item.price}
-                        authorName={item.author.name}></ContentItem>
+                        authorName={item.author.name}
+                        authorUsername={item.author.username}>
+                    </ContentItem>
                 </Grid>
             ))) : <></>}
             {courses === null ? <Grid item md={4} style={{ padding: "0 10px" }}>

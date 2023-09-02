@@ -47,12 +47,14 @@ function StudyMapsGrid() {
                         type={'Map'}
                         title={item.mapTitle}
                         imageSrc={"http://" + window.location.hostname + ":8080" + item.imagePath}
-                        authorName={item.author.name}></ContentItem>
+                        authorName={item.author.name}
+                        authorUsername={item.author.username}>
+                    </ContentItem>
                 </Grid>
             ))) : <></>}
 
             {ownStudyMaps === null ? <Grid item md={4} style={{ padding: "0 10px" }}>
-               <LoadingContentItem />
+                <LoadingContentItem />
             </Grid> : <></>}
 
             <Snackbar open={ownStudyMapsError !== null} autoHideDuration={5000}
