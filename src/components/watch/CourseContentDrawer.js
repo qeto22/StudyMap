@@ -20,7 +20,7 @@ function CourseContentDrawer({ isDrawerOpen, toggleDrawer }) {
 
                 <Typography style={{width: "100%"}}>Learn Python Programming - Beginner to Master</Typography>
             </div>
-            <CourseSections showTitle={false}></CourseSections>
+            <CourseSections sections={[]} showTitle={false}></CourseSections>
         </div>
     </Drawer>);
 }

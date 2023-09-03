@@ -3,15 +3,17 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import "./ContentItem.css"
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "../AuthProvider";
 
 
 function ContentItem({ id, type, title, imageSrc, authorName, authorUsername, authorImageSrc, hideOverview, price }) {
     const navigate = useNavigate();
+    const { user } = useContext(AuthContext);
 
-    console.log("authorname")
-    console.log(authorName)
     const [snackbar, setSnackbar] = useState(null);
+
+    const showAddToCartButton = type === 'Course' && (user === null || user.boughtCourseIds.find((courseId) => courseId === id) === undefined);
 
     const onContentClicked = () => {
         if (type === 'Course') {
@@ -95,7 +97,7 @@ function ContentItem({ id, type, title, imageSrc, authorName, authorUsername, au
             </CardContent>
             <CardActions style={{ background: "#121212", color: "white", display: "flex", justifyContent: "space-between" }}>
                 {hideOverview ? <></> : <Button size="small" onClick={() => { onContentClicked() }}><VisibilityIcon></VisibilityIcon>&nbsp;OverView</Button>}
-                {type === 'Course' ? <Button onClick={addToCart} size="small"><AddShoppingCartIcon></AddShoppingCartIcon>&nbsp;Add to Cart</Button> : <></>}
+                {showAddToCartButton ? <Button onClick={addToCart} size="small"><AddShoppingCartIcon></AddShoppingCartIcon>&nbsp;Add to Cart</Button> : <></>}
             </CardActions>
             <Snackbar open={snackbar != null}
                 onClose={handleSnackbarClose}

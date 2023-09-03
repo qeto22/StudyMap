@@ -1,6 +1,7 @@
 import { Alert, Button, Card, CardContent, CardMedia, Container, Divider, Grid, Snackbar, Typography, useMediaQuery } from "@mui/material";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import LocalAtmIcon from '@mui/icons-material/LocalAtm';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import LoadingCourseBody from './LoadingCourseBody'
 import CourseDetailsComponent from "./CourseDetailsComponent";
 import CourseTitle from "./CourseTitle";
@@ -13,9 +14,11 @@ import { AuthContext } from "../AuthProvider";
 import { useNavigate } from "react-router-dom";
 
 function CourseBody({ course, onReviewSubmit }) {
-    const { isAuthenticated } = useContext(AuthContext);
+    const { isAuthenticated, user } = useContext(AuthContext);
     const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
     const [snackBarOpen, setSnackBarOpen] = useState(false);
+
+    const hasBoughtTheCourse = user != null && course != null && user.boughtCourseIds.find((courseId) => courseId === course.id) !== undefined;
 
     const navigate = useNavigate();
 
@@ -37,6 +40,10 @@ function CourseBody({ course, onReviewSubmit }) {
             cartItems.push(course.id);
             localStorage.setItem('cart', JSON.stringify(cartItems));
         }
+    }
+
+    const watchCourse = () => {
+        navigate(`/watch/${course.id}`);
     }
 
     useEffect(() => {
@@ -68,18 +75,30 @@ function CourseBody({ course, onReviewSubmit }) {
                     <CardMedia sx={{ height: "200px" }} image={'http://' + window.location.hostname + `:8080${course.imageUrl}`}></CardMedia>
                     <CardContent style={{ background: "#12181B" }}>
                         <Typography variant="h5">{course.price !== null && course.price > 0 ? `$${(Math.round(course.price * 100) / 100).toFixed(2)}` : 'FREE'}</Typography>
-                        <Button sx={{
-                            width: "100%",
-                            fontFamily: "cubano",
-                            letterSpacing: "1px",
-                            marginTop: "15px"
-                        }} onClick={addToCart} startIcon={<ShoppingCartIcon></ShoppingCartIcon>} variant="contained" color="material">Add To Cart</Button>
-                        <Button onClick={buyNowClicked} sx={{
-                            width: "100%",
-                            fontFamily: "cubano",
-                            letterSpacing: "1px",
-                            marginTop: "8px"
-                        }} startIcon={<LocalAtmIcon></LocalAtmIcon>} variant="outlined">Buy now</Button>
+                        {!hasBoughtTheCourse ? (
+                            <Button sx={{
+                                width: "100%",
+                                fontFamily: "cubano",
+                                letterSpacing: "1px",
+                                marginTop: "15px"
+                            }} onClick={addToCart} startIcon={<ShoppingCartIcon></ShoppingCartIcon>} variant="contained" color="material">Add To Cart</Button>
+                        ) : <></>}
+                        {!hasBoughtTheCourse ? (
+                            <Button onClick={buyNowClicked} sx={{
+                                width: "100%",
+                                fontFamily: "cubano",
+                                letterSpacing: "1px",
+                                marginTop: "8px"
+                            }} startIcon={<LocalAtmIcon></LocalAtmIcon>} variant="outlined">Buy now</Button>
+                        ) : <></>}
+                        {hasBoughtTheCourse ? (
+                            <Button sx={{
+                                width: "100%",
+                                fontFamily: "cubano",
+                                letterSpacing: "1px",
+                                marginTop: "15px"
+                            }} onClick={watchCourse} startIcon={<PlayArrowIcon></PlayArrowIcon>} variant="contained" color="material">Watch</Button>
+                        ) : <></>}
                         <Divider style={{ marginTop: "25px" }}></Divider>
                         <Typography style={{ fontFamily: "cubano", marginTop: "15px", letterSpacing: "1px" }}>Course Details</Typography>
                         <CourseDetailsComponent></CourseDetailsComponent>
@@ -95,7 +114,7 @@ function CourseBody({ course, onReviewSubmit }) {
         }}></Author>
         <Reviews reviews={course.reviews} onReviewSubmit={onReviewSubmit}></Reviews>
         <Snackbar anchorOrigin={{ vertical: "bottom", horizontal: "right" }} open={snackBarOpen}>
-            <Alert severity="warning" sx={{ width: '100%' }} variant="filled" style={{color: "white"}}>
+            <Alert severity="warning" sx={{ width: '100%' }} variant="filled" style={{ color: "white" }}>
                 You are not logged in!
             </Alert>
         </Snackbar>
