@@ -1,4 +1,4 @@
-import { Button, Card, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, Grid, Typography } from "@mui/material";
+import { Alert, Button, Card, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, Grid, Snackbar, Typography } from "@mui/material";
 import "./AuthorBody.css";
 import CountUp from 'react-countup';
 import AnimatedRating from "./AnimatedRating";
@@ -11,7 +11,6 @@ import FormTextInput from "../login/FormTextInput";
 import { AuthContext } from "../AuthProvider";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { set } from "lodash";
 
 function AuthorBody({ authorUsername }) {
     const { isAuthenticated } = useContext(AuthContext);
@@ -23,6 +22,8 @@ function AuthorBody({ authorUsername }) {
 
     const [isMentorshipRequestDialogOpen, setMentorshipRequestDialogOpen] = useState(hireMePresent !== null);
     const [sessionsCount, setSessionsCount] = useState(1);
+    const [mentorshipRequestMessage, setMentorshipRequestMessage] = useState('');
+    const [snackbar, setSnackbar] = useState(null);
 
     const [author, setAuthor] = useState(null);
     const [authorCourses, setAuthorCourses] = useState([]);
@@ -39,6 +40,40 @@ function AuthorBody({ authorUsername }) {
             navigate('/login');
             return;
         }
+
+        const token = localStorage.getItem('token');
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+        };
+
+        axios.post('http://' + window.location.hostname + ':8080/api/v1/notification/request-mentorship', {
+            sessionCount: sessionsCount,
+            message: mentorshipRequestMessage,
+            mentorUsername: author.username
+        }, config).then(response => {
+            if (response.status === 200) {
+                setSnackbar({
+                    severity: 'success',
+                    message: 'Mentorship request sent successfully'
+                });
+                setMentorshipRequestDialogOpen(false);
+                navigate(location.pathname);
+            } else {
+                setSnackbar({
+                    severity: 'error',
+                    message: 'Error sending mentorship request'
+                });
+            }
+        }
+        ).catch(error => {
+            console.log('Error sending mentorship request:', error);
+            setSnackbar({
+                severity: 'error',
+                message: 'Error sending mentorship request'
+            });
+        });
     }
 
     const handleClose = () => {
@@ -257,7 +292,7 @@ function AuthorBody({ authorUsername }) {
                         }} label="Session" type="number" defaultValue={"1"} onChange={(e) => setSessionsCount(Number(e.target.value))} />
                         <FormTextInput style={{
                             marginTop: "8px",
-                        }} label="Optional message to Ketevan" defaultValue={"Hello Ketevan,"} multiline={true} />
+                        }} label="Optional message to Ketevan" defaultValue={mentorshipRequestMessage} onChange={(e) => setMentorshipRequestMessage(e.target.value)} multiline={true} />
                         <Divider light style={{
                             marginTop: "15px",
                             marginBottom: "8px",
@@ -277,6 +312,11 @@ function AuthorBody({ authorUsername }) {
                     </Button>
                 </DialogActions>
             </Dialog>
+            <Snackbar anchorOrigin={{ vertical: "bottom", horizontal: "right" }} open={snackbar != null} autoHideDuration={3000} onClose={() => setSnackbar(null)}>
+                <Alert severity={snackbar != null ? snackbar.severity : null} sx={{ width: '100%' }} variant="filled" style={{ color: "white" }}>
+                    {snackbar != null ? snackbar.message : null}
+                </Alert>
+            </Snackbar>
         </Container>
     );
 }
