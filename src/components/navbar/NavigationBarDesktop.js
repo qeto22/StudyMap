@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { Button, Divider, List, ListItemButton, ListItemIcon, ListItemText, Popover, Tooltip, Typography } from '@mui/material';
+import { Button, ClickAwayListener, Divider, List, ListItemButton, ListItemIcon, ListItemText, Popover, Tooltip, Typography } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import NotificationsIcon from '@mui/icons-material/Notifications';
@@ -22,6 +22,9 @@ function NavigationBarDesktop() {
 
     const [cartAnchorEl, setCartAnchorElement] = useState(null);
     const cartPopoverOpen = Boolean(cartAnchorEl);
+
+    const [notificationAnchorEl, setNotificationAnchorElemenet] = useState(null);
+    const notificationPopoverOpen = Boolean(notificationAnchorEl);
 
     const [cartItemIds, setCartItemIds] = useState([]);
     const [cartItems, setCartItems] = useState([]);
@@ -75,7 +78,7 @@ function NavigationBarDesktop() {
             <SearchBar width={600} marginLeft={5} />
             <span className='navbar-item'>
                 <Tooltip title="Cart">
-                    <ShoppingCartIcon onMouseEnter={(event) => {
+                    <ShoppingCartIcon onClick={(event) => {
                         setCartAnchorElement(event.currentTarget);
                     }}></ShoppingCartIcon>
                 </Tooltip>
@@ -103,7 +106,9 @@ function NavigationBarDesktop() {
             {isAuthenticated ? (
                 <span className='navbar-item'>
                     <Tooltip title="Notifications">
-                        <NotificationsIcon></NotificationsIcon>
+                        <NotificationsIcon onClick={(event) => {
+                            setNotificationAnchorElemenet(event.currentTarget);
+                        }}></NotificationsIcon>
                     </Tooltip>
                 </span>
             ) : (<></>)}
@@ -192,7 +197,6 @@ function NavigationBarDesktop() {
                 id={cartPopoverOpen ? 'simple-popover' : undefined}
                 open={cartPopoverOpen}
                 anchorEl={cartAnchorEl}
-                onClose={() => setCartAnchorElement(null)}
                 style={{ marginTop: "15px" }}
                 anchorOrigin={{
                     vertical: 'bottom',
@@ -203,20 +207,53 @@ function NavigationBarDesktop() {
                     horizontal: 'center',
                 }}
             >
-                <div style={{ width: "325px" }}>
-                    {cartItems.length === 0 ?
-                        (<Typography style={{ width: "100%", textAlign: "center", marginTop: "15px", fontSize: "14px", color: "rgba(255, 255, 255, 0.5)" }}>Your cart is empty</Typography>) : <></>}
-                    {cartItems.length > 0 ? cartItems.map((course, index) => {
-                        return (<div style={{ marginTop: "8px" }}>
-                            <CartItem size='small' item={course} onRemove={() => onCartItemRemoved(course.id)}></CartItem>
-                        </div>)
-                    }) : <></>}
-                    <Divider style={{ marginTop: "15px" }}></Divider>
-                    <Button disabled={cartItems.length === 0}
-                        color='material'
-                        style={{ width: "100%", textTransform: "none" }}
-                        onClick={() => navigate('/order')}>View Cart</Button>
-                </div>
+                <ClickAwayListener onClickAway={() => setCartAnchorElement(null)}>
+                    <div style={{ width: "325px" }}>
+                        {cartItems.length === 0 ?
+                            (<Typography style={{ width: "100%", textAlign: "center", marginTop: "15px", fontSize: "14px", color: "rgba(255, 255, 255, 0.5)" }}>Your cart is empty</Typography>) : <></>}
+                        {cartItems.length > 0 ? cartItems.map((course, index) => {
+                            return (<div style={{ marginTop: "8px" }}>
+                                <CartItem size='small' item={course} onRemove={() => onCartItemRemoved(course.id)}></CartItem>
+                            </div>)
+                        }) : <></>}
+                        <Divider style={{ marginTop: "15px" }}></Divider>
+                        <Button disabled={cartItems.length === 0}
+                            color='material'
+                            style={{ width: "100%", textTransform: "none" }}
+                            onClick={() => navigate('/order')}>View Cart</Button>
+                    </div>
+                </ClickAwayListener>
+            </Popover>
+            <Popover
+                id={notificationPopoverOpen ? 'simple-popover' : undefined}
+                open={notificationPopoverOpen}
+                anchorEl={notificationAnchorEl}
+                onClose={() => setNotificationAnchorElemenet(null)}
+                style={{ marginTop: "15px" }}
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'center',
+                }}
+                transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'center',
+                }}>
+                <ClickAwayListener onClickAway={() => setNotificationAnchorElemenet(null)}>
+                    <div style={{ width: "325px" }}>
+                        {cartItems.length === 0 ?
+                            (<Typography style={{ width: "100%", textAlign: "center", marginTop: "15px", fontSize: "14px", color: "rgba(255, 255, 255, 0.5)" }}>You don't have any notification</Typography>) : <></>}
+                        {cartItems.length > 0 ? cartItems.map((course, index) => {
+                            return (<div style={{ marginTop: "8px" }}>
+                                <CartItem size='small' item={course} onRemove={() => onCartItemRemoved(course.id)}></CartItem>
+                            </div>)
+                        }) : <></>}
+                        <Divider style={{ marginTop: "15px" }}></Divider>
+                        <Button disabled={cartItems.length === 0}
+                            color='material'
+                            style={{ width: "100%", textTransform: "none" }}
+                            onClick={() => navigate('/order')}>View All Notifications</Button>
+                    </div>
+                </ClickAwayListener>
             </Popover>
         </>
     );
