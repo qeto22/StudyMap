@@ -25,7 +25,6 @@ function CourseContent() {
 
     useEffect(() => {
         if (course !== null) {
-            console.log(course);
             document.title = course.title + " | Course - StudyMap";
         }
     }, [course]);

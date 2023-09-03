@@ -26,6 +26,9 @@ function CourseBody({ course, onReviewSubmit }) {
         if (!isAuthenticated) {
             setSnackBarOpen(true);
         };
+
+        localStorage.setItem('cart', JSON.stringify([course.id]));
+        navigate('/order');
     }
 
     const addToCart = () => {

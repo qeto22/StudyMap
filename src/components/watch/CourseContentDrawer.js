@@ -2,7 +2,7 @@ import { Button, Drawer, Typography } from "@mui/material";
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import CourseSections from "../course/CourseSections";
 
-function CourseContentDrawer({ isDrawerOpen, toggleDrawer }) {
+function CourseContentDrawer({ course, isDrawerOpen, onVideoSelected, toggleDrawer }) {
     return (<Drawer
         anchor="right"
         open={isDrawerOpen}
@@ -18,9 +18,9 @@ function CourseContentDrawer({ isDrawerOpen, toggleDrawer }) {
                     <NavigateNextIcon fontSize="large"></NavigateNextIcon>
                 </Button>
 
-                <Typography style={{width: "100%"}}>Learn Python Programming - Beginner to Master</Typography>
+                <Typography style={{width: "100%"}}>{course.title}</Typography>
             </div>
-            <CourseSections sections={[]} showTitle={false}></CourseSections>
+            <CourseSections clickable={true} onVideoSelected={onVideoSelected} sections={course.sections} showTitle={false}></CourseSections>
         </div>
     </Drawer>);
 }

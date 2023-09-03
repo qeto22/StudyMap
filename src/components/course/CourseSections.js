@@ -10,7 +10,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import VideoLibraryIcon from '@mui/icons-material/VideoLibrary';
 import VideoFileIcon from '@mui/icons-material/VideoFile';
 
-function CourseSections({ sections, showTitle }) {
+function CourseSections({ clickable=false, onVideoSelected, sections, showTitle }) {
     return (
         <div style={{ marginTop: "20px" }}>
             {showTitle ? (<Typography variant="h6" fontWeight={"bold"}>
@@ -36,7 +36,7 @@ function CourseSections({ sections, showTitle }) {
                             <Typography>
                                 {section.videos.map((video, index) => {
                                     return (
-                                        <div style={{ display: "flex", justifyContent: "space-between", gap: "8px" }}>
+                                        <div style={{ display: "flex", justifyContent: "space-between", gap: "8px", cursor: clickable ? 'pointer' : null }} onClick={clickable ? () => onVideoSelected(video) : null}>
                                             <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
                                                 <VideoFileIcon fontSize={"17px"}></VideoFileIcon>
                                                 <Typography fontSize={"15px"}>{video.title}</Typography>

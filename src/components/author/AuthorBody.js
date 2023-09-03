@@ -51,7 +51,6 @@ function AuthorBody({ authorUsername }) {
         axios.get('http://' + window.location.hostname + ':8080/api/v1/course/author/' + authorUsername)
             .then(response => {
                 if (response.status === 200) {
-                    console.log(response.data);
                     setAuthorCourses(response.data);
                 } else {
                     console.log('Error fetching author courses:');
@@ -66,7 +65,6 @@ function AuthorBody({ authorUsername }) {
         axios.get('http://' + window.location.hostname + ':8080/api/v1/map/author/' + authorUsername)
             .then(response => {
                 if (response.status === 200) {
-                    console.log(response.data);
                     setAuthorMaps(response.data);
                 } else {
                     console.log('Error fetching author maps:');
@@ -104,7 +102,6 @@ function AuthorBody({ authorUsername }) {
         axios.get('http://' + window.location.hostname + ':8080/api/v1/user/' + authorUsername)
             .then(response => {
                 if (response.status === 200) {
-                    console.log(response.data);
                     setAuthor(response.data);
                 } else {
                     setErrorMessage('Error fetching user data');

@@ -30,7 +30,6 @@ function ProfileHeader({ user }) {
                     <Button startIcon={<Share />}
                         variant="contained"
                         color="material"
-                        onClick={() => { console.log("Share your Profile") }}
                         style={{
                             fontSize: "12px"
                         }}>Share your Profile</Button>
