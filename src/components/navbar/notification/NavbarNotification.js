@@ -6,6 +6,8 @@ function NavbarNotification({ notification }) {
             return <NavbarMentorshipNotification type='request' notification={notification} />;
         case 'MENTORSHIP_ACCEPTED':
             return <NavbarMentorshipNotification type='accepted' notification={notification} />;
+        case 'MENTORSHIP_REJECTED':
+            return <NavbarMentorshipNotification type='rejected' notification={notification} />;
         default:
             return 'Unknown Notification Type';
     }

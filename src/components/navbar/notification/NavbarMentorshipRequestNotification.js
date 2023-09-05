@@ -1,13 +1,15 @@
 import { Grid, Typography } from "@mui/material";
 
 function NavbarMentorshipNotification({ type, notification }) {
-    
+
     const getHeaderMessage = () => {
         switch (type) {
             case 'request':
                 return 'Mentorship Request';
             case 'accepted':
                 return 'Mentorship Accepted';
+            case 'rejected':
+                return 'Mentorship Rejected';
             default:
                 return 'Unknown Notification Type';
         }
@@ -19,6 +21,8 @@ function NavbarMentorshipNotification({ type, notification }) {
                 return `${notification.sender.name} sent you a mentorship request!`;
             case 'accepted':
                 return `${notification.sender.name} accepted your mentorship request!`;
+            case 'rejected':
+                return `${notification.sender.name} rejected your mentorship request!`;
             default:
                 return 'Unknown Notification Type';
         }

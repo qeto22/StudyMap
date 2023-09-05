@@ -24,8 +24,11 @@ const CreditCardForm = ({ cartItemIds }) => {
             }
         };
 
+        const mentorshipItem = JSON.parse(localStorage.getItem('mentorshipPayment') || 'null');
+
         axios.post("http://" + window.location.hostname + ":8080/api/v1/payment", {
             courseIds: cartItemIds,
+            mentorshipNotificationId: mentorshipItem != null ? mentorshipItem.notification.id : null,
             cardHolder: holderName,
             cardNumber: cardNumber,
             expirationDate: expirationDate,

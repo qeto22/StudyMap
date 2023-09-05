@@ -14,21 +14,24 @@ const CartItem = ({ size, item, onRemove }) => {
       </Grid>
       {size !== 'small' ? (
         <Grid item md={2} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          <Rating
-            name="simple-controlled"
-            size="small"
-            precision={0.5}
-            value={5}
-            readOnly
-            color="dark"
-          />
+          {item.type === 'COURSE' ? (
+            <Rating
+              name="simple-controlled"
+              size="small"
+              precision={0.5}
+              value={5}
+              readOnly
+              color="dark"
+            />) : <></>
+          }
         </Grid>
       ) : <></>}
       <Grid item md={2} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: "14px" }}>
         ${(Math.round(item.price * 100) / 100).toFixed(2)}
       </Grid>
       <Grid item md={size === 'small' ? 3 : 2} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <Button variant="contained" className="remove-button" color="material" onClick={() => onRemove(item.id)}><DeleteOutlineIcon /> {size !== 'small' ? 'Remove' : <></>} </Button>
+        {item.type !== 'MENTORSHIP' ? (
+          <Button variant="contained" className="remove-button" color="material" onClick={() => onRemove(item.id)}><DeleteOutlineIcon /> {size !== 'small' ? 'Remove' : <></>} </Button>) : <></>}
       </Grid>
     </Grid>
   );

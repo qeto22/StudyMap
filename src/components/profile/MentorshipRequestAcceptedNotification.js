@@ -1,11 +1,10 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, TextField, Typography } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, Typography } from "@mui/material";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import CloseIcon from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check'
 import PaymentsIcon from '@mui/icons-material/Payments';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { DateTimePicker } from "@mui/x-date-pickers";
-import FormTextInput from "../login/FormTextInput";
 import axios from "axios";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router";
@@ -15,7 +14,7 @@ function MentorshipRequestAcceptedNotification({ notification }) {
     const navigate = useNavigate();
 
     const additionalData = notification.additionalData.split(',');
-    const paidOrRejected = additionalData[additionalData.length - 1] === 'PAID' || additionalData[additionalData.length - 1] === 'REJECT';
+    const paidOrRejected = additionalData[additionalData.length - 1] === 'ACCEPTED' || additionalData[additionalData.length - 1] === 'REJECT';
     const datesCount = paidOrRejected ? additionalData.length - 1 : additionalData.length;
 
     const [showDialogWindow, setShowDialogWindow] = useState(false);
@@ -39,10 +38,10 @@ function MentorshipRequestAcceptedNotification({ notification }) {
     }
 
     const onPayClicked = () => {
-        localStorage.setItem("mentorshipPayment", {
+        localStorage.setItem("mentorshipPayment", JSON.stringify({
             notification: notification,
             amount: datesCount * 25
-        });
+        }));
         navigate("/order");
     }
 
@@ -69,7 +68,7 @@ function MentorshipRequestAcceptedNotification({ notification }) {
                             <VisibilityIcon style={{ fontSize: "15px", marginRight: "5px" }} /> VIEW OFFER
                         </Button>
                     ) : null}
-                    {paidOrRejected && additionalData[additionalData.length - 1] === "PAID" ? (
+                    {paidOrRejected && additionalData[additionalData.length - 1] === "ACCEPTED" ? (
                         <Button variant="contained" color="success" style={{ color: "white" }}>
                             <CheckIcon style={{ color: "white", fontSize: "16px", marginRight: "5px" }} /> PAID
                         </Button>
@@ -103,8 +102,8 @@ function MentorshipRequestAcceptedNotification({ notification }) {
                     <Button variant="contained"
                         color="success"
                         style={{ color: "white", display: "flex", alignItems: "center", textAlign: "center" }}
-                        onClick={() => setShowDialogWindow(false)}>
-                        <PaymentsIcon style={{ marginRight: "5px" }} onClick={() => onPayClicked()} /> Pay ${datesCount * 25}
+                        onClick={() => onPayClicked()}>
+                        <PaymentsIcon style={{ marginRight: "5px" }} /> Pay ${datesCount * 25}
                     </Button>
                     <Button variant="contained"
                         color="error"

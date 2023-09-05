@@ -11,18 +11,44 @@ function PaymentBody() {
     const [cartItemIds, setCartItemIds] = useState(JSON.parse(localStorage.getItem('cart') || '[]'));
     const [cartItems, setCartItems] = useState([]);
 
+    const mentorshipCartItem = JSON.parse(localStorage.getItem('mentorshipPayment') || 'null');
+
     useEffect(() => {
         if (cartItemIds.length === 0) {
-            setCartItems([]);
+            if (mentorshipCartItem === null) {
+                setCartItemIds([]);
+                return;
+            }
+            setCartItems([{
+                id: mentorshipCartItem.notification.sender.id,
+                title: 'Mentorship from ' + mentorshipCartItem.notification.sender.name,
+                imageUrl: '/image/' + mentorshipCartItem.notification.sender.imageUrl,
+                author: {
+                    name: mentorshipCartItem.notification.sender.name
+                },
+                price: mentorshipCartItem.amount,
+                type: 'MENTORSHIP'
+            }]);
             return;
         }
+
         const fetchCartItems = async () => {
             const cartItems = await Promise.all(cartItemIds.map(async (cartItemId) => {
                 const response = await fetch(`http://localhost:8080/api/v1/course/${cartItemId}`);
                 const course = await response.json();
+                course.type = 'COURSE';
                 return course;
             }));
-            setCartItems(cartItems);
+            setCartItems([...cartItems, {
+                id: mentorshipCartItem.notification.sender.id,
+                title: 'Mentorship from ' + mentorshipCartItem.notification.sender.name,
+                imageUrl: '/image/' + mentorshipCartItem.notification.sender.imageUrl,
+                author: {
+                    name: mentorshipCartItem.notification.sender.name
+                },
+                price: mentorshipCartItem.amount,
+                type: 'MENTORSHIP'
+            }]);
         }
         fetchCartItems();
     }, [cartItemIds]);
@@ -35,7 +61,7 @@ function PaymentBody() {
 
     const totalPrice = cartItems.reduce((total, item) => total + item.price, 0);
 
-    if (cartItemIds.length === 0) {
+    if (cartItems.length === 0) {
         return (<Container maxWidth="lg" style={{
             margin: "25px auto"
         }}>
