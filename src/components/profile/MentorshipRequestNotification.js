@@ -4,15 +4,17 @@ import CloseIcon from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check'
 import { useEffect, useState } from "react";
 import { DateTimePicker } from "@mui/x-date-pickers";
-import { set } from "lodash";
 import FormTextInput from "../login/FormTextInput";
+import axios from "axios";
 
 function MentorshipRequestNotification({ notification }) {
-    const sessionCount = parseInt(notification.additionalData);
+    const additionalData = notification.additionalData.split(',');
+    const sessionCount = parseInt(additionalData[0]);
 
     const [selectedDates, setSelectedDates] = useState(Array.from(Array(sessionCount).keys()).map(() => { return new Date() }));
     const [dialogWindow, setDialogWindow] = useState(false);
     const [datesSelectionWindow, setDatesSelectionWindow] = useState(false);
+    const [messageToMentee, setMessageToMentee] = useState("");
 
     const handleDialogWindow = () => {
         setDialogWindow(false);
@@ -30,7 +32,39 @@ function MentorshipRequestNotification({ notification }) {
     }
 
     const onMentorshipRequestApproved = () => {
-        handleDialogWindow();
+        const data = {
+            notificationId: notification.id,
+            meetingDates: selectedDates,
+            message: messageToMentee
+        }
+
+        axios.post('http://' + window.location.hostname + ':8080/api/v1/notification/accept-mentorship', data, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+        }).then((response) => {
+            console.log(response);
+            handleDialogWindow();
+        }).catch((error) => {
+            console.log(error);
+            handleDialogWindow();
+        });
+    }
+
+    const rejectMentorshipRequest = () => {
+        const data = {
+            notificationId: notification.id,
+        }
+
+        axios.post('http://' + window.location.hostname + ':8080/api/v1/notification/reject-mentorship', data, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+        }).then((response) => {
+            handleDialogWindow();
+        }).catch((error) => {
+            handleDialogWindow();
+        });
     }
 
     useEffect(() => {
@@ -56,16 +90,33 @@ function MentorshipRequestNotification({ notification }) {
                     <Typography style={{ fontSize: "19px" }}>Mentorship Request</Typography>
                     <Typography style={{ fontSize: "16px", color: "rgba(255, 255, 255, 0.7)" }}>{notification.sender.name} sent you a mentorship request!</Typography>
                 </Grid>
-                <Grid item xs={3} style={{ display: 'flex', justifyContent: "space-between", paddingRight: "10px" }}>
-                    <Button variant="contained" color="material" onClick={() => { setDialogWindow(true) }}>
-                        <VisibilityIcon style={{ fontSize: "15px" }} />
-                    </Button>
-                    <Button variant="contained" color="error">
-                        <CloseIcon style={{ color: "white", fontSize: "15px" }} />
-                    </Button>
-                    <Button variant="contained" color="success" onClick={() => setDatesSelectionWindow(true)}>
-                        <CheckIcon style={{ color: "white", fontSize: "15px" }} />
-                    </Button>
+                <Grid item xs={3} style={{ display: 'flex', justifyContent: additionalData.length > 1 ? "end" : "space-between", paddingRight: "10px" }}>
+
+                    {additionalData.length === 1 ? (
+                        <Button variant="contained" color="material" onClick={() => { setDialogWindow(true) }}>
+                            <VisibilityIcon style={{ fontSize: "15px" }} />
+                        </Button>
+                    ) : null}
+                    {additionalData.length === 1 ? (
+                        <Button variant="contained" color="error">
+                            <CloseIcon style={{ color: "white", fontSize: "15px" }} />
+                        </Button>
+                    ) : null}
+                    {additionalData.length === 1 ? (
+                        <Button variant="contained" color="success" onClick={() => setDatesSelectionWindow(true)}>
+                            <CheckIcon style={{ color: "white", fontSize: "15px" }} />
+                        </Button>
+                    ) : null}
+                    {additionalData.length > 1 && additionalData[1] === "ACCEPTED" ? (
+                        <Button variant="contained" color="success" style={{ color: "white" }}>
+                            <CheckIcon style={{ color: "white", fontSize: "16px", marginRight: "5px" }} /> ACCEPTED
+                        </Button>
+                    ) : null}
+                    {additionalData.length > 1 && additionalData[1] === "REJECT" ? (
+                        <Button variant="contained" color="error" style={{ color: "white" }}>
+                            <CheckIcon style={{ color: "white", fontSize: "16px", marginRight: "5px" }} /> REJECTED
+                        </Button>
+                    ) : null}
                 </Grid>
             </Grid>
             <Dialog open={dialogWindow} onClose={handleDialogWindow}>
@@ -85,7 +136,7 @@ function MentorshipRequestNotification({ notification }) {
                     <Button variant="contained"
                         color="error"
                         style={{ color: "white" }}
-                        onClick={handleDialogWindow}>
+                        onClick={rejectMentorshipRequest}>
                         <CloseIcon /> Deny
                     </Button>
                 </DialogActions>
@@ -97,8 +148,11 @@ function MentorshipRequestNotification({ notification }) {
                         Please select dates for the mentorship sessions. You can select up to {sessionCount} dates. You can not change the dates later. Please select carefully.
                     </DialogContentText>
                     <FormTextInput style={{
-                            marginTop: "25px",
-                        }} label={"Optional message to " + notification.sender.name} rows={3} multiline={true} />
+                        marginTop: "25px",
+                    }} label={"Optional message to " + notification.sender.name}
+                        rows={3}
+                        multiline={true}
+                        onChange={(e) => setMessageToMentee(e.target.value)} />
                     <Grid container spacing={2} style={{ marginTop: "10px" }}>
                         {Array.from(Array(sessionCount).keys()).map((index) => {
                             return (
