@@ -43,6 +43,7 @@ const CreditCardForm = ({ cartItemIds }) => {
                     return;
                 }
                 localStorage.removeItem('cart');
+                localStorage.removeItem('mentorshipPayment');
                 setBuyingResult({
                     success: true,
                     message: 'Courses bought successfully.'

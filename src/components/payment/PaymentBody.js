@@ -16,7 +16,7 @@ function PaymentBody() {
     useEffect(() => {
         if (cartItemIds.length === 0) {
             if (mentorshipCartItem === null) {
-                setCartItemIds([]);
+                setCartItems([]);
                 return;
             }
             setCartItems([{
@@ -39,17 +39,23 @@ function PaymentBody() {
                 course.type = 'COURSE';
                 return course;
             }));
-            setCartItems([...cartItems, {
-                id: mentorshipCartItem.notification.sender.id,
-                title: 'Mentorship from ' + mentorshipCartItem.notification.sender.name,
-                imageUrl: '/image/' + mentorshipCartItem.notification.sender.imageUrl,
-                author: {
-                    name: mentorshipCartItem.notification.sender.name
-                },
-                price: mentorshipCartItem.amount,
-                type: 'MENTORSHIP'
-            }]);
+            
+            let newCartItems = [...cartItems];
+            if (mentorshipCartItem) {
+                newCartItems = [...cartItems, {
+                    id: mentorshipCartItem.notification.sender.id,
+                    title: 'Mentorship from ' + mentorshipCartItem.notification.sender.name,
+                    imageUrl: '/image/' + mentorshipCartItem.notification.sender.imageUrl,
+                    author: {
+                        name: mentorshipCartItem.notification.sender.name
+                    },
+                    price: mentorshipCartItem.amount,
+                    type: 'MENTORSHIP'
+                }];
+            }
+            setCartItems(newCartItems);
         }
+
         fetchCartItems();
     }, [cartItemIds]);
 
