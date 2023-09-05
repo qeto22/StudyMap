@@ -13,6 +13,7 @@ import { AuthContext } from "../AuthProvider";
 import ProfileTab from "./profile/ProfileTab";
 import SettingsTab from "./SettingsTab";
 import NotificationsTab from "./NotificationsTab";
+import MentorMenteeMeetingsTab from "./MentorMenteeMeetingsTab";
 
 function useQuery() {
     return new URLSearchParams(useLocation().search);
@@ -41,6 +42,9 @@ function ProfileBody() {
             break;
         case "notifications":
             content = <NotificationsTab />;
+            break;
+        case "mentor-meetings":
+            content = <MentorMenteeMeetingsTab />;
             break;
         default:
             content = null;
