@@ -13,6 +13,10 @@ import CategoriesButton from './CategoriesButton';
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../AuthProvider';
 import CartItem from '../cart/CartItem';
+import axios from 'axios';
+import Badge from '@mui/material/Badge';
+import styled from '@mui/material/styles/styled';
+import NavbarNotification from './notification/NavbarNotification';
 
 function NavigationBarDesktop() {
     const { isAuthenticated } = useContext(AuthContext);
@@ -29,11 +33,56 @@ function NavigationBarDesktop() {
     const [cartItemIds, setCartItemIds] = useState([]);
     const [cartItems, setCartItems] = useState([]);
 
+    const [notifications, setNotifications] = useState([]);
+
     const onCartItemRemoved = (courseIdToDelete) => {
         const newCartItems = cartItemIds.filter(existingCartId => existingCartId !== courseIdToDelete);
         localStorage.setItem('cart', JSON.stringify(newCartItems));
         setCartItemIds(newCartItems);
     }
+
+    const fetchNotifications = async () => {
+        const token = localStorage.getItem('token');
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+        };
+
+        axios.get('http://localhost:8080/api/v1/notification/unread', config)
+            .then((response) => {
+                setNotifications(response.data);
+            })
+    }
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            const interval = setInterval(() => {
+                fetchNotifications();
+            }, 10000);
+            return () => clearInterval(interval);
+        }
+    }, [isAuthenticated]);
+
+    useEffect(() => {
+        if (notificationAnchorEl) {
+            const token = localStorage.getItem('token');
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+            };
+
+            axios.post('http://localhost:8080/api/v1/notification', {
+                notificationIds: notifications.map(notification => notification.id)
+            }, config)
+                .then((response) => { })
+                .catch(error => { });
+        } else {
+            // setNotifications([]);
+        }
+    }, [notificationAnchorEl, notifications]);
+
 
     useEffect(() => {
         if (cartAnchorEl) {
@@ -106,9 +155,11 @@ function NavigationBarDesktop() {
             {isAuthenticated ? (
                 <span className='navbar-item'>
                     <Tooltip title="Notifications">
-                        <NotificationsIcon onClick={(event) => {
-                            setNotificationAnchorElemenet(event.currentTarget);
-                        }}></NotificationsIcon>
+                        <StyledBadge color="material" badgeContent={notifications.length} max={10}>
+                            <NotificationsIcon onClick={(event) => {
+                                setNotificationAnchorElemenet(event.currentTarget);
+                            }}></NotificationsIcon>
+                        </StyledBadge>
                     </Tooltip>
                 </span>
             ) : (<></>)}
@@ -240,23 +291,31 @@ function NavigationBarDesktop() {
                 }}>
                 <ClickAwayListener onClickAway={() => setNotificationAnchorElemenet(null)}>
                     <div style={{ width: "325px" }}>
-                        {cartItems.length === 0 ?
-                            (<Typography style={{ width: "100%", textAlign: "center", marginTop: "15px", fontSize: "14px", color: "rgba(255, 255, 255, 0.5)" }}>You don't have any notification</Typography>) : <></>}
-                        {cartItems.length > 0 ? cartItems.map((course, index) => {
-                            return (<div style={{ marginTop: "8px" }}>
-                                <CartItem size='small' item={course} onRemove={() => onCartItemRemoved(course.id)}></CartItem>
-                            </div>)
+                        {notifications.length === 0 ?
+                            (<Typography style={{ width: "100%", textAlign: "center", marginTop: "15px", marginBottom: "15px", fontSize: "14px", color: "rgba(255, 255, 255, 0.5)" }}>You don't have any unread notification</Typography>) : <></>}
+                        {notifications.length > 0 ? notifications.map((notification, index) => {
+                            return (<div style={{ marginTop:"4px" }}>
+                                <NavbarNotification notification={notification} />
+                                <Divider style={{ marginTop: "4px" }}></Divider>
+                            </div>);
                         }) : <></>}
-                        <Divider style={{ marginTop: "15px" }}></Divider>
-                        <Button disabled={cartItems.length === 0}
+                        <Divider></Divider>
+                        <Button
                             color='material'
                             style={{ width: "100%", textTransform: "none" }}
-                            onClick={() => navigate('/order')}>View All Notifications</Button>
+                            onClick={() => navigate('/profile?tab=notifications')}>View All Notifications</Button>
                     </div>
                 </ClickAwayListener>
             </Popover>
         </>
     );
 }
+
+const StyledBadge = styled(Badge)(({ theme }) => ({
+    '& .MuiBadge-badge': {
+        border: `2px solid #EC6652`,
+        padding: '0 4px',
+    },
+}));
 
 export default NavigationBarDesktop;

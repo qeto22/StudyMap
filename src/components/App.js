@@ -15,10 +15,12 @@ import SecuredRoute from "./SecuredRoute";
 import ProfileContent from "./profile/ProfileContent";
 import StudyMapCreationContent from "./studymap/StudyMapCreationContent";
 import CourseCreationContent from "./course/CourseCreationContent";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 
 function App() {
   return (
-    <div style={{ minHeight: "100%" }}>
+    <LocalizationProvider style={{ minHeight: "100%" }} dateAdapter={AdapterDayjs}>
       <AuthProvider>
         <Router>
           <Routes>
@@ -88,7 +90,7 @@ function App() {
           </Routes>
         </Router>
       </AuthProvider>
-    </div>
+    </LocalizationProvider>
   );
 }
 

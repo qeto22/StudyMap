@@ -2,6 +2,7 @@ import AccountCircleOutlined from "@mui/icons-material/AccountCircleOutlined";
 import SchoolIcon from '@mui/icons-material/School';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
+import NotificationsIcon from '@mui/icons-material/Notifications';
 import { Container, Grid, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography } from "@mui/material";
 import { Settings } from "@mui/icons-material";
 import { useContext, useState } from "react";
@@ -11,6 +12,7 @@ import CourseGrid from "./CourseGrid";
 import { AuthContext } from "../AuthProvider";
 import ProfileTab from "./profile/ProfileTab";
 import SettingsTab from "./SettingsTab";
+import NotificationsTab from "./NotificationsTab";
 
 function useQuery() {
     return new URLSearchParams(useLocation().search);
@@ -36,6 +38,9 @@ function ProfileBody() {
             break;
         case "settings":
             content = <SettingsTab />;
+            break;
+        case "notifications":
+            content = <NotificationsTab />;
             break;
         default:
             content = null;
@@ -75,6 +80,16 @@ function ProfileBody() {
                                 <AccountTreeIcon style={{ fontSize: '23px' }} />
                             </ListItemIcon>
                             <ListItemText primary="My Paths" primaryTypographyProps={{ fontSize: '15px' }} />
+                        </ListItemButton>
+                    </ListItem>
+                    <ListItem disablePadding>
+                        <ListItemButton
+                            selected={selectedItem === "notifications"}
+                            onClick={() => setSelectedItem("notifications")}>
+                            <ListItemIcon>
+                                <NotificationsIcon style={{ fontSize: '23px' }} />
+                            </ListItemIcon>
+                            <ListItemText primary={"Notifications"} primaryTypographyProps={{ fontSize: '15px' }} />
                         </ListItemButton>
                     </ListItem>
                     <ListItem divider disablePadding>

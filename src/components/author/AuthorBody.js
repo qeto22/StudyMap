@@ -272,7 +272,7 @@ function AuthorBody({ authorUsername }) {
                 aria-labelledby="hire-mentor-dialog-title"
                 aria-describedby="hire-mentor-dialog-description"
             >
-                <DialogTitle id="hire-mentor-dialog-title">Hire Ketevan Bachalashvili</DialogTitle>
+                <DialogTitle id="hire-mentor-dialog-title">Hire {author.firstName} {author.lastName}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="hire-mentor-dialog-description">
                         <div className="mentorship-session-details">
@@ -292,7 +292,7 @@ function AuthorBody({ authorUsername }) {
                         }} label="Session" type="number" defaultValue={"1"} onChange={(e) => setSessionsCount(Number(e.target.value))} />
                         <FormTextInput style={{
                             marginTop: "8px",
-                        }} label="Optional message to Ketevan" defaultValue={mentorshipRequestMessage} onChange={(e) => setMentorshipRequestMessage(e.target.value)} multiline={true} />
+                        }} label={"Optional message to " + author.firstName + " " + author.lastName} defaultValue={mentorshipRequestMessage} onChange={(e) => setMentorshipRequestMessage(e.target.value)} multiline={true} />
                         <Divider light style={{
                             marginTop: "15px",
                             marginBottom: "8px",
