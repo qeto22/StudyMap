@@ -34,7 +34,7 @@ function PaymentBody() {
 
         const fetchCartItems = async () => {
             const cartItems = await Promise.all(cartItemIds.map(async (cartItemId) => {
-                const response = await fetch(`http://localhost:8080/api/v1/course/${cartItemId}`);
+                const response = await fetch('http://' + window.location.hostname + `:8080/api/v1/course/${cartItemId}`);
                 const course = await response.json();
                 course.type = 'COURSE';
                 return course;

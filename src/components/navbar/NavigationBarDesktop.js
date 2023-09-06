@@ -49,7 +49,7 @@ function NavigationBarDesktop() {
             },
         };
 
-        axios.get('http://localhost:8080/api/v1/notification/unread', config)
+        axios.get('http://' + window.location.hostname + ':8080/api/v1/notification/unread', config)
             .then((response) => {
                 setNotifications(response.data);
             })
@@ -73,7 +73,7 @@ function NavigationBarDesktop() {
                 },
             };
 
-            axios.post('http://localhost:8080/api/v1/notification', {
+            axios.post('http://' + window.location.hostname + ':8080/api/v1/notification', {
                 notificationIds: notifications.map(notification => notification.id)
             }, config)
                 .then((response) => { })
@@ -97,7 +97,7 @@ function NavigationBarDesktop() {
         }
         const fetchCartItems = async () => {
             const cartItems = await Promise.all(cartItemIds.map(async (cartItemId) => {
-                const response = await fetch(`http://localhost:8080/api/v1/course/${cartItemId}`);
+                const response = await fetch('http://' + window.location.hostname + `:8080/api/v1/course/${cartItemId}`);
                 const course = await response.json();
                 return course;
             }));

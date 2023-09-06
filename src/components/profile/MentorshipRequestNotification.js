@@ -84,7 +84,7 @@ function MentorshipRequestNotification({ notification }) {
                 alignItems: "center",
             }}>
                 <Grid item xs={2} style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    <img src={`http://localhost:8080/image/${notification.sender.imageUrl}`} alt='course icon' style={{ width: '60px', height: '60px', borderRadius: "50%" }} />
+                    <img src={'http://' + window.location.hostname + `:8080/image/${notification.sender.imageUrl}`} alt='course icon' style={{ width: '60px', height: '60px', borderRadius: "50%" }} />
                 </Grid>
                 <Grid item xs={7}>
                     <Typography style={{ fontSize: "19px" }}>Mentorship Request</Typography>

@@ -21,7 +21,7 @@ function NotificationsTab() {
             },
         };
 
-        axios.get('http://localhost:8080/api/v1/notification', config)
+        axios.get('http://' + window.location.hostname + ':8080/api/v1/notification', config)
             .then((response) => {
                 setNotifications(response.data);
             })

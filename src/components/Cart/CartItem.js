@@ -6,7 +6,7 @@ const CartItem = ({ size, item, onRemove }) => {
   return (
     <Grid container>
       <Grid item md={size === 'small' ? '2' : '1.5'} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <img src={`http://localhost:8080${item.imageUrl}`} alt='course icon' style={{ width: '30px', height: '30px' }} />
+        <img src={'http://' + window.location.hostname + `:8080${item.imageUrl}`} alt='course icon' style={{ width: '30px', height: '30px' }} />
       </Grid>
       <Grid item md={size === 'small' ? 5 : 4}>
         <Typography style={{ fontWeight: "bold", fontSize: size === 'small' ? "14px" : "16px" }}>{item.title}</Typography>

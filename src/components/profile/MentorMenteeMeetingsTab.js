@@ -28,7 +28,7 @@ function MentorMenteeMeetingsTab() {
             },
         };
 
-        axios.get('http://localhost:8080/api/video/meetings', config)
+        axios.get('http://' + window.location.hostname + ':8080/api/video/meetings', config)
             .then((response) => {
                 setMeetings(response.data);
             })

@@ -5,11 +5,17 @@ import AddIcon from '@mui/icons-material/Add';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import StudyMapNodeEditor from "./StudyMapNodeEditor";
 
-function StudyMapVisualisationCreation({nodeData, setNodeData}) {
+function StudyMapVisualisationCreation({ nodeData, setNodeData }) {
     const [anchorEl, setAnchorEl] = useState(null);
     const [selectedNode, setSelectedNode] = useState(null);
     const [cyInstance, setCyInstance] = useState(null);
     const [resetBool, setResetBool] = useState(false);
+
+    const uuidv4 = () => {
+        return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
+            (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+        );
+    }
 
     useEffect(() => {
         const cy = cytoscape({
@@ -92,7 +98,7 @@ function StudyMapVisualisationCreation({nodeData, setNodeData}) {
     }
 
     const onAddNodeClicked = () => {
-        const newNode = { data: { id: crypto.randomUUID().toString(), label: '' } }
+        const newNode = { data: { id: uuidv4(), label: '' } }
         setNodeData([...nodeData, newNode]);
         setResetBool(!resetBool);
     }
@@ -158,7 +164,7 @@ function StudyMapVisualisationCreation({nodeData, setNodeData}) {
                 existingNode={nodeData}
                 onNodeDeleteClicked={onNodeDeleteClicked}
                 onNodeUpdated={onNodeUpdated} />) : (<> </>)
-                
+
         }
     </div>)
 }
