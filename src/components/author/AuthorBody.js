@@ -13,7 +13,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function AuthorBody({ authorUsername }) {
-    const { isAuthenticated } = useContext(AuthContext);
+    const { isAuthenticated, user } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const location = useLocation();
@@ -24,6 +24,8 @@ function AuthorBody({ authorUsername }) {
     const [sessionsCount, setSessionsCount] = useState(1);
     const [mentorshipRequestMessage, setMentorshipRequestMessage] = useState('');
     const [snackbar, setSnackbar] = useState(null);
+
+    const showSnackbar = snackbar != null
 
     const [author, setAuthor] = useState(null);
     const [authorCourses, setAuthorCourses] = useState([]);
@@ -168,7 +170,7 @@ function AuthorBody({ authorUsername }) {
                 <Card elevation={5} style={{ width: "50%", background: "transparent", padding: "15px", margin: "10px auto", border: "1px solid rgba(255, 255, 255, 0.5)" }}>
                     <Typography variant="h8">{author.description}</Typography>
                 </Card>
-                {author.type === 'MENTOR' ? (
+                {author.type === 'MENTOR' && user !== null && author.username != user.username ? (
                     <Button startIcon={<HandshakeIcon />}
                         variant="contained"
                         color="material"
@@ -192,7 +194,7 @@ function AuthorBody({ authorUsername }) {
                         }}><CountUp start={0} end={authorCourses.length} duration={2} /></Typography>
                     </Grid>) : null}
 
-                    <Grid item xs={author.type === 'MENTOR' ? 3 : 4} style={{
+                    <Grid item xs={author.type === 'MENTOR' ? 3 : 6} style={{
                         borderLeft: "2px solid white",
                         paddingLeft: "20px"
                     }}>
@@ -203,7 +205,7 @@ function AuthorBody({ authorUsername }) {
                             fontWeight: "bold"
                         }}><CountUp start={0} end={authorMaps.length} duration={2} /></Typography>
                     </Grid>
-                    <Grid item xs={author.type === 'MENTOR' ? 3 : 4} style={{
+                    {author.type === 'MENTOR' ? (<Grid item xs={author.type === 'MENTOR' ? 3 : 4} style={{
                         borderLeft: "2px solid white",
                         paddingLeft: "20px"
                     }}>
@@ -213,8 +215,8 @@ function AuthorBody({ authorUsername }) {
                             color: "#EC6652",
                             fontWeight: "bold"
                         }}><CountUp start={0} end={0} duration={2} /></Typography>
-                    </Grid>
-                    <Grid item xs={author.type === 'MENTOR' ? 3 : 4} style={{
+                    </Grid>) : <></>}
+                    <Grid item xs={author.type === 'MENTOR' ? 3 : 6} style={{
                         borderLeft: "2px solid white",
                         paddingLeft: "20px"
                     }}>
@@ -312,9 +314,9 @@ function AuthorBody({ authorUsername }) {
                     </Button>
                 </DialogActions>
             </Dialog>
-            <Snackbar anchorOrigin={{ vertical: "bottom", horizontal: "right" }} open={snackbar != null} autoHideDuration={3000} onClose={() => setSnackbar(null)}>
+            <Snackbar anchorOrigin={{ vertical: "bottom", horizontal: "right" }} open={snackbar != null}>
                 <Alert severity={snackbar != null ? snackbar.severity : null} sx={{ width: '100%' }} variant="filled" style={{ color: "white" }}>
-                    {snackbar != null ? snackbar.message : null}
+                    {snackbar != null && snackbar.message != null ? snackbar.message : null}
                 </Alert>
             </Snackbar>
         </Container>

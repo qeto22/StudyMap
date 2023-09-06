@@ -22,11 +22,6 @@ function Author({ author }) {
             <div>
                 <Typography variant="h5">{ author.name }</Typography>
                 <Typography style={{ marginTop: '8px' }}>{ author.description }</Typography>
-                <Button onClick={onHireMeClicked} startIcon={<HandshakeIcon />} sx={{
-                    marginTop: '20px',
-                    fontFamily: "cubano",
-                    letterSpacing: "1px",
-                }} variant="contained" color="material">Hire me</Button>
                 <Button onClick={onViewProfileClicked} startIcon={<Person2Icon />}
                     sx={{
                         marginTop: '20px',

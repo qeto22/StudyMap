@@ -13,7 +13,9 @@ function ContentItem({ id, type, title, imageSrc, authorName, authorUsername, au
 
     const [snackbar, setSnackbar] = useState(null);
 
-    const showAddToCartButton = type === 'Course' && (user === null || user.boughtCourseIds.find((courseId) => courseId === id) === undefined);
+    const showAddToCartButton = type === 'Course'
+        && (user === null || user.boughtCourseIds.find((courseId) => courseId === id) === undefined)
+        && (user === null || user.username !== authorUsername);
 
     const onContentClicked = () => {
         if (type === 'Course') {

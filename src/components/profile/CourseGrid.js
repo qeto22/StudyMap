@@ -3,10 +3,13 @@ import ContentItem from "../welcome/ContentItem";
 import AddGridItem from "./AddGridItem";
 import { useNavigate } from "react-router-dom";
 import LoadingContentItem from "./LoadingContentItem";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
+import { AuthContext } from "../AuthProvider";
 
 function CourseGrid() {
+    const { user } = useContext(AuthContext);
+
     const navigate = useNavigate();
 
     const [courses, setCourses] = useState(null);
@@ -58,10 +61,11 @@ function CourseGrid() {
                     Could not fetch Courses! Please refresh the page or try again later
                 </Alert>
             </Snackbar>
-
-            <Grid item md={4} style={{ padding: "0 10px" }}>
-                <AddGridItem label={'Upload New Course'} onClick={() => navigate('/course/create')} />
-            </Grid>
+            {user === null || user.type === 'MENTEE' ? <></> :
+                <Grid item md={4} style={{ padding: "0 10px" }}>
+                    <AddGridItem label={'Upload New Course'} onClick={() => navigate('/course/create')} />
+                </Grid>
+            }
         </Grid>
     )
 }

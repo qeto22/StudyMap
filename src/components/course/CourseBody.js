@@ -19,6 +19,7 @@ function CourseBody({ course, onReviewSubmit }) {
     const [snackBarOpen, setSnackBarOpen] = useState(false);
 
     const hasBoughtTheCourse = user != null && course != null && user.boughtCourseIds.find((courseId) => courseId === course.id) !== undefined;
+    const isAuthor = user != null && course != null && user.username === course.author.username;
 
     const navigate = useNavigate();
 
@@ -78,7 +79,7 @@ function CourseBody({ course, onReviewSubmit }) {
                     <CardMedia sx={{ height: "200px" }} image={'http://' + window.location.hostname + `:8080${course.imageUrl}`}></CardMedia>
                     <CardContent style={{ background: "#12181B" }}>
                         <Typography variant="h5">{course.price !== null && course.price > 0 ? `$${(Math.round(course.price * 100) / 100).toFixed(2)}` : 'FREE'}</Typography>
-                        {!hasBoughtTheCourse ? (
+                        {!hasBoughtTheCourse && !isAuthor ? (
                             <Button sx={{
                                 width: "100%",
                                 fontFamily: "cubano",
@@ -86,7 +87,7 @@ function CourseBody({ course, onReviewSubmit }) {
                                 marginTop: "15px"
                             }} onClick={addToCart} startIcon={<ShoppingCartIcon></ShoppingCartIcon>} variant="contained" color="material">Add To Cart</Button>
                         ) : <></>}
-                        {!hasBoughtTheCourse ? (
+                        {!hasBoughtTheCourse && !isAuthor ? (
                             <Button onClick={buyNowClicked} sx={{
                                 width: "100%",
                                 fontFamily: "cubano",
@@ -115,7 +116,7 @@ function CourseBody({ course, onReviewSubmit }) {
             name: course.author.name,
             description: course.author.description
         }}></Author>
-        <Reviews reviews={course.reviews} onReviewSubmit={onReviewSubmit}></Reviews>
+        <Reviews reviewingUserId={course.author.id} reviews={course.reviews} onReviewSubmit={onReviewSubmit}></Reviews>
         <Snackbar anchorOrigin={{ vertical: "bottom", horizontal: "right" }} open={snackBarOpen}>
             <Alert severity="warning" sx={{ width: '100%' }} variant="filled" style={{ color: "white" }}>
                 You are not logged in!

@@ -4,12 +4,15 @@ import { Typography } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../AuthProvider";
 
-function Reviews({ reviews, onReviewSubmit }) {
+function Reviews({ reviewingUserId, reviews, onReviewSubmit }) {
     const { isAuthenticated, user } = useContext(AuthContext);
     const [reviewInputEnabled, setReviewInputEnabled] = useState(false);
 
     useEffect(() => {
-        if (isAuthenticated && user !== null && !reviews.some((review) => review.author.username === user.username)) {
+        if (isAuthenticated 
+            && user !== null 
+            && !reviews.some((review) => review.author.username === user.username)
+            && reviewingUserId !== user.id) {
             setReviewInputEnabled(true);
         }
     }, [isAuthenticated, user, reviews]);

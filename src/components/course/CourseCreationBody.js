@@ -32,6 +32,10 @@ function CourseCreationBody() {
     const [courseId, setCourseId] = React.useState(null);
     const [uploadedCourseSections, setUploadedCourseSections] = React.useState([]);
     const [courseUploadError, setCourseUploadError] = React.useState(null);
+    
+    console.log("Keto Bachala");
+    console.log(uploadedCourseSections);
+    console.log(courseSections);
 
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -151,7 +155,7 @@ function CourseCreationBody() {
             if (response.status !== 200) {
                 setCourseUploadError(`Error occurred uploading Section ${section.title}!`);
             } else {
-                setUploadedCourseSections([...uploadedCourseSections, section]);
+                setUploadedCourseSections(prevStateOfUploadedCourses => [...prevStateOfUploadedCourses, section]);
             }
         } catch (ex) {
             setCourseUploadError(`Error occurred uploading Section ${section.title}!`);
